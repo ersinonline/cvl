@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Civil Kasa Kapanışı Rehberi</title>
+    <!-- Favicon -->
+    <link rel="icon" href="https://www.civilim.com//Skins/shared/images/civil-logo.jpg" type="image/jpeg">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            scroll-behavior: smooth; /* Yumuşak kaydırma için */
+        }
+        .container {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            padding: 25px;
+        }
+        .step-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .step-number {
+            background-color: #dd3612; /* Civil rengi */
+            color: #fff;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.1em;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        .step-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #1a202c;
+        }
+        .step-content {
+            font-size: 1em;
+            line-height: 1.6;
+            color: #4a5568;
+        }
+        .step-image {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        .section-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #1a202c;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+        .important-note {
+            background-color: #fff7ed;
+            border-left: 4px solid #f97316;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #d97706;
+            font-weight: 500;
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+            color: #718096;
+            font-size: 0.9em;
+        }
+        /* Navigasyon Dropdown Stilleri */
+        .navigation-dropdown-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        .section-select {
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95em;
+            cursor: pointer;
+            background-color: #fef2f2; /* Çok açık kırmızı */
+            color: #dd3612; /* Civil rengi */
+            border: 1px solid #fca5a5; /* Açık kırmızı border */
+            appearance: none; /* Varsayılan ok simgesini kaldır */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23dd3612%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7L146.2%20202.7%2018.8%2075.1c-3.7-3.7-8.3-5.7-13-5.7-4.7%200-9.3%202-13%205.7-7.3%207.3-7.3%2019.1%200%2026.4l130.4%20130.5c3.7%203.7%208.3%205.7%2013%205.7s9.3-2%2013-5.7l130.4-130.5c7.4-7.3%207.4-19.1%20.1-26.4z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+            background-size: 12px auto;
+            min-width: 250px; /* Dropdown genişliği */
+            transition: all 0.2s ease-in-out; /* Geçiş efekti */
+        }
+        .section-select:hover {
+            background-color: #fde0e0; /* Daha koyu açık kırmızı */
+            color: #c22f0f; /* Koyu Civil rengi */
+        }
+        .section-select:focus {
+            outline: none;
+            border-color: #c22f0f; /* Koyu Civil rengi */
+            box-shadow: 0 0 0 2px rgba(221, 54, 18, 0.3); /* Civil rengi gölge */
+        }
+
+        .section-content-wrapper {
+            display: none; /* Varsayılan olarak tüm bölümleri gizle */
+        }
+        .section-content-wrapper.active {
+            display: block; /* Aktif olan bölümü göster */
+        }
+        /* Ana bölüm başlıkları için yeni stil */
+        .main-section-header {
+            background-color: #c22f0f; /* Koyu Civil rengi */
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        .main-section-header h2 {
+            margin: 0;
+            color: #fff;
+            font-size: 2em; /* section-title ile aynı boyutta */
+            font-weight: 700;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .card-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            background-color: #f9fafb;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .card-item img {
+            max-width: 120px;
+            height: auto;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        /* Şablon butonu stili */
+        .template-button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #dd3612; /* Civil rengi */
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            text-align: center;
+            margin-top: 20px; /* Görselden sonra boşluk */
+        }
+        .template-button:hover {
+            background-color: #c22f0f; /* Koyu Civil rengi */
+            transform: translateY(-1px);
+        }
+        .template-button:active {
+            transform: translateY(0);
+        }
+
+        /* Yukarı Çık düğmesi */
+        #backToTopBtn {
+            display: none; /* Varsayılan olarak gizli */
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #dd3612; /* Civil rengi */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.8em;
+            line-height: 50px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s, opacity 0.3s;
+            z-index: 1000;
+        }
+        #backToTopBtn:hover {
+            background-color: #c22f0f; /* Koyu Civil rengi */
+        }
+
+        /* LLM Asistanı Stilleri */
+        .llm-assistant-card {
+            padding: 25px;
+            background-color: #fff7f7; /* Çok açık kırmızı */
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            border: 1px solid #fcc2c2; /* Açık kırmızı border */
+        }
+        .llm-assistant-card textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 1em;
+            resize: vertical;
+            transition: border-color 0.2s;
+        }
+        .llm-assistant-card textarea:focus {
+            outline: none;
+            border-color: #dd3612; /* Civil rengi */
+            box-shadow: 0 0 0 2px rgba(221, 54, 18, 0.2); /* Civil rengi gölge */
+        }
+        .llm-assistant-card button {
+            background-color: #c22f0f; /* Koyu Civil rengi */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: background-color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 5px rgba(194, 47, 15, 0.3); /* Koyu Civil rengi gölge */
+        }
+        .llm-assistant-card button:hover {
+            background-color: #a1280c; /* Daha koyu Civil rengi */
+            transform: translateY(-1px);
+        }
+        .llm-assistant-card button:active {
+            transform: translateY(0);
+        }
+        .llm-response {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #ffebeb; /* Çok açık kırmızı */
+            border-radius: 8px;
+            border: 1px solid #fcdada; /* Açık kırmızı border */
+            white-space: pre-wrap; /* Metin formatını koru */
+            font-size: 0.95em;
+            color: #c22f0f; /* Koyu Civil rengi */
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .llm-response.loading {
+            font-style: italic;
+            color: #6b7280;
+        }
+
+        @media (max-width: 768px) {
+            .step-title {
+                font-size: 1.2em;
+            }
+            .section-title {
+                font-size: 1.8em;
+            }
+            .section-select {
+                width: 100%;
+                min-width: unset;
+            }
+            .main-section-header {
+                padding: 12px 20px;
+            }
+            .main-section-header h2 {
+                font-size: 1.8em;
+            }
+            .card-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            #backToTopBtn {
+                width: 45px;
+                height: 45px;
+                font-size: 1.6em;
+                line-height: 45px;
+                bottom: 15px;
+                right: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="section-title">Civil Kasa Kapanışı Rehberi</h1>
+
+        <!-- Navigasyon Dropdown -->
+        <div class="navigation-dropdown-container">
+            <select id="sectionSelector" class="section-select">
+                <option value="">Bölüm Seçiniz...</option>
+                <option value="section-hareket-ozeti">1. Hareket Özeti Açma</option>
+                <option value="section-islem-kaymasi">2. İşlem Kayması Düzeltme</option>
+                <option value="section-kasa-fazlasi-acigi">3. Kasa Fazlası/Açığı Yatırma</option>
+                <option value="section-nakit-yatirma">4. Nakit Yatırma</option>
+                <option value="section-ara-rapor">5. Ara Rapor Alma</option>
+                <option value="section-taksit-secenekleri">6. Taksit Seçenekleri</option>
+                <option value="section-sablon">7. Şablon</option>
+                <option value="section-hata-asistani">8. Kısım: Hata Asistanı ✨</option>
+                <option value="show-all">Tümünü Göster</option>
+            </select>
+        </div>
+
+        <!-- 1. Kısım: Hareket Özeti Açma -->
+        <div id="section-hareket-ozeti" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>1. Kısım: Hareket Özeti Açma</h2>
+            </div>
+            <div id="content-hareket-ozeti" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">Kasa-Kasiyer Raporunu Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Mağaza hareket özeti kısmına tıklayarak 'Kasa-Kasiyer Raporu' kısmını seçiyoruz. Böylelikle gün sonu yekünleri tek bir kasa halinde değil, kişi kasalarına ayrılmış olarak listelenir.</p>
+                        <img src="https://i.hizliresim.com/mnf88h7.png" alt="[Kasa-Kasiyer Raporu Seçimi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">Kasiyer Bazında Listeleme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Kasiyer Bazında Listelensin' kısmını 'Evet'e çevirerek kasiyer bazında listelemiş oluyoruz.</p>
+                        <img src="https://i.hizliresim.com/o0hi6mp.png" alt="[Kasiyer Bazında Listeleme görseli]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Kısım: İşlem Kayması Düzeltme -->
+        <div id="section-islem-kaymasi" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>2. Kısım: İşlem Kayması Düzeltme</h2>
+            </div>
+            <div id="content-islem-kaymasi" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">Kasa Cirolarını ve Kredi İşlemlerini Teyit Etme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Kasiyer arkadaşlarımızın kasa cirolarının ve kredi işlemlerinin sağlamasını yapıyoruz. Eğer bir problemle karşılaşırsak (bankalar arası veya nakit ciroda), problemin hangi işlemler arasında olduğunu tespit etmek için sol üst bölümde bulunan 'Ara...' kısmına gelerek 'Alınan Ödemeler Listesi' yazıyoruz.</p>
+                        <!-- Görsel kaldırıldı -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h2 class="step-title">Alınan Ödemeler Listesi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Alınan ödemeler kısmından 'Alınan Ödemeler Listesi' seçeneğine tıklayıp çalıştır diyoruz.</p>
+                        <img src="https://i.hizliresim.com/6i75o54.png" alt="[Alınan Ödemeler Listesi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h2 class="step-title">İşlem Tespiti ve Seçimi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Tespit edilen işlem sistem tarafından 'Kredi Kartı Ödemeler' veya 'Nakit Ödemeler' şeklinde ayrılır. Tespit edilen işlem hangisi ise o seçeneği seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/6u77fsi.png" alt="[İşlem Tespiti görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">6</div>
+                        <h2 class="step-title">Ödeme (D) Kısmında Filtreleme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Ödeme(D)' kısmının sağ üst bölümünden filtre seçeneğine tıklıyoruz ve tespit ettiğimiz tutarı yazıyoruz.</p>
+                        <img src="https://i.hizliresim.com/fo77a8x.png" alt="[Ödeme Filtreleme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">7</div>
+                        <h2 class="step-title">Fatura Referans Numarasını Kopyalama</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Seçtiğimiz tutarın 'Fatura Referans Numarasını' kopyalıyoruz.</p>
+                        <img src="https://i.hizliresim.com/oumum0x.png" alt="[Fatura Referans Kopyalama görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">8</div>
+                        <h2 class="step-title">Hatalı Girilmiş Ödeme Kayıtlarını Düzeltme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Fatura Referans Numarası'nı kopyaladıktan sonra 'Ara...' kısmına 'Hatalı Girilmiş Ödeme Kayıtlarını Düzelt' yazıyoruz ve seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/f20cm4g.png" alt="[Hatalı Ödeme Düzeltme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">9</div>
+                        <h2 class="step-title">POS Terminali Seçimi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Hata hangi POS Terminali'nden yapıldıysa, düzeltmeleri o POS Terminali'nden yapmak zorundayız. Açtıktan sonra ilgili POS Terminali'ni seçiyoruz.</p>
+                        <!-- Görsel kaldırıldı -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">10</div>
+                        <h2 class="step-title">Fiş Numarası ve Kaydetme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Kopyaladığımız Fatura Referans Numarasını 'Fiş Numarası' kısmına yapıştırıp satırın sonundaki 'OK' simgesine tıklıyoruz. Bu seçenekten Kredi Kartı işlemini nakit işleme çevirebilir veya bankalar arası düzeltmek istediğimiz bankayı seçebiliriz. Değiştirmek istediğimiz bankayı seçtikten sonra 'Kaydet' simgesine tıklıyoruz ve bankalar arası kayma düzeltilmiş oluyor.</p>
+                        <img src="https://i.hizliresim.com/sug6i4p.png" alt="[Fiş Numarası Kaydetme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <!-- Yeni Eklenen Adımlar -->
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">11</div>
+                        <h2 class="step-title">Kredi Kartı İşlemini Nakit/Bankalar Arası Çevirme Seçeneği</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Bu seçenekten Kredi Kartı işlemini nakit işleme çevirebiliriz. Ya da bankalar arası düzeltmek istediğimiz bankayı seçebiliriz.</p>
+                        <img src="https://i.hizliresim.com/elq0rok.png" alt="[Kredi Kartı İşlemini Nakit/Bankalar Arası Çevirme Seçeneği görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">12</div>
+                        <h2 class="step-title">Değiştirmek İstediğiniz Bankayı Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Değiştirmek istediğimiz bankayı seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/eqwilnw.png" alt="[Değiştirmek İstediğiniz Bankayı Seçme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">13</div>
+                        <h2 class="step-title">Değişiklikleri Kaydetme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Daha sonra 'Kaydet' simgesine tıklıyoruz ve bankalar arası kayma düzeltilmiş oluyor.</p>
+                        <img src="https://i.hizliresim.com/5j7dwfq.png" alt="[Değişiklikleri Kaydetme görseli]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Kısım: Kasa Fazlası veya Açığı Yatırma -->
+        <div id="section-kasa-fazlasi-acigi" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>3. Kısım: Kasa Fazlası veya Açığı Yatırma</h2>
+            </div>
+            <div id="content-kasa-fazlasi-acigi" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">14</div>
+                        <h2 class="step-title">Mağaza Masraf Girişi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Herhangi bir eksik veya fazla olma durumunda 'Ara...' kısmına 'Mağaza Masraf Girişi' yazıp ilk çıkan seçeneğe tıklıyoruz. Masraf gireceğimiz POS hangisi ise onu seçip 'Tik'e tıklıyoruz.</p>
+                        <img src="https://i.hizliresim.com/r7uywx2.png" alt="[Mağaza Masraf Girişi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">15</div>
+                        <h2 class="step-title">Tedarikçi Seçimi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Tedarikçi' kısmından üç noktayı seçiyoruz. Okla göstermiş olduğumuz noktaya 'Muhtelif' yazıyoruz ve alt sırada çıkan 'Muhtelif Tedarikçi...' kısmını seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/aaey7pv.png" alt="[Tedarikçi Seçimi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">16</div>
+                        <h2 class="step-title">Masraf Beyanını Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Muhasebe Döküman Tipi'nden 'Masraf Beyan' kısmını seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/ilrvgi7.png" alt="[Masraf Beyanı Seçme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">17</div>
+                        <h2 class="step-title">İade Kısmını İşaretleme (Kasamızda Fazla Varsa) / Boş Bırakma (Kasamızda Eksik Varsa)</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Kasamızda fazla var ise 'İade' kısmını tik bırakmak zorundayız. Kasamızda eksik var ise tik bırakmamalıyız!</p>
+                        <img src="https://i.hizliresim.com/dp9c75z.png" alt="[İade Kısmını İşaretleme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">18</div>
+                        <h2 class="step-title">'Madde Kodu' kısmından üç noktayı seçiyoruz.</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Madde Kodu' kısmından üç noktayı seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/gjt81ub.png" alt="[Madde Kodu Seçimi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">19</div>
+                        <h2 class="step-title">Kasa Açığı/Fazlası Seçimi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Siyah kutucukla gösterilen noktaya 'Kasa' yazdığımız takdirde kasa açığı veya kasa fazlası seçeneğini gün sonu yekünümüze göre seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/g3y9bw2.png" alt="[Kasa Açığı/Fazlası Seçimi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">20</div>
+                        <h2 class="step-title">Fiyat Girişi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Fiyat' kısmına o gün yekünümüzden kalan eksik veya fazla tutarımızı yazıyoruz.</p>
+                        <img src="https://i.hizliresim.com/pota95a.png" alt="[Fiyat Girişi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">21</div>
+                        <h2 class="step-title">Şimdi kaydedelim</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Şimdi kaydedelim.</p>
+                        <img src="https://i.hizliresim.com/43hl6dk.png" alt="[Şimdi kaydedelim görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">22</div>
+                        <h2 class="step-title">Masraf Beyanını Onaylama ve Kaydetme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Üçgen kısımdan kendi mağazamızı seçtikten sonra masraf beyanını onaylıyoruz. Kaydet butonunu seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/ab93nz9.png" alt="[Masraf Beyanını Onaylama görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">23</div>
+                        <h2 class="step-title">Seri Numarası Girişi ve İşlem Sonu</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Seri Numarası' kısmına olduğumuz tarihi 'YYYY/AA/GG' (tarihi ters) şeklinde yazıyoruz, daha sonrasında 'TİK'i seçiyoruz. Ve masraf giriş işlemimiz bitiyor.</p>
+                        <img src="https://i.hizliresim.com/lybakck.png" alt="[Seri Numarası Girişi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">24</div>
+                        <h2 class="step-title">Mağaza Fiyat Hatası Girişi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Mağaza fiyat hatası da aynı yerden yatırılıyor; sadece kasa fazlası/kasa açığı yazılan yere "Mağaza Fiyat Hatası" yazılması gereklidir.</p>
+                        <!-- Görsel kaldırıldı -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Kısım: Nakit Yatırma -->
+        <div id="section-nakit-yatirma" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>4. Kısım: Nakit Yatırma</h2>
+            </div>
+            <div id="content-nakit-yatirma" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">25</div>
+                        <h2 class="step-title">Kasa Hareketleri Ekranı</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Kasiyer gün sonu cirolarını ve bankalarını teyit ettikten sonra herhangi bir problemle karşılaşmadığımız takdirde kasa kapanışı işlemine devam ediyoruz. Tekrar sol üst köşede bulunan 'Ara...' kısmına 'Kasa Hareketleri' yazıp 2. sırada çıkan seçeneği seçiyoruz. 'Kasa hareketleri' ekranı gördüğümüz şekildedir. Burada yapacağımız ilk şey 'Nakit Hesap Kodu' kısmındaki 3 noktaya tıklayarak kendi şubemizi seçmektir.</p>
+                        <img src="https://i.hizliresim.com/hase4r9.png" alt="[Kasa Hareketleri Ekranı görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">26</div>
+                        <h2 class="step-title">Cari Hesap Kodu Seçimi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>'Cari Hesap Tipi'nin yanındaki 'Cari Hesap Kodu' kısmından üç noktaya tıklayarak çıkan arama bölümüne "Muhtelif" yazıyoruz ve çıkan tedarikçiyi seçiyoruz.</p>
+                        <img src="https://i.hizliresim.com/1nxesxg.png" alt="[Cari Hesap Kodu Seçimi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">27</div>
+                        <h2 class="step-title">Maliyet Merkezi Seçimi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Ekranı okların olduğu kısımdan mouse ile sağa çekiyoruz ve 'Maliyet Merkezi' kısmını seçiyoruz. Siyah kutucuğa kendi mağazamızı yazıp kırmızı kutucukta olduğu gibi mağazamızın kodunu vs. onaylıyoruz.</p>
+                        <img src="https://i.hizliresim.com/hsxa0mv.png" alt="[Maliyet Merkezi Seçimi görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">28</div>
+                        <h2 class="step-title">Nakit Kasa Yekünü Girişi ve Kaydetme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Alacak kısmına o günkü nakit kasa yekünü tutarını yazıp klavyede alt yön tuşuna tıklıyoruz ve kaydet butonu aktif hale geliyor. Kaydediyoruz ve kasamız kapanmış oluyor.</p>
+                        <img src="https://i.hizliresim.com/r9h71th.png" alt="[Nakit Kasa Yekünü Girişi ve Kaydetme görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">29</div>
+                        <h2 class="step-title">Son Kontrol: Nakit Kasa Yekünü</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>En son aşamada 'Mağaza Hareket Özeti' kısmından kasalarımızı ayırmadan tek bir kasa halinde bakıyoruz. 'Nakit Kasa Yekünü' 0 olmak zorunda ki ertesi gün sıkıntı yaşanmasın.</p>
+                        <img src="https://i.hizliresim.com/th2kl5w.png" alt="[Son Kontrol: Nakit Kasa Yekünü görseli]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Kısım: Ara Rapor Alma -->
+        <div id="section-ara-rapor" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>5. Kısım: Ara Rapor Alma</h2>
+            </div>
+            <div id="content-ara-rapor" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">30</div>
+                        <h2 class="step-title">Yapı Kredi Bankası Ara Raporu</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Yapı Kredi Bankası için ara rapor almak üzere POS cihazında **#** tuşuna basıyoruz. Ardından sırasıyla şu menüleri takip ediyoruz:</p>
+                        <ol class="list-decimal ml-5 mt-3 space-y-2">
+                            <li><strong>Yapı Kredi</strong></li>
+                            <li><strong>YKB Ana</strong></li>
+                            <li><strong>Liste İşlemleri</strong></li>
+                            <li><strong>Toplamlar</strong></li>
+                        </ol>
+                        <p class="mt-3">Bu adımları takip ederek Yapı Kredi Bankası'nın ara raporunu alabilirsiniz.</p>
+                        <!-- Görsel kaldırıldı -->
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">31</div>
+                        <h2 class="step-title">QNB, Ziraat ve Halkbankası Ara Raporu</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>QNB, Ziraat ve Halkbankası için ara rapor almak üzere POS cihazında **\*** tuşuna basıyoruz. Ardından çıkan menüden <strong>Ara Rapor</strong> seçeneğini seçiyoruz.</p>
+                        <!-- Görsel kaldırıldı -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Kısım: Taksit Seçenekleri -->
+        <div id="section-taksit-secenekleri" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>6. Kısım: Taksit Seçenekleri</h2>
+            </div>
+            <div id="content-taksit-secenekleri" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">32</div>
+                        <h2 class="step-title">Vade Farksız 6 Taksit Yapılan Kartlar (Tüm Kategorilerde)</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Aşağıdaki bankaların World kartlarına tüm kategorilerde vade farksız 6 taksit yapılmaktadır:</p>
+                        <div class="card-grid">
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_classic.png" alt="[Yapı Kredi World Classic Kartı görseli]">
+                                <span>Yapı Kredi World Classic</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios.png" alt="[Yapı Kredi World Adios Kartı görseli]">
+                                <span>Yapı Kredi World Adios</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios_premium.png" alt="[Yapı Kredi World Adios Premium Kartı görseli]">
+                                <span>Yapı Kredi World Adios Premium</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_cyrastal.png" alt="[Yapı Kredi World Crystal Kartı görseli]">
+                                <span>Yapı Kredi World Crystal</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_hespiburada.png" alt="[Yapı Kredi World Hepsiburada Kartı görseli]">
+                                <span>Yapı Kredi World Hepsiburada</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_play.png" alt="[Yapı Kredi World Play Kartı görseli]">
+                                <span>Yapı Kredi World Play</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_opet.png" alt="[Yapı Kredi World Opet Kartı görseli]">
+                                <span>Yapı Kredi World Opet</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_koc_ailem.png" alt="[Yapı Kredi World Koç Ailem Kartı görseli]">
+                                <span>Yapı Kredi World Koç Ailem</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_44677fa77d.png" alt="[Albaraka World Kartı (Genel) görseli]">
+                                <span>Albaraka World</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_ccd845116d.png" alt="[Albaraka World Kartı (Özel) görseli]">
+                                <span>Albaraka World</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_eflatun_bff07796e8.png" alt="[Albaraka World Eflatun Kartı görseli]">
+                                <span>Albaraka World Eflatun</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_c9d109452c.png" alt="[Albaraka World Kartı (Farklı Dizayn) görseli]">
+                                <span>Albaraka World</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_9f86e8800f.png" alt="[Albaraka World Kartı (Başka Bir Dizayn) görseli]">
+                                <span>Albaraka World</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/click-kart.png" alt="[Vakıfbank World Click Kartı görseli]">
+                                <span>Vakıfbank World Click</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/emekli-kart.png" alt="[Vakıfbank World Emekli Kartı görseli]">
+                                <span>Vakıfbank World Emekli</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">33</div>
+                        <h2 class="step-title">Taksit Yapılmayan Kartlar</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Aşağıdaki kartlara **kesinlikle taksit yapılmamaktadır**:</p>
+                        <div class="card-grid">
+                            <div class="card-item">
+                                <img src="https://www.worldcard.com.tr/getmedia/f94b6712-8ed4-49e0-85c5-2e36c4d8275a/world-new-eko-card.png?width=1012&height=639&ext=.png" alt="[Yapı Kredi World Eko Kartı görseli]">
+                                <span>Yapı Kredi World Eko</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.kuveytturk.com.tr/medium/SitemapNodePage-Landing-22010-2x.vsf" alt="[Kuveyttürk Kartı görseli]">
+                                <span>Kuveyttürk</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.kuveytturk.com.tr/medium/SitemapNodePage-Landing-22241-2x.vsf" alt="[Kuveyttürk Kartı görseli]">
+                                <span>Kuveyttürk</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://cdn2.enuygun.com/img/finance/uploads/2denizbank_311x196_d51fa04d43.png" alt="[Denizbank Kartı görseli]">
+                                <span>Denizbank</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">34</div>
+                        <h2 class="step-title">Diğer Kartlar, Araç Gereç ve Oyuncak Taksitlendirmesi</h2>
+                    </div>
+                    <div class="step-content">
+                        <ul class="list-disc ml-5 mt-3 space-y-2">
+                            <li>Yukarıda belirtilenler dışındaki diğer tüm kartlara **%10 vade farklı 4 taksit** yapılmaktadır.</li>
+                            <li>Araç gereç ve oyuncak alımlarında **vade farksız 4 taksit** imkanı sunulmaktadır.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Kısım: Şablon -->
+        <div id="section-sablon" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>7. Kısım: Şablon</h2>
+            </div>
+            <div id="content-sablon" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">35</div>
+                        <h2 class="step-title">Fiyat Hatası ve Kasa Açığı/Fazlası Şablonu</h2>
+                    </div>
+                    <div class="step-content">
+                        <p class="mb-4 font-semibold text-red-600">Şablonda fiyat hatası olan barkodun ve kasa açığı ya da fazla olan kişinin isminin yazılması zorunludur.</p>
+                        <div class="flex justify-center mb-4">
+                            <a href="https://docs.google.com/spreadsheets/d/1_toHuGzRYjxFKffmGf5r1JMNdIBSuGXqsC-SgSKxZDc/edit?gid=911808809#gid=911808809" target="_blank" class="template-button">Şablon Linki</a>
+                        </div>
+                        <img src="https://i.hizliresim.com/nl3hd0x.png" alt="[Fiyat Hatası ve Kasa Açığı/Fazlası Şablonu görseli]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Kısım: Hata Asistanı -->
+        <div id="section-hata-asistani" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>8. Kısım: Hata Asistanı ✨</h2>
+            </div>
+            <div id="content-hata-asistani" class="section-content">
+                <div class="llm-assistant-card">
+                    <p class="text-lg font-semibold text-gray-700 mb-4">Kasa kapanışı sırasında yaşadığınız sorunu buraya yazın, Hata Asistanı size yardımcı olsun:</p>
+                    <textarea id="problemInput" placeholder="Örn: 'Nakit kasa yekünü sıfırlanmıyor, ne yapmalıyım?' veya 'Kredi kartı işleminde kayma var.'"></textarea>
+                    <button id="askAssistantBtn" class="w-full sm:w-auto">Asistana Sor ✨</button>
+                    <div id="assistantResponse" class="llm-response">Cevap burada görünecektir.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="important-note">
+            <p><strong>Önemli Not:</strong> Bu rehberdeki adımlar, Nebim V3 STORE sisteminin belirli bir versiyonuna göre hazırlanmıştır. Sistem güncellemeleri veya farklı mağaza konfigürasyonları nedeniyle bazı ekranlar veya adımlar farklılık gösterebilir. Her zaman güncel prosedürleri takip ettiğinizden emin olun.</p>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2025 Civil Kasa Kapanışı Rehberi. Hazırlayan: Ersin</p>
+        </footer>
+
+        <!-- Yukarı Çık Düğmesi -->
+        <button id="backToTopBtn" title="Yukarı Çık">&#9650;</button> <!-- Unicode yukarı ok -->
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sectionSelector = document.getElementById('sectionSelector');
+            const sectionWrappers = document.querySelectorAll('.section-content-wrapper');
+            const backToTopBtn = document.getElementById('backToTopBtn');
+
+            // LLM Asistanı elementleri
+            const problemInput = document.getElementById('problemInput');
+            const askAssistantBtn = document.getElementById('askAssistantBtn');
+            const assistantResponse = document.getElementById('assistantResponse');
+
+            // Helper function to extract text content from a section
+            const getSectionContentText = (sectionId) => {
+                const section = document.getElementById(sectionId);
+                if (!section) return '';
+                let textContent = '';
+                // Iterate over all card elements within the section and extract their text
+                section.querySelectorAll('.card .step-content p, .card .step-content li').forEach(element => {
+                    textContent += element.textContent + '\n';
+                });
+                return textContent.trim();
+            };
+
+            // Tüm ana bölüm sarmalayıcılarını gizleyen fonksiyon
+            const hideAllSectionWrappers = () => {
+                sectionWrappers.forEach(wrapper => {
+                    wrapper.classList.remove('active'); // Ana sarmalayıcıyı gizle
+                });
+            };
+
+            // Belirli bir ana bölüm sarmalayıcısını gösteren fonksiyon
+            const showSpecificSectionWrapper = (sectionId) => {
+                hideAllSectionWrappers(); // Önce tüm diğerlerini gizle
+                const targetWrapper = document.getElementById(sectionId);
+                if (targetWrapper) {
+                    targetWrapper.classList.add('active'); // Ana sarmalayıcıyı göster
+                }
+            };
+
+            // Dropdown seçimi değiştiğinde
+            sectionSelector.addEventListener('change', (event) => {
+                const selectedSectionId = event.target.value;
+
+                if (selectedSectionId === 'show-all') {
+                    // Tüm ana bölüm sarmalayıcılarını göster
+                    sectionWrappers.forEach(wrapper => {
+                        wrapper.classList.add('active');
+                    });
+                } else if (selectedSectionId) { // Boş seçenek değilse
+                    // Sadece seçilen ana bölüm sarmalayıcısını göster
+                    showSpecificSectionWrapper(selectedSectionId);
+                } else { // "Bölüm Seçiniz..." seçeneği seçilirse tümünü gizle
+                    hideAllSectionWrappers();
+                }
+                // Seçim yapıldıktan sonra sayfanın başına kaydır
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // Sayfa yüklendiğinde varsayılan olarak hiçbir bölüm gözükmesin
+            // Kullanıcı "Bölüm Seçiniz..." dropdown'ından seçim yapsın.
+            hideAllSectionWrappers();
+
+            // Sayfa kaydırma olayını dinle
+            window.onscroll = function() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    backToTopBtn.style.display = "block";
+                } else {
+                    backToTopBtn.style.display = "none";
+                }
+            };
+
+            // Yukarı Çık düğmesine tıklandığında
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            // LLM Asistanı için olay dinleyici
+            askAssistantBtn.addEventListener('click', async () => {
+                const problem = problemInput.value.trim();
+                if (!problem) {
+                    assistantResponse.textContent = "Lütfen bir sorun girin.";
+                    assistantResponse.classList.remove('loading');
+                    return;
+                }
+
+                assistantResponse.textContent = "Cevap aranıyor... Lütfen bekleyin.";
+                assistantResponse.classList.add('loading');
+
+                try {
+                    let chatHistory = [];
+                    let context = "";
+
+                    // Dynamically add context based on keywords in the problem
+                    if (problem.includes("kasa fazla") || problem.includes("kasa açık") || problem.includes("fazla yatırma") || problem.includes("açık yatırma") || problem.includes("masraf girişi")) {
+                        context += "\n\n[Kasa Fazlası veya Açığı Yatırma Rehberi Bilgisi]:\n" + getSectionContentText('section-kasa-fazlasi-acigi');
+                    }
+                    if (problem.includes("nakit yatırma") || problem.includes("kasa hareketleri") || problem.includes("nakit kasa")) {
+                        context += "\n\n[Nakit Yatırma Rehberi Bilgisi]:\n" + getSectionContentText('section-nakit-yatirma');
+                    }
+                    if (problem.includes("taksit") || problem.includes("vade") || problem.includes("kart") || problem.includes("world") || problem.includes("albaraka") || problem.includes("vakıfbank") || problem.includes("denizbank") || problem.includes("kuveyttürk")) {
+                        context += "\n\n[Taksit Seçenekleri Rehberi Bilgisi]:\n" + getSectionContentText('section-taksit-secenekleri');
+                    }
+                    if (problem.includes("ara rapor") || problem.includes("pos")) {
+                        context += "\n\n[Ara Rapor Alma Rehberi Bilgisi]:\n" + getSectionContentText('section-ara-rapor');
+                    }
+                    if (problem.includes("fiyat hatası") || problem.includes("şablon")) {
+                        context += "\n\n[Şablon Rehberi Bilgisi]:\n" + getSectionContentText('section-sablon');
+                    }
+
+                    const prompt = `Bir mağaza kasiyerinin kasa kapanışı sırasında yaşadığı bir sorunla ilgili yardımcı bir asistan rolündesin. Kullanıcının sorunu şu: "${problem}". Lütfen bu sorunun olası nedenlerini ve bu rehberdeki hangi adımları kontrol etmesi gerektiğini maddeler halinde, net ve anlaşılır bir dille açıkla. Rehberdeki adımlara genel olarak atıfta bulun, örneğin "işlem kayması düzeltme adımları" veya "kasa fazlası/açığı yatırma adımları" gibi. Eğer sağlanan ek bilgi ile doğrudan ilgili değilse, genel bir cevap ver.
+
+${context}`;
+                    
+                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+                    const payload = { contents: chatHistory };
+                    const apiKey = ""; // API anahtarı boş bırakılacak, Canvas otomatik sağlayacak
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        assistantResponse.textContent = text;
+                    } else {
+                        assistantResponse.textContent = "Üzgünüm, bir sorun oluştu veya yanıt alınamadı. Lütfen tekrar deneyin.";
+                    }
+                } catch (error) {
+                    console.error("LLM API çağrısında hata:", error);
+                    assistantResponse.textContent = "Bir hata oluştu: " + error.message;
+                } finally {
+                    assistantResponse.classList.remove('loading');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
