@@ -454,26 +454,111 @@
         <div class="navigation-dropdown-container">
             <select id="sectionSelector" class="section-select">
                 <option value="">Bölüm Seçiniz...</option>
-                <option value="section-hareket-ozeti">1. Hareket Özeti Açma</option>
-                <option value="section-islem-kaymasi">2. İşlem Kayması Düzeltme</option>
-                <option value="section-kasa-fazlasi-acigi">3. Kasa Fazlası/Açığı Yatırma</option>
-                <option value="section-nakit-yatirma">4. Nakit Yatırma</option>
-                <option value="section-ara-rapor">5. Ara Rapor Alma</option>
-                <option value="section-chippin">6. Chippin ile Ödeme</option>
-                <option value="section-iwallet">7. iWallet ile Ödeme</option>
-                <option value="section-setcard">8. Setcard ile Ödeme</option>
-                <option value="section-ederned">9. Ederned ile Ödeme</option>
-                <option value="section-eticaret-fatura">10. E-Ticaret Fatura Bulma</option>
-                <option value="section-taksit-secenekleri">11. Taksit Seçenekleri</option>
-                <option value="section-sablon">12. Şablon</option>
+                <option value="section-pos-kullanimi">1. POS Kullanımı</option>
+                <option value="section-hareket-ozeti">2. Hareket Özeti Açma</option>
+                <option value="section-islem-kaymasi">3. İşlem Kayması Düzeltme</option>
+                <option value="section-kasa-fazlasi-acigi">4. Kasa Fazlası/Açığı Yatırma</option>
+                <option value="section-nakit-yatirma">5. Nakit Yatırma</option>
+                <option value="section-ara-rapor">6. Ara Rapor Alma</option>
+                <option value="section-chippin">7. Chippin ile Ödeme</option>
+                <option value="section-iwallet">8. iWallet ile Ödeme</option>
+                <option value="section-setcard">9. Setcard ile Ödeme</option>
+                <option value="section-ederned">10. Ederned ile Ödeme</option>
+                <option value="section-eticaret-fatura">11. E-Ticaret Fatura Bulma</option>
+                <option value="section-taksit-secenekleri">12. Taksit Seçenekleri</option>
+                <option value="section-sablon">13. Şablon</option>
                 <option value="show-all">Tümünü Göster</option>
             </select>
         </div>
 
-        <!-- 1. Kısım: Hareket Özeti Açma -->
+        <!-- 1. Kısım: POS Kullanımı -->
+        <div id="section-pos-kullanimi" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>1. Kısım: POS Kullanımı</h2>
+            </div>
+            <div id="content-pos-kullanimi" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">1</div>
+                        <h2 class="step-title">Taksitli Satış Nasıl Yapılır</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Taksitli satışlarda kart her zaman POS'a takılır. Kartta çip yoksa yan taraftan çekme (swipe) denenir.</p>
+                        <img src="https://i.hizliresim.com/izfkfvm.png" alt="[Taksitli satış POS kullanımı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">2</div>
+                        <h2 class="step-title">POS'ta QR ile İşlem Alma</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Satış tutarını POS'a girdikten sonra 0'a basın ve Yapı Kredi bankasını seçin; ardından QR ekranı açılacaktır.</p>
+                        <img src="https://i.hizliresim.com/q6ulr01.png" alt="[POS QR işlem alma]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">3</div>
+                        <h2 class="step-title">Sliplerin Kullanımı</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/b9ehkip.png" alt="[Slip kullanımı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">4</div>
+                        <h2 class="step-title">Ek Nüsha Alma</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Bazı bankalar (ör. Garanti) slip vermeyebilir veya kağıt yetersizliğinde slip çıkmayabilir. Bu durumda ek nüsha alınarak işlem tamamlanır.</p>
+                        <img src="https://i.hizliresim.com/hirbfbh.png" alt="[Ek nüsha alma]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">5</div>
+                        <h2 class="step-title">Gün Sonu Alma</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Gün sonlarında işlem kontrolü için mutlaka detay rapor seçilmelidir.</p>
+                        <img src="https://i.hizliresim.com/eu6nsil.png" alt="[Gün sonu detay raporu]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">6</div>
+                        <h2 class="step-title">İşlem İptali</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>İşlem aynı gün içinde ve gün sonu alınmadan önce yapıldıysa iade yerine iptal yapılır. İptal kredi kartlarına anlık, banka kartlarına 3–5 iş günü içinde yansır.</p>
+                        <img src="https://i.hizliresim.com/c87t4mo.png" alt="[İşlem iptali]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">7</div>
+                        <h2 class="step-title">İşlem İadesi</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Gün sonu alındıysa işlem iade edilebilir.</p>
+                        <img src="https://i.hizliresim.com/38lrif4.png" alt="[İşlem iadesi]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Kısım: Hareket Özeti Açma -->
         <div id="section-hareket-ozeti" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>1. Kısım: Hareket Özeti Açma</h2>
+                <h2>2. Kısım: Hareket Özeti Açma</h2>
             </div>
             <div id="content-hareket-ozeti" class="section-content">
                 <div class="card">
@@ -503,7 +588,7 @@
         <!-- 2. Kısım: İşlem Kayması Düzeltme -->
         <div id="section-islem-kaymasi" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>2. Kısım: İşlem Kayması Düzeltme</h2>
+                <h2>3. Kısım: İşlem Kayması Düzeltme</h2>
             </div>
             <div id="content-islem-kaymasi" class="section-content">
                 <div class="card">
@@ -633,7 +718,7 @@
         <!-- 3. Kısım: Kasa Fazlası veya Açığı Yatırma -->
         <div id="section-kasa-fazlasi-acigi" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>3. Kısım: Kasa Fazlası veya Açığı Yatırma</h2>
+                <h2>4. Kısım: Kasa Fazlası veya Açığı Yatırma</h2>
             </div>
             <div id="content-kasa-fazlasi-acigi" class="section-content">
                 <div class="card">
@@ -762,7 +847,7 @@
         <!-- 4. Kısım: Nakit Yatırma -->
         <div id="section-nakit-yatirma" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>4. Kısım: Nakit Yatırma</h2>
+                <h2>5. Kısım: Nakit Yatırma</h2>
             </div>
             <div id="content-nakit-yatirma" class="section-content">
                 <div class="card">
@@ -825,7 +910,7 @@
         <!-- 5. Kısım: Ara Rapor Alma -->
         <div id="section-ara-rapor" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>5. Kısım: Ara Rapor Alma</h2>
+                <h2>6. Kısım: Ara Rapor Alma</h2>
             </div>
             <div id="content-ara-rapor" class="section-content">
                 <div class="card">
@@ -862,7 +947,7 @@
         <!-- 6. Kısım: Chippin ile Ödeme -->
         <div id="section-chippin" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>6. Kısım: Chippin ile Ödeme</h2>
+                <h2>7. Kısım: Chippin ile Ödeme</h2>
             </div>
             <div id="content-chippin" class="section-content">
                 <div class="card">
@@ -930,7 +1015,7 @@
         <!-- 7. Kısım: iWallet ile Ödeme -->
         <div id="section-iwallet" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>7. Kısım: iWallet ile Ödeme</h2>
+                <h2>8. Kısım: iWallet ile Ödeme</h2>
             </div>
             <div id="content-iwallet" class="section-content">
                 <div class="card">
@@ -1019,7 +1104,7 @@
         <!-- 8. Kısım: Setcard ile Ödeme -->
         <div id="section-setcard" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>8. Kısım: Setcard ile Ödeme</h2>
+                <h2>9. Kısım: Setcard ile Ödeme</h2>
             </div>
             <div id="content-setcard" class="section-content">
                 <div class="card">
@@ -1117,7 +1202,7 @@
         <!-- 9. Kısım: Ederned ile Ödeme -->
         <div id="section-ederned" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>9. Kısım: Ederned ile Ödeme</h2>
+                <h2>10. Kısım: Ederned ile Ödeme</h2>
             </div>
             <div id="content-ederned" class="section-content">
                 <div class="card">
@@ -1205,7 +1290,7 @@
         <!-- 10. Kısım: E-Ticaret Fatura Bulma -->
         <div id="section-eticaret-fatura" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>10. Kısım: E-Ticaret Fatura Bulma</h2>
+                <h2>11. Kısım: E-Ticaret Fatura Bulma</h2>
             </div>
             <div id="content-eticaret-fatura" class="section-content">
                 <div class="card">
@@ -1263,7 +1348,7 @@
         <!-- 11. Kısım: Taksit Seçenekleri -->
         <div id="section-taksit-secenekleri" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>11. Kısım: Taksit Seçenekleri</h2>
+                <h2>12. Kısım: Taksit Seçenekleri</h2>
             </div>
             <div id="content-taksit-secenekleri" class="section-content">
                 <div class="card">
@@ -1530,7 +1615,7 @@
         <!-- 12. Kısım: Şablon -->
         <div id="section-sablon" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>12. Kısım: Şablon</h2>
+                <h2>13. Kısım: Şablon</h2>
             </div>
             <div id="content-sablon" class="section-content">
                 <div class="card">
@@ -1563,20 +1648,6 @@
             </div>
         </div>
 
-        <!-- 13. Kısım: Hata Asistanı -->
-        <div id="section-hata-asistani" class="section-content-wrapper">
-            <div class="main-section-header">
-                <h2>13. Kısım: Hata Asistanı ✨</h2>
-            </div>
-            <div id="content-hata-asistani" class="section-content">
-                <div class="llm-assistant-card">
-                    <p class="text-lg font-semibold text-gray-700 mb-4">Kasa kapanışı sırasında yaşadığınız sorunu buraya yazın, Hata Asistanı size yardımcı olsun:</p>
-                    <textarea id="problemInput" placeholder="Örn: 'Nakit kasa yekünü sıfırlanmıyor, ne yapmalıyım?' veya 'Kredi kartı işleminde kayma var.'"></textarea>
-                    <button id="askAssistantBtn" class="w-full sm:w-auto">Asistana Sor ✨</button>
-                    <div id="assistantResponse" class="llm-response">Cevap burada görünecektir.</div>
-                </div>
-            </div>
-        </div>
 
         <div class="important-note">
             <p><strong>Önemli Not:</strong> Bu rehberdeki adımlar, Nebim V3 STORE sisteminin belirli bir versiyonuna göre hazırlanmıştır. Sistem güncellemeleri veya farklı mağaza konfigürasyonları nedeniyle bazı ekranlar veya adımlar farklılık gösterebilir. Her zaman güncel prosedürleri takip ettiğinizden emin olun.</p>
