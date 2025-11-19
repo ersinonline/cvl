@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Civil Kasa Kapanışı Rehberi</title>
+    <title>Kasa Kapanışı Rehberi</title>
     <!-- Favicon -->
     <link rel="icon" href="https://www.civilim.com//Skins/shared/images/civil-logo.jpg" type="image/jpeg">
     <!-- PWA Manifest -->
@@ -20,16 +20,49 @@
             scroll-behavior: smooth; /* Yumuşak kaydırma için */
         }
         .container {
-            max-width: 960px;
+            max-width: 1040px;
             margin: 0 auto;
-            padding: 20px;
+            padding: clamp(12px, 3vw, 24px);
         }
         .card {
             background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-            margin-bottom: 20px;
-            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+            margin-bottom: 22px;
+            padding: 26px;
+            border: 1px solid rgba(0,0,0,0.04);
+        }
+        .input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            background-color: #fff;
+            font-size: 0.95em;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input:focus {
+            outline: none;
+            border-color: #dd3612;
+            box-shadow: 0 0 0 2px rgba(221, 54, 18, 0.15);
+        }
+        .copy-btn, .toggle-pass {
+            padding: 10px 12px;
+            border-radius: 8px;
+            background-color: #f3f4f6;
+            color: #111827;
+            border: 1px solid #d1d5db;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .copy-btn:hover, .toggle-pass:hover {
+            background-color: #e5e7eb;
+            transform: translateY(-1px);
+        }
+        .copy-btn[disabled] {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
         .step-header {
             display: flex;
@@ -51,7 +84,7 @@
             flex-shrink: 0;
         }
         .step-title {
-            font-size: 1.4em;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
             font-weight: 600;
             color: #1a202c;
         }
@@ -66,8 +99,81 @@
             margin-top: 15px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        .image-modal img {
+            max-width: 92vw;
+            max-height: 92vh;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+        }
+        .chat-launcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #dd3612;
+            color: #fff;
+            border-radius: 999px;
+            padding: 12px 16px;
+            font-weight: 700;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            z-index: 1500;
+            cursor: pointer;
+        }
+        .chat-widget {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 340px;
+            max-height: 70vh;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 24px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            border: 1px solid #e5e7eb;
+            z-index: 1500;
+        }
+        .chat-widget.active { display: flex; }
+        .chat-header {
+            background: #c22f0f;
+            color: #fff;
+            padding: 10px 14px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+        }
+        .chat-messages {
+            padding: 12px;
+            overflow-y: auto;
+            flex: 1;
+        }
+        .message { margin-bottom: 8px; font-size: 0.95em; }
+        .message.user { text-align: right; }
+        .message.user span { display: inline-block; background: #f3f4f6; color: #111827; padding: 8px 10px; border-radius: 10px; }
+        .message.bot span { display: inline-block; background: #fff7f7; color: #c22f0f; padding: 8px 10px; border-radius: 10px; }
+        .chat-input-row { padding: 10px; display: flex; gap: 8px; border-top: 1px solid #e5e7eb; }
+        .chat-input-row input { flex: 1; }
+        .chat-close-btn { background: transparent; color: #fff; border: none; cursor: pointer; font-size: 1.1em; }
+        @media (max-width: 768px) {
+            .chat-widget { right: 12px; bottom: 72px; width: 92vw; }
+            .chat-launcher { right: 12px; bottom: 12px; }
+        }
         .section-title {
-            font-size: 2em;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
             font-weight: 700;
             color: #1a202c;
             text-align: center;
@@ -96,9 +202,13 @@
             justify-content: center;
             margin-bottom: 30px;
             padding: 15px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            backdrop-filter: saturate(180%) blur(6px);
         }
         .section-select {
             padding: 10px 18px;
@@ -135,25 +245,25 @@
         }
         /* Ana bölüm başlıkları için yeni stil */
         .main-section-header {
-            background-color: #c22f0f; /* Koyu Civil rengi */
+            background-color: #c22f0f;
             color: #fff;
-            padding: 15px 25px;
+            padding: 16px 26px;
             border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 22px;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
             text-align: left;
         }
         .main-section-header h2 {
             margin: 0;
             color: #fff;
-            font-size: 2em; /* section-title ile aynı boyutta */
+            font-size: clamp(1.6rem, 2.5vw, 2rem);
             font-weight: 700;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 18px;
             margin-top: 20px;
         }
         .card-item {
@@ -195,28 +305,23 @@
             transform: translateY(0);
         }
 
-        /* Yukarı Çık düğmesi */
-        #backToTopBtn {
-            display: none; /* Varsayılan olarak gizli */
+        /* Chat Launcher */
+        .chat-launcher {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #dd3612; /* Civil rengi */
-            color: white;
-            border: none;
+            background-color: #dd3612;
+            color: #fff;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            font-size: 1.8em;
-            line-height: 50px;
-            text-align: center;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25em;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+            z-index: 1500;
             cursor: pointer;
-            transition: background-color 0.3s, opacity 0.3s;
-            z-index: 1000;
-        }
-        #backToTopBtn:hover {
-            background-color: #c22f0f; /* Koyu Civil rengi */
         }
 
         /* LLM Asistanı Stilleri */
@@ -230,13 +335,14 @@
         }
         .llm-assistant-card textarea {
             width: 100%;
-            min-height: 120px;
-            padding: 12px;
-            border-radius: 8px;
+            min-height: 130px;
+            padding: 12px 14px;
+            border-radius: 10px;
             border: 1px solid #d1d5db;
             font-size: 1em;
+            line-height: 1.5;
             resize: vertical;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         .llm-assistant-card textarea:focus {
             outline: none;
@@ -244,14 +350,14 @@
             box-shadow: 0 0 0 2px rgba(221, 54, 18, 0.2); /* Civil rengi gölge */
         }
         .llm-assistant-card button {
-            background-color: #c22f0f; /* Koyu Civil rengi */
+            background-color: #c22f0f;
             color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+            padding: 12px 22px;
+            border-radius: 10px;
             font-weight: 600;
-            margin-top: 15px;
+            margin-top: 16px;
             transition: background-color 0.2s, transform 0.1s;
-            box-shadow: 0 2px 5px rgba(194, 47, 15, 0.3); /* Koyu Civil rengi gölge */
+            box-shadow: 0 4px 10px rgba(194, 47, 15, 0.3);
         }
         .llm-assistant-card button:hover {
             background-color: #a1280c; /* Daha koyu Civil rengi */
@@ -291,6 +397,23 @@
                 width: 100%;
                 min-width: unset;
             }
+            .container {
+                padding: 15px;
+            }
+            .card {
+                padding: 18px;
+            }
+            .step-number {
+                width: 30px;
+                height: 30px;
+            }
+            .step-content .flex {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .step-content .w-40 {
+                width: 100%;
+            }
             .main-section-header {
                 padding: 12px 20px;
             }
@@ -298,22 +421,34 @@
                 font-size: 1.8em;
             }
             .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             }
-            #backToTopBtn {
-                width: 45px;
-                height: 45px;
-                font-size: 1.6em;
-                line-height: 45px;
-                bottom: 15px;
-                right: 15px;
+            .llm-assistant-card button { width: 100%; }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: clamp(1.6rem, 5vw, 2rem);
+            }
+            .main-section-header h2 {
+                font-size: clamp(1.4rem, 4.5vw, 1.8rem);
+            }
+            .card-grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 14px;
+            }
+            .card {
+                padding: 16px;
+            }
+            .section-select {
+                font-size: 0.95rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="section-title">Civil Kasa Kapanışı Rehberi</h1>
+        <h1 class="section-title">Kasa Kapanışı Rehberi</h1>
 
         <!-- Navigasyon Dropdown -->
         <div class="navigation-dropdown-container">
@@ -324,9 +459,13 @@
                 <option value="section-kasa-fazlasi-acigi">3. Kasa Fazlası/Açığı Yatırma</option>
                 <option value="section-nakit-yatirma">4. Nakit Yatırma</option>
                 <option value="section-ara-rapor">5. Ara Rapor Alma</option>
-                <option value="section-taksit-secenekleri">6. Taksit Seçenekleri</option>
-                <option value="section-sablon">7. Şablon</option>
-                <option value="section-hata-asistani">8. Kısım: Hata Asistanı ✨</option>
+                <option value="section-chippin">6. Chippin ile Ödeme</option>
+                <option value="section-iwallet">7. iWallet ile Ödeme</option>
+                <option value="section-setcard">8. Setcard ile Ödeme</option>
+                <option value="section-ederned">9. Ederned ile Ödeme</option>
+                <option value="section-eticaret-fatura">10. E-Ticaret Fatura Bulma</option>
+                <option value="section-taksit-secenekleri">11. Taksit Seçenekleri</option>
+                <option value="section-sablon">12. Şablon</option>
                 <option value="show-all">Tümünü Göster</option>
             </select>
         </div>
@@ -695,7 +834,7 @@
                         <h2 class="step-title">Yapı Kredi Bankası Ara Raporu</h2>
                     </div>
                     <div class="step-content">
-                        <p>Yapı Kredi Bankası için ara rapor almak üzere POS cihazında **#** tuşuna basıyoruz. Ardından sırasıyla şu menüleri takip ediyoruz:</p>
+                        <p>Yapı Kredi Bankası için ara rapor almak üzere POS cihazında <strong>#</strong> tuşuna basıyoruz. Ardından sırasıyla şu menüleri takip ediyoruz:</p>
                         <ol class="list-decimal ml-5 mt-3 space-y-2">
                             <li><strong>Yapı Kredi</strong></li>
                             <li><strong>YKB Ana</strong></li>
@@ -713,22 +852,423 @@
                         <h2 class="step-title">QNB, Ziraat ve Halkbankası Ara Raporu</h2>
                     </div>
                     <div class="step-content">
-                        <p>QNB, Ziraat ve Halkbankası için ara rapor almak üzere POS cihazında **\*** tuşuna basıyoruz. Ardından çıkan menüden <strong>Ara Rapor</strong> seçeneğini seçiyoruz.</p>
+                        <p>QNB, Ziraat ve Halkbankası için ara rapor almak üzere POS cihazında <strong>*</strong> tuşuna basıyoruz. Ardından çıkan menüden <strong>Ara Rapor</strong> seçeneğini seçiyoruz.</p>
                         <!-- Görsel kaldırıldı -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 6. Kısım: Taksit Seçenekleri -->
+        <!-- 6. Kısım: Chippin ile Ödeme -->
+        <div id="section-chippin" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>6. Kısım: Chippin ile Ödeme</h2>
+            </div>
+            <div id="content-chippin" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">32</div>
+                        <h2 class="step-title">Chippin Başlangıç</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/tgpzdlu.jpg" alt="[Chippin başlangıç ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">33</div>
+                        <h2 class="step-title">Kasada Chippin Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/nzbgwjx.jpg" alt="[Sepette Chippin seçimi]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">34</div>
+                        <h2 class="step-title">Ödemeyi Chippin Uygulamasına Gönderme</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/cn4xn4c.jpg" alt="[Kampanya ve puan kontrolü]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">35</div>
+                        <h2 class="step-title">Müşteri Bilgileri Kontrolü</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/rqjv4cy.jpg" alt="[Ödeme onayı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">36</div>
+                        <h2 class="step-title">Müşteri Ödeme Süreci</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/85fgb54.jpg" alt="[QR / OTP doğrulama]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">37</div>
+                        <h2 class="step-title">Ödeme Tamamlanması</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/mcmfgsz.jpg" alt="[Başarılı işlem ekranı]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 7. Kısım: iWallet ile Ödeme -->
+        <div id="section-iwallet" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>7. Kısım: iWallet ile Ödeme</h2>
+            </div>
+            <div id="content-iwallet" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">38</div>
+                        <h2 class="step-title">iWallet Başlangıç</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/ahvb0na.jpg" alt="[iWallet başlangıç ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">39</div>
+                        <h2 class="step-title">Kasada iWallet Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/fnjkgpo.jpg" alt="[Kasada iWallet seçimi]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">40</div>
+                        <h2 class="step-title">iWallet Giriş</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/bl7t28d.jpg" alt="[Ödeme oluşturma ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">41</div>
+                        <h2 class="step-title">Satış İşlemini Başlatma</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/1jpga57.jpg" alt="[Müşteri bilgileri ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">42</div>
+                        <h2 class="step-title">Kart Bilgilerini Alma</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/e9zf814.jpg" alt="[Uygulama onayı]" class="step-image">
+                        <p class="mt-2 text-sm text-gray-700">Tutar konusunda eminseniz, kart numarası yerine 7 haneli QR kod kullanmak daha pratiktir; doğrudan ödemeyi çeker.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">43</div>
+                        <h2 class="step-title">Doğrulama</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/cnrof3m.jpg" alt="[Doğrulama ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">44</div>
+                        <h2 class="step-title">Başarılı İşlem</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/91jrum4.jpg" alt="[Başarılı işlem ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">45</div>
+                        <h2 class="step-title">İşlemi Bitirme</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/5ukfbj4.jpg" alt="[Makbuz / Fiş]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 8. Kısım: Setcard ile Ödeme -->
+        <div id="section-setcard" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>8. Kısım: Setcard ile Ödeme</h2>
+            </div>
+            <div id="content-setcard" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">46</div>
+                        <h2 class="step-title">Setcard Başlangıç</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/7i6ev8n.jpg" alt="[Setcard başlangıç ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">47</div>
+                        <h2 class="step-title">Kasada Setcard Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/2mlz5mo.jpg" alt="[Kasada Setcard seçimi]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">48</div>
+                        <h2 class="step-title">Setcard Giriş</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/tbne02l.jpg" alt="[Ödeme oluşturma ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">49</div>
+                        <h2 class="step-title">Müşteri Bilgileri</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/jgc5vyp.jpg" alt="[Müşteri bilgileri ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">50</div>
+                        <h2 class="step-title">Uygulama Onayı</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/lpxzj6v.jpg" alt="[Uygulama onayı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">51</div>
+                        <h2 class="step-title">Müşteri Telefon No Doğrulama</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/ciyowa4.jpg" alt="[Doğrulama ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">52</div>
+                        <h2 class="step-title">SMS Doğrulama</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/4lmtdqm.jpg" alt="[Başarılı işlem ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">53</div>
+                        <h2 class="step-title">Başarılı İşlem</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/h3gfaz7.jpg" alt="[Makbuz / Fiş]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">54</div>
+                        <h2 class="step-title">Başarılı İşlem</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/8bzyd2k.jpg" alt="[Özet / Kayıt]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Kısım: Ederned ile Ödeme -->
+        <div id="section-ederned" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>9. Kısım: Ederned ile Ödeme</h2>
+            </div>
+            <div id="content-ederned" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">55</div>
+                        <h2 class="step-title">Ederned Başlangıç</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/is4janf.jpg" alt="[Ederned başlangıç ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">56</div>
+                        <h2 class="step-title">Kasada Ederned Seçme</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/ny1vhyj.jpg" alt="[Kasada Ederned seçimi]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">57</div>
+                        <h2 class="step-title">Ödeme Oluşturma</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/bawc1b6.jpg" alt="[Ödeme oluşturma ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">58</div>
+                        <h2 class="step-title">Müşteri Bilgileri</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/dy5qpst.jpg" alt="[Müşteri bilgileri ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">59</div>
+                        <h2 class="step-title">Uygulama Onayı</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/88ndwiu.jpg" alt="[Uygulama onayı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">60</div>
+                        <h2 class="step-title">Doğrulama</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/nsrgb5e.jpg" alt="[Doğrulama ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">61</div>
+                        <h2 class="step-title">Başarılı İşlem</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/goy0aer.jpg" alt="[Başarılı işlem ekranı]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">62</div>
+                        <h2 class="step-title">Makbuz / Fiş</h2>
+                    </div>
+                    <div class="step-content">
+                        <img src="https://i.hizliresim.com/awpxe3u.jpg" alt="[Makbuz / Fiş]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 10. Kısım: E-Ticaret Fatura Bulma -->
+        <div id="section-eticaret-fatura" class="section-content-wrapper">
+            <div class="main-section-header">
+                <h2>10. Kısım: E-Ticaret Fatura Bulma</h2>
+            </div>
+            <div id="content-eticaret-fatura" class="section-content">
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">63</div>
+                        <h2 class="step-title">Giriş Bilgileri ve Kopyalama</h2>
+                    </div>
+                    <div class="step-content">
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-3">
+                                <span class="font-semibold w-40">Portal Link</span>
+                                <a href="https://onlinefatura.civil.com.tr" target="_blank" class="template-button">Aç</a>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-semibold w-40">E-Posta</span>
+                                <input id="portalEmailInput" type="text" class="input" value="magaza@civil.com.tr" readonly>
+                                <button class="copy-btn" data-target="portalEmailInput">Kopyala</button>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <span class="font-semibold w-40">Şifre</span>
+                                <input id="portalPassInput" type="password" class="input" placeholder="Şifreyi girin">
+                                <button class="copy-btn" data-target="portalPassInput" disabled>Kopyala</button>
+                                <button type="button" class="toggle-pass" data-target="portalPassInput">Göster</button>
+                                <button type="button" id="loadDefaultPassBtn">Varsayılanı Yükle</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">64</div>
+                        <h2 class="step-title">Sipariş/Fatura Arama</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Portalda ilgili sipariş veya fatura numarasını arama alanına girin ve sonuçları filtreleyin.</p>
+                        <img src="https://i.hizliresim.com/jsov0a3.png" alt="[Portal arama ekranı görseli]" class="step-image">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">65</div>
+                        <h2 class="step-title">Fatura Detayı ve İndirme</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Bulunan faturanın detayına girerek görüntüleyin ve gerektiğinde PDF/indirme seçeneklerini kullanın.</p>
+                        <img src="https://i.hizliresim.com/i49ap5s.png" alt="[Fatura detay ekranı görseli]" class="step-image">
+                        <img src="https://i.hizliresim.com/5qg2r7m.png" alt="[Fatura indirme ekranı görseli]" class="step-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 11. Kısım: Taksit Seçenekleri -->
         <div id="section-taksit-secenekleri" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>6. Kısım: Taksit Seçenekleri</h2>
+                <h2>11. Kısım: Taksit Seçenekleri</h2>
             </div>
             <div id="content-taksit-secenekleri" class="section-content">
                 <div class="card">
                     <div class="step-header">
-                        <div class="step-number">32</div>
+                        <div class="step-number">66</div>
                         <h2 class="step-title">Vade Farksız 6 Taksit Yapılan Kartlar (Tüm Kategorilerde)</h2>
                     </div>
                     <div class="step-content">
@@ -794,17 +1334,141 @@
                                 <img src="https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/emekli-kart.png" alt="[Vakıfbank World Emekli Kartı görseli]">
                                 <span>Vakıfbank World Emekli</span>
                             </div>
+                            <div class="card-item">
+                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_eflatun-kredi-karti@1x.jpg" alt="[Albaraka World Eflatun Kartı görseli]">
+                                <span>Albaraka World Eflatun</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_mester-card@1x.jpg" alt="[Albaraka World Mastercard görseli]">
+                                <span>Albaraka World Mastercard</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_visa@1x%20(1).jpg" alt="[Albaraka World Visa görseli]">
+                                <span>Albaraka World Visa</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-metal-kart-256x208.png" alt="[VakıfBank Platinum Plus Metal Kart görseli]">
+                                <span>VakıfBank Platinum Plus Metal</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-one-kart-desktop.png" alt="[VakıfBank Platinum One Kart görseli]">
+                                <span>VakıfBank Platinum One</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.worldcard.com.tr/getmedia/ed463df8-b61a-45e3-9cf0-99a808ee7997/world-new-platinum-card.png?width=560&height=356&ext=.png" alt="[Yapı Kredi World Platinum Kartı görseli]">
+                                <span>Yapı Kredi World Platinum</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.worldcard.com.tr/getmedia/89e152a7-0cee-4d78-93c8-761ec56653de/world-new-gold-card.png?width=1012&height=639&ext=.png" alt="[Yapı Kredi World Gold Kartı görseli]">
+                                <span>Yapı Kredi World Gold</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-klasik-256x208.png" alt="[VakıfBank Fenerbahçe Klasik Kart görseli]">
+                                <span>VakıfBank Fenerbahçe Klasik</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.worldcard.com.tr/getmedia/7ea29937-0662-4c69-8f9e-54fae7892ac8/world-new-card.png?width=560&height=354&ext=.png" alt="[Yapı Kredi World Kartı görseli]">
+                                <span>Yapı Kredi World</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.worldcard.com.tr/getmedia/478a56b9-6b20-4b36-acbf-72b849446dbb/world-new-fenerbahce-card.png?width=1012&height=639&ext=.png" alt="[Yapı Kredi World Fenerbahçe Kartı görseli]">
+                                <span>Yapı Kredi World Fenerbahçe</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/ogretmenim-kart-desktop.png" alt="[VakıfBank Öğretmenim Kart görseli]">
+                                <span>VakıfBank Öğretmenim Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/ases-kart-dekstop.png" alt="[VakıfBank Ases Kart görseli]">
+                                <span>VakıfBank Ases Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-gold-256x208.png" alt="[VakıfBank Fenerbahçe Gold Kart görseli]">
+                                <span>VakıfBank Fenerbahçe Gold</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-galatasaray-desktop.png" alt="[VakıfBank Galatasaray Taraftar Kartı görseli]">
+                                <span>VakıfBank Galatasaray</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/express-card-dekstop.png" alt="[VakıfBank Express Card görseli]">
+                                <span>VakıfBank Express Card</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-platinum-256x208.png" alt="[VakıfBank Fenerbahçe Platinum Kart görseli]">
+                                <span>VakıfBank Fenerbahçe Platinum</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/kamusen-kart-dekstop.png" alt="[VakıfBank KamuSen Kart görseli]">
+                                <span>VakıfBank KamuSen Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/like-card-256x208.png" alt="[VakıfBank Like Card görseli]">
+                                <span>VakıfBank Like Card</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-trabzonspor-desktop.png" alt="[VakıfBank Trabzonspor Taraftar Kartı görseli]">
+                                <span>VakıfBank Trabzonspor</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/acecard-256x208.png" alt="[VakıfBank Acecard görseli]">
+                                <span>VakıfBank Acecard</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-fenerbahce-desktop.png" alt="[VakıfBank Fenerbahçe Taraftar Kartı görseli]">
+                                <span>VakıfBank Fenerbahçe Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-besiktas-dekstop.png" alt="[VakıfBank Beşiktaş Taraftar Kartı görseli]">
+                                <span>VakıfBank Beşiktaş Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/vakifbank-world-card-dekstop.png" alt="[VakıfBank World Kart görseli]">
+                                <span>VakıfBank World</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/gold-kart-dekstop.png" alt="[VakıfBank Gold Kart görseli]">
+                                <span>VakıfBank Gold Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-kart-desktop.png" alt="[VakıfBank Platinum Kart görseli]">
+                                <span>VakıfBank Platinum Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/rail-miles-desktop.png" alt="[VakıfBank Rail&Miles Kart görseli]">
+                                <span>VakıfBank Rail&Miles</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_8_trend.jpg" alt="[Albaraka World Trend Kartı görseli]">
+                                <span>Albaraka World Trend</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_ozel-bankacilik1x.jpg" alt="[Albaraka World Özel Bankacılık Kartı görseli]">
+                                <span>Albaraka World Özel Bankacılık</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-kart-desktop.png" alt="[VakıfBank Platinum Plus Kart görseli]">
+                                <span>VakıfBank Platinum Plus</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://vbassets.vakifbank.com.tr/bireysel/recycle-kart-256x208.png" alt="[VakıfBank Recycle Kart görseli]">
+                                <span>VakıfBank Recycle Kart</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_visa-gold@1x.jpg" alt="[Albaraka World Visa Gold Kartı görseli]">
+                                <span>Albaraka World Visa Gold</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="step-header">
-                        <div class="step-number">33</div>
+                        <div class="step-number">67</div>
                         <h2 class="step-title">Taksit Yapılmayan Kartlar</h2>
                     </div>
                     <div class="step-content">
-                        <p>Aşağıdaki kartlara **kesinlikle taksit yapılmamaktadır**:</p>
+                        <p>Aşağıdaki kartlara <strong>kesinlikle taksit yapılmamaktadır</strong>:</p>
                         <div class="card-grid">
                             <div class="card-item">
                                 <img src="https://www.worldcard.com.tr/getmedia/f94b6712-8ed4-49e0-85c5-2e36c4d8275a/world-new-eko-card.png?width=1012&height=639&ext=.png" alt="[Yapı Kredi World Eko Kartı görseli]">
@@ -819,8 +1483,20 @@
                                 <span>Kuveyttürk</span>
                             </div>
                             <div class="card-item">
-                                <img src="https://cdn2.enuygun.com/img/finance/uploads/2denizbank_311x196_d51fa04d43.png" alt="[Denizbank Kartı görseli]">
-                                <span>Denizbank</span>
+                                <img src="https://www.denizbank.com/medium/SitemapNodePage-Landing-16960-2x.vsf" alt="[DenizBank Kartı görseli]">
+                                <span>DenizBank Kartı</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.denizbank.com/medium/SitemapNodePage-Landing-14992-2x.vsf" alt="[DenizBank Kartı görseli]">
+                                <span>DenizBank Kartı</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.denizbank.com/medium/SitemapNodePage-Landing-16447-2x.vsf" alt="[DenizBank Kartı görseli]">
+                                <span>DenizBank Kartı</span>
+                            </div>
+                            <div class="card-item">
+                                <img src="https://www.denizbank.com/medium/SitemapNodePage-Landing-15224-2x.vsf" alt="[DenizBank Kartı görseli]">
+                                <span>DenizBank Kartı</span>
                             </div>
                         </div>
                     </div>
@@ -828,28 +1504,52 @@
 
                 <div class="card">
                     <div class="step-header">
-                        <div class="step-number">34</div>
+                        <div class="step-number">68</div>
+                        <h2 class="step-title">Bazı Ayakkabılarda Vade Farksız Taksit (Kural)</h2>
+                    </div>
+                    <div class="step-content">
+                        <p>Bazı ayakkabı ürünlerinde vade farksız taksit uygulanabilir, ancak tüm ayakkabı kategorileri için geçerli değildir. Kampanya ve kategori kurallarına bağlıdır.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">69</div>
                         <h2 class="step-title">Diğer Kartlar, Araç Gereç ve Oyuncak Taksitlendirmesi</h2>
                     </div>
                     <div class="step-content">
                         <ul class="list-disc ml-5 mt-3 space-y-2">
-                            <li>Yukarıda belirtilenler dışındaki diğer tüm kartlara **%10 vade farklı 4 taksit** yapılmaktadır.</li>
-                            <li>Araç gereç ve oyuncak alımlarında **vade farksız 4 taksit** imkanı sunulmaktadır.</li>
+                            <li>Yukarıda belirtilenler dışındaki diğer tüm kartlara <strong>%10 vade farklı 4 taksit</strong> yapılmaktadır.</li>
+                            <li>Araç gereç ve oyuncak alımlarında <strong>vade farksız 4 taksit</strong> imkanı sunulmaktadır.</li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 7. Kısım: Şablon -->
+        <!-- 12. Kısım: Şablon -->
         <div id="section-sablon" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>7. Kısım: Şablon</h2>
+                <h2>12. Kısım: Şablon</h2>
             </div>
             <div id="content-sablon" class="section-content">
                 <div class="card">
                     <div class="step-header">
-                        <div class="step-number">35</div>
+                        <div class="step-number">70</div>
+                        <h2 class="step-title">Kur Formülleri ve Tarih</h2>
+                    </div>
+                    <div class="step-content">
+                        <ul class="list-disc ml-5 mt-3 space-y-2">
+                            <li>Dolar kuru hücresinde formül: <code>=b3*c3</code></li>
+                            <li>Euro kuru hücresinde formül: <code>=b4*c4</code></li>
+                            <li>Tarih alanı için güncel tarih: <code>=TODAY()</code></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="step-header">
+                        <div class="step-number">71</div>
                         <h2 class="step-title">Fiyat Hatası ve Kasa Açığı/Fazlası Şablonu</h2>
                     </div>
                     <div class="step-content">
@@ -863,10 +1563,10 @@
             </div>
         </div>
 
-        <!-- 8. Kısım: Hata Asistanı -->
+        <!-- 13. Kısım: Hata Asistanı -->
         <div id="section-hata-asistani" class="section-content-wrapper">
             <div class="main-section-header">
-                <h2>8. Kısım: Hata Asistanı ✨</h2>
+                <h2>13. Kısım: Hata Asistanı ✨</h2>
             </div>
             <div id="content-hata-asistani" class="section-content">
                 <div class="llm-assistant-card">
@@ -883,20 +1583,34 @@
         </div>
 
         <footer class="footer">
-            <p>&copy; 2025 Civil Kasa Kapanışı Rehberi</p>
+            <p>&copy; 2025 Kasa Kapanışı Rehberi</p>
         </footer>
 
-        <!-- Yukarı Çık Düğmesi -->
-        <button id="backToTopBtn" title="Yukarı Çık">&#9650;</button> <!-- Unicode yukarı ok -->
+        </div>
+
+    <div id="imageModal" class="image-modal">
+        <img id="modalImg" src="" alt="">
+    </div>
+
+    <button id="chatLauncher" class="chat-launcher">💬</button>
+    <div id="chatWidget" class="chat-widget">
+        <div class="chat-header">
+            <div>Hata Asistanı</div>
+            <button id="chatCloseBtn" class="chat-close-btn">✕</button>
+        </div>
+        <div id="chatMessages" class="chat-messages"></div>
+        <div class="chat-input-row">
+            <input id="chatInput" type="text" class="input" placeholder="Örn: setcard sorunu var">
+            <button id="sendChatBtn" class="copy-btn">Gönder</button>
+        </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const sectionSelector = document.getElementById('sectionSelector');
-            const sectionWrappers = document.querySelectorAll('.section-content-wrapper');
-            const backToTopBtn = document.getElementById('backToTopBtn');
+                const sectionSelector = document.getElementById('sectionSelector');
+                const sectionWrappers = document.querySelectorAll('.section-content-wrapper');
 
-            // LLM Asistanı elementleri
+                // LLM Asistanı elementleri
             const problemInput = document.getElementById('problemInput');
             const askAssistantBtn = document.getElementById('askAssistantBtn');
             const assistantResponse = document.getElementById('assistantResponse');
@@ -952,84 +1666,289 @@
             // Kullanıcı "Bölüm Seçiniz..." dropdown'ından seçim yapsın.
             hideAllSectionWrappers();
 
-            // Sayfa kaydırma olayını dinle
-            window.onscroll = function() {
-                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                    backToTopBtn.style.display = "block";
-                } else {
-                    backToTopBtn.style.display = "none";
+            // Kopyalama tuşları ve şifre yardımcıları
+            const passInput = document.getElementById('portalPassInput');
+            const passCopyBtn = document.querySelector('.copy-btn[data-target="portalPassInput"]');
+            const emailCopyBtn = document.querySelector('.copy-btn[data-target="portalEmailInput"]');
+            const togglePassBtns = document.querySelectorAll('.toggle-pass');
+
+            if (passInput) {
+                const saved = localStorage.getItem('portalPass') || '';
+                passInput.value = saved;
+                if (passCopyBtn) passCopyBtn.disabled = !passInput.value;
+                passInput.addEventListener('input', () => {
+                    localStorage.setItem('portalPass', passInput.value);
+                    if (passCopyBtn) passCopyBtn.disabled = !passInput.value;
+                });
+                const loadBtn = document.getElementById('loadDefaultPassBtn');
+                if (loadBtn) {
+                    loadBtn.addEventListener('click', () => {
+                        let def = '';
+                        if (window.__CVL_DEFAULTS && window.__CVL_DEFAULTS.portalPass) {
+                            def = window.__CVL_DEFAULTS.portalPass;
+                        } else {
+                            def = prompt('Şifreyi girin');
+                        }
+                        if (!def) return;
+                        passInput.value = def;
+                        localStorage.setItem('portalPass', def);
+                        if (passCopyBtn) passCopyBtn.disabled = !passInput.value;
+                    });
+                }
+            }
+
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.disabled) return;
+                    const targetId = btn.getAttribute('data-target');
+                    const targetEl = document.getElementById(targetId);
+                    if (!targetEl) return;
+                    const val = targetEl.value || targetEl.textContent || '';
+                    if (!val) return;
+                    navigator.clipboard.writeText(val).then(() => {
+                        btn.textContent = 'Kopyalandı';
+                        setTimeout(() => btn.textContent = 'Kopyala', 1500);
+                    });
+                });
+            });
+
+            togglePassBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('data-target');
+                    const targetEl = document.getElementById(targetId);
+                    if (!targetEl) return;
+                    targetEl.type = targetEl.type === 'password' ? 'text' : 'password';
+                    btn.textContent = targetEl.type === 'password' ? 'Göster' : 'Gizle';
+                });
+            });
+
+            const imageModal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            document.querySelectorAll('.step-image').forEach(img => {
+                img.addEventListener('click', () => {
+                    modalImg.src = img.src;
+                    imageModal.classList.add('active');
+                });
+            });
+            imageModal.addEventListener('click', () => {
+                imageModal.classList.remove('active');
+                modalImg.src = '';
+            });
+
+            const chatLauncher = document.getElementById('chatLauncher');
+            const chatWidget = document.getElementById('chatWidget');
+            const chatCloseBtn = document.getElementById('chatCloseBtn');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendChatBtn = document.getElementById('sendChatBtn');
+            const sectionDropdown = document.getElementById('sectionSelector');
+
+            const appendMessage = (text, who) => {
+                const div = document.createElement('div');
+                div.className = `message ${who}`;
+                const span = document.createElement('span');
+                span.textContent = text;
+                div.appendChild(span);
+                chatMessages.appendChild(div);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            };
+
+            const quickNavigate = (sectionId) => {
+                if (!sectionId) return;
+                sectionDropdown.value = sectionId;
+                showSpecificSectionWrapper(sectionId);
+                appendMessage('İlgili bölüme yönlendirildi.', 'bot');
+            };
+
+            const handleChat = (text) => {
+                const t = text.trim();
+                if (!t) return;
+                appendMessage(t, 'user');
+                const l = t.toLowerCase();
+                let guided = false;
+                if (l.includes('setcard')) { quickNavigate('section-setcard'); guided = true; }
+                else if (l.includes('iwallet')) { quickNavigate('section-iwallet'); guided = true; }
+                else if (l.includes('ederned')) { quickNavigate('section-ederned'); guided = true; }
+                else if (l.includes('chippin')) { quickNavigate('section-chippin'); guided = true; }
+                else if (l.includes('taksit')) { quickNavigate('section-taksit-secenekleri'); guided = true; }
+                else if (l.includes('fatura') || l.includes('portal') || l.includes('şifre')) { quickNavigate('section-eticaret-fatura'); guided = true; }
+                if (!guided) {
+                    appendMessage('Sorunu anladım. İlgili bölümü belirtirsen hızlıca yönlendirebilirim: chippin, iwallet, setcard, ederned, taksit, fatura.', 'bot');
                 }
             };
 
-            // Yukarı Çık düğmesine tıklandığında
-            backToTopBtn.addEventListener('click', () => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+            chatLauncher.addEventListener('click', () => { chatWidget.classList.add('active'); });
+            chatCloseBtn.addEventListener('click', () => { chatWidget.classList.remove('active'); });
+            sendChatBtn.addEventListener('click', () => { handleChat(chatInput.value); chatInput.value = ''; });
+            chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { handleChat(chatInput.value); chatInput.value = ''; } });
 
-            // LLM Asistanı için olay dinleyici
-            askAssistantBtn.addEventListener('click', async () => {
+            // Yukarı çık düğmesi kaldırıldı
+
+            askAssistantBtn.addEventListener('click', () => {
                 const problem = problemInput.value.trim();
                 if (!problem) {
                     assistantResponse.textContent = "Lütfen bir sorun girin.";
                     assistantResponse.classList.remove('loading');
                     return;
                 }
-
-                assistantResponse.textContent = "Cevap aranıyor... Lütfen bekleyin.";
+                assistantResponse.textContent = "Cevap hazırlanıyor...";
                 assistantResponse.classList.add('loading');
-
-                try {
-                    let chatHistory = [];
-                    let context = "";
-
-                    // Dynamically add context based on keywords in the problem
-                    if (problem.includes("kasa fazla") || problem.includes("kasa açık") || problem.includes("fazla yatırma") || problem.includes("açık yatırma") || problem.includes("masraf girişi")) {
-                        context += "\n\n[Kasa Fazlası veya Açığı Yatırma Rehberi Bilgisi]:\n" + getSectionContentText('section-kasa-fazlasi-acigi');
-                    }
-                    if (problem.includes("nakit yatırma") || problem.includes("kasa hareketleri") || problem.includes("nakit kasa")) {
-                        context += "\n\n[Nakit Yatırma Rehberi Bilgisi]:\n" + getSectionContentText('section-nakit-yatirma');
-                    }
-                    if (problem.includes("taksit") || problem.includes("vade") || problem.includes("kart") || problem.includes("world") || problem.includes("albaraka") || problem.includes("vakıfbank") || problem.includes("denizbank") || problem.includes("kuveyttürk")) {
-                        context += "\n\n[Taksit Seçenekleri Rehberi Bilgisi]:\n" + getSectionContentText('section-taksit-secenekleri');
-                    }
-                    if (problem.includes("ara rapor") || problem.includes("pos")) {
-                        context += "\n\n[Ara Rapor Alma Rehberi Bilgisi]:\n" + getSectionContentText('section-ara-rapor');
-                    }
-                    if (problem.includes("fiyat hatası") || problem.includes("şablon")) {
-                        context += "\n\n[Şablon Rehberi Bilgisi]:\n" + getSectionContentText('section-sablon');
-                    }
-
-                    const prompt = `Bir mağaza kasiyerinin kasa kapanışı sırasında yaşadığı bir sorunla ilgili yardımcı bir asistan rolündesin. Kullanıcının sorunu şu: "${problem}". Lütfen bu sorunun olası nedenlerini ve bu rehberdeki hangi adımları kontrol etmesi gerektiğini maddeler halinde, net ve anlaşılır bir dille açıkla. Rehberdeki adımlara genel olarak atıfta bulun, örneğin "işlem kayması düzeltme adımları" veya "kasa fazlası/açığı yatırma adımları" gibi. Eğer sağlanan ek bilgi ile doğrudan ilgili değilse, genel bir cevap ver.
-
-${context}`;
-                    
-                    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-                    const payload = { contents: chatHistory };
-                    const apiKey = ""; // API anahtarı boş bırakılacak, Canvas otomatik sağlayacak
-                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-                    const response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    const result = await response.json();
-
-                    if (result.candidates && result.candidates.length > 0 &&
-                        result.candidates[0].content && result.candidates[0].content.parts &&
-                        result.candidates[0].content.parts.length > 0) {
-                        const text = result.candidates[0].content.parts[0].text;
-                        assistantResponse.textContent = text;
-                    } else {
-                        assistantResponse.textContent = "Üzgünüm, bir sorun oluştu veya yanıt alınamadı. Lütfen tekrar deneyin.";
-                    }
-                } catch (error) {
-                    console.error("LLM API çağrısında hata:", error);
-                    assistantResponse.textContent = "Bir hata oluştu: " + error.message;
-                } finally {
-                    assistantResponse.classList.remove('loading');
+                let context = "";
+                if (problem.includes("kasa fazla") || problem.includes("kasa açık") || problem.includes("fazla yatırma") || problem.includes("açık yatırma") || problem.includes("masraf girişi")) {
+                    context += "\n\n[Kasa Fazlası/Açığı]:\n" + getSectionContentText('section-kasa-fazlasi-acigi');
                 }
+                if (problem.includes("nakit yatırma") || problem.includes("kasa hareketleri") || problem.includes("nakit kasa")) {
+                    context += "\n\n[Nakit Yatırma]:\n" + getSectionContentText('section-nakit-yatirma');
+                }
+                if (problem.includes("taksit") || problem.includes("vade") || problem.includes("kart") || problem.includes("world") || problem.includes("albaraka") || problem.includes("vakıfbank") || problem.includes("denizbank") || problem.includes("kuveyttürk")) {
+                    context += "\n\n[Taksit Seçenekleri]:\n" + getSectionContentText('section-taksit-secenekleri');
+                }
+                if (problem.includes("chippin")) {
+                    context += "\n\n[Chippin ile Ödeme]:\n" + getSectionContentText('section-chippin');
+                }
+                if (problem.includes("iwallet")) {
+                    context += "\n\n[iWallet ile Ödeme]:\n" + getSectionContentText('section-iwallet');
+                }
+                if (problem.includes("setcard")) {
+                    context += "\n\n[Setcard ile Ödeme]:\n" + getSectionContentText('section-setcard');
+                }
+                if (problem.includes("ederned")) {
+                    context += "\n\n[Ederned ile Ödeme]:\n" + getSectionContentText('section-ederned');
+                }
+                if (problem.includes("fatura") || problem.includes("portal") || problem.includes("şifre")) {
+                    context += "\n\n[E-Ticaret Fatura Bulma]:\n" + getSectionContentText('section-eticaret-fatura');
+                }
+                if (problem.includes("ara rapor") || problem.includes("pos")) {
+                    context += "\n\n[Ara Rapor Alma]:\n" + getSectionContentText('section-ara-rapor');
+                }
+                if (problem.includes("fiyat hatası") || problem.includes("şablon")) {
+                    context += "\n\n[Şablon]:\n" + getSectionContentText('section-sablon');
+                }
+                const lowers = problem.toLowerCase();
+                const topics = [];
+                if (lowers.includes("işlem kayması") || lowers.includes("kayma")) {
+                    topics.push({
+                        title: "İşlem Kayması Düzeltme",
+                        tips: [
+                            "Alınan Ödemeler Listesi'ni aç.",
+                            "Ödeme(D) bölümünde tespit tutarı ile filtrele.",
+                            "Kart/Nakit referans numarasını kopyala.",
+                            "Fiş Numarası alanına yapıştır ve Kaydet.",
+                            "Gerekirse Kredi/Nakit dönüştür ve doğrula."
+                        ]
+                    });
+                }
+                if (lowers.includes("kasa fazla") || lowers.includes("kasa açık") || lowers.includes("fazla") || lowers.includes("açık") || lowers.includes("yekün")) {
+                    topics.push({
+                        title: "Kasa Fazlası/Açığı",
+                        tips: [
+                            "Masraf Girişi üzerinden fazla/açığı beyan et.",
+                            "Mağaza seçiminden doğru mağazayı seç.",
+                            "Seri Numarası alanını günün tarihiyle doldur.",
+                            "Kaydet ve Hareket Özeti'nde sonucu kontrol et."
+                        ]
+                    });
+                }
+                if (lowers.includes("nakit") && lowers.includes("yatırma")) {
+                    topics.push({
+                        title: "Nakit Yatırma",
+                        tips: [
+                            "Alacak alanına gün sonu nakit kasa yekününü gir.",
+                            "Alt yön tuşu ile kaydet butonunu aktifleştir.",
+                            "Kaydedip Nakit Kasa Yekünü'nü 0 doğrula."
+                        ]
+                    });
+                }
+                if (lowers.includes("taksit") || lowers.includes("vade") || lowers.includes("world") || lowers.includes("vakıfbank") || lowers.includes("albaraka") || lowers.includes("denizbank") || lowers.includes("kuveyttürk")) {
+                    topics.push({
+                        title: "Taksit Seçenekleri",
+                        tips: [
+                            "Kart tipine göre taksit seçeneklerini kontrol et.",
+                            "Pos ekranında vade ve kampanya bilgilerini teyit et."
+                        ]
+                    });
+                }
+                if (lowers.includes("chippin")) {
+                    topics.push({
+                        title: "Chippin ile Ödeme",
+                        tips: [
+                            "Kasada Chippin'i seç ve tutarı doğrula.",
+                            "QR/OTP ile onayla ve işlemi bitir."
+                        ]
+                    });
+                }
+                if (lowers.includes("iwallet")) {
+                    topics.push({
+                        title: "iWallet ile Ödeme",
+                        tips: [
+                            "Giriş yap ve satış işlemini başlat.",
+                            "Kart bilgilerini al; kesin tutarda 7 haneli QR pratik."
+                        ]
+                    });
+                }
+                if (lowers.includes("setcard")) {
+                    topics.push({
+                        title: "Setcard ile Ödeme",
+                        tips: [
+                            "Setcard girişinden sonra müşteri telefonunu doğrula.",
+                            "SMS doğrulama ile işlemi tamamla."
+                        ]
+                    });
+                }
+                if (lowers.includes("ederned")) {
+                    topics.push({
+                        title: "Ederned ile Ödeme",
+                        tips: [
+                            "Kasada Ederned'i seç ve ödeme oluştur.",
+                            "Uygulama onayı ve doğrulama adımlarını takip et."
+                        ]
+                    });
+                }
+                if (lowers.includes("fatura") || lowers.includes("portal") || lowers.includes("şifre")) {
+                    topics.push({
+                        title: "E-Ticaret Fatura Bulma",
+                        tips: [
+                            "Portal linkini aç, e-posta ve şifreyi gir.",
+                            "Sipariş/fatura arayıp PDF indirme seçeneklerini kullan."
+                        ]
+                    });
+                }
+                if (lowers.includes("ara rapor") || lowers.includes("pos")) {
+                    topics.push({
+                        title: "Ara Rapor Alma",
+                        tips: [
+                            "POS cihazından ara rapor al.",
+                            "İşlem toplamları ile kasa kayıtlarını karşılaştır."
+                        ]
+                    });
+                }
+                if (lowers.includes("fiyat hatası") || lowers.includes("şablon")) {
+                    topics.push({
+                        title: "Şablon",
+                        tips: [
+                            "Barkodu ve kasa açığı/fazlası olan kişinin adını yaz.",
+                            "Şablon bağlantısını doldur ve paylaş."
+                        ]
+                    });
+                }
+                let output = "";
+                if (topics.length === 0) {
+                    output += "- Hareket Özeti'nden Kasa-Kasiyer raporu ile kontrol et.\n";
+                    output += "- Alınan Ödemeler Listesi'nde tutarı filtreleyip referansı bul.\n";
+                    output += "- Gerekirse Kredi/Nakit dönüştür ve Kaydet.\n";
+                    output += "- Son Kontrol: Nakit Kasa Yekünü 0 olmalı.";
+                } else {
+                    topics.forEach(t => {
+                        output += `${t.title}:\n`;
+                        t.tips.forEach(tip => { output += `- ${tip}\n`; });
+                        output += "\n";
+                    });
+                }
+                if (context) {
+                    output += "Bağlantılı içerik:\n" + context;
+                }
+                assistantResponse.textContent = output.trim();
+                assistantResponse.classList.remove('loading');
             });
         });
     </script>
