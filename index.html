@@ -13,19 +13,188 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --cvl-primary: #dd3612;
+            --cvl-primary-strong: #c22f0f;
+            --cvl-ink: #1f2937;
+            --cvl-muted: #4b5563;
+            --cvl-surface: #ffffff;
+            --cvl-soft: #fff3f1;
+            --cvl-border: rgba(0, 0, 0, 0.05);
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5;
-            color: #333;
-            scroll-behavior: smooth; /* Yumuşak kaydırma için */
+            background: #f7fafc;
+            color: var(--cvl-ink);
+            scroll-behavior: smooth;
+            min-height: 100vh;
         }
         .container {
-            max-width: 1040px;
-            margin: 0 auto;
-            padding: clamp(12px, 3vw, 24px);
+            max-width: 1100px;
+            margin: 0 auto 40px;
+            padding: clamp(16px, 4vw, 28px);
         }
+        .page-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background: #fff;
+            border: 1px solid rgba(221, 54, 18, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 8px 18px rgba(15, 23, 42, 0.08);
+        }
+        .page-topbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: var(--cvl-primary-strong);
+        }
+        .page-topbar .pulse {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.18);
+        }
+        .page-hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 18px;
+            background: #fff;
+            border: 1px solid rgba(221, 54, 18, 0.14);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            border-radius: 18px;
+            padding: clamp(18px, 3vw, 26px);
+            margin-bottom: 18px;
+        }
+        .hero-text h1 {
+            font-size: clamp(1.9rem, 3vw, 2.6rem);
+            font-weight: 800;
+            color: var(--cvl-primary-strong);
+            margin-bottom: 8px;
+        }
+        .hero-text p {
+            color: var(--cvl-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 999px;
+            background: rgba(221, 54, 18, 0.1);
+            color: #9a230b;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+        }
+        .hero-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 12px;
+            border-radius: 12px;
+            background: var(--cvl-surface);
+            border: 1px solid var(--cvl-border);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+            font-weight: 600;
+            color: var(--cvl-ink);
+        }
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .pill-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background: var(--cvl-primary);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 24px rgba(221, 54, 18, 0.25);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s;
+        }
+        .pill-button:hover {
+            transform: translateY(-1px);
+            background: var(--cvl-primary-strong);
+            box-shadow: 0 12px 28px rgba(194, 47, 15, 0.26);
+        }
+        .pill-button.secondary {
+            background: #fff;
+            color: var(--cvl-primary-strong);
+            border: 1px solid rgba(194, 47, 15, 0.35);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+        }
+        .pill-button.secondary:hover {
+            background: #fff5f2;
+        }
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
+            align-self: center;
+        }
+        .stat-card {
+            background: var(--cvl-surface);
+            padding: 16px;
+            border-radius: 14px;
+            border: 1px solid var(--cvl-border);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+        }
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--cvl-primary-strong);
+        }
+        .stat-label {
+            color: var(--cvl-muted);
+            margin-top: 4px;
+            font-weight: 600;
+        }
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 18px 0 12px;
+        }
+        .shortcut-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid rgba(221, 54, 18, 0.12);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.18s ease;
+        }
+        .shortcut-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+        .shortcut-card .title { font-weight: 700; color: var(--cvl-ink); }
+        .shortcut-card .hint { color: var(--cvl-muted); font-size: 0.95em; }
         .card {
-            background-color: #fff;
+            background-color: var(--cvl-surface);
             border-radius: 14px;
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
             margin-bottom: 22px;
@@ -126,68 +295,14 @@
             border-radius: 10px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.35);
         }
-        .chat-launcher {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #dd3612;
-            color: #fff;
-            border-radius: 999px;
-            padding: 12px 16px;
-            font-weight: 700;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.2);
-            z-index: 1500;
-            cursor: pointer;
-        }
-        .chat-widget {
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 340px;
-            max-height: 70vh;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 24px rgba(0,0,0,0.2);
-            display: none;
-            flex-direction: column;
-            border: 1px solid #e5e7eb;
-            z-index: 1500;
-        }
-        .chat-widget.active { display: flex; }
-        .chat-header {
-            background: #c22f0f;
-            color: #fff;
-            padding: 10px 14px;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-        }
-        .chat-messages {
-            padding: 12px;
-            overflow-y: auto;
-            flex: 1;
-        }
-        .message { margin-bottom: 8px; font-size: 0.95em; }
-        .message.user { text-align: right; }
-        .message.user span { display: inline-block; background: #f3f4f6; color: #111827; padding: 8px 10px; border-radius: 10px; }
-        .message.bot span { display: inline-block; background: #fff7f7; color: #c22f0f; padding: 8px 10px; border-radius: 10px; }
-        .chat-input-row { padding: 10px; display: flex; gap: 8px; border-top: 1px solid #e5e7eb; }
-        .chat-input-row input { flex: 1; }
-        .chat-close-btn { background: transparent; color: #fff; border: none; cursor: pointer; font-size: 1.1em; }
-        @media (max-width: 768px) {
-            .chat-widget { right: 12px; bottom: 72px; width: 92vw; }
-            .chat-launcher { right: 12px; bottom: 12px; }
-        }
+        .chat-launcher, .chat-widget, .mobile-sticky-actions { display: none !important; }
         .section-title {
             font-size: clamp(1.8rem, 3vw, 2.4rem);
             font-weight: 700;
             color: #1a202c;
             text-align: center;
-            margin-bottom: 30px;
-            padding-top: 20px;
+            margin-bottom: 18px;
+            padding-top: 10px;
         }
         .important-note {
             background-color: #fff7ed;
@@ -209,21 +324,40 @@
         .navigation-dropdown-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
-            padding: 15px;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.06);
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            backdrop-filter: saturate(180%) blur(6px);
+            margin: 16px 0 24px;
+            padding: 12px;
+            background-color: #fff;
+            border-radius: 14px;
+            box-shadow: 0 6px 14px rgba(15, 23, 42, 0.06);
+            border: 1px solid rgba(221, 54, 18, 0.12);
+            overflow-x: auto;
+        }
+        .quick-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .quick-link {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(221, 54, 18, 0.18);
+            background: #fff;
+            color: #9a230b;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.2s ease;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+        }
+        .quick-link:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
         }
         .section-select {
             padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.95em;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.98em;
             cursor: pointer;
             background-color: #fef2f2; /* Çok açık kırmızı */
             color: #dd3612; /* Civil rengi */
@@ -247,10 +381,8 @@
         }
 
         .section-content-wrapper {
-            display: none; /* Varsayılan olarak tüm bölümleri gizle */
-        }
-        .section-content-wrapper.active {
-            display: block; /* Aktif olan bölümü göster */
+            display: block;
+            scroll-margin-top: 100px;
         }
         /* Ana bölüm başlıkları için yeni stil */
         .main-section-header {
@@ -376,89 +508,146 @@
             transform: translateY(0);
         }
         .llm-response {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #ffebeb; /* Çok açık kırmızı */
-            border-radius: 8px;
-            border: 1px solid #fcdada; /* Açık kırmızı border */
-            white-space: pre-wrap; /* Metin formatını koru */
-            font-size: 0.95em;
-            color: #c22f0f; /* Koyu Civil rengi */
-            min-height: 50px;
-            display: flex;
+            white-space: pre-wrap;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #fca5a5;
+            padding: 12px;
+            margin-top: 10px;
+            min-height: 46px;
+            transition: all 0.2s ease;
+        }
+        .llm-response.loading { opacity: 0.7; }
+        .mobile-sticky-actions {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(221, 54, 18, 0.18);
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.15);
+            z-index: 1200;
+            backdrop-filter: blur(8px);
+        }
+        .mobile-sticky-actions button {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: #fff7f7;
+            color: var(--cvl-primary-strong);
+            font-weight: 700;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
         }
-        .llm-response.loading {
-            font-style: italic;
-            color: #6b7280;
+        .mobile-sticky-actions .primary { background: var(--cvl-primary); color: #fff; border-color: rgba(0,0,0,0.08); }
+        .mobile-sticky-actions .ghost { background: #fff; color: var(--cvl-primary-strong); }
+        @media (max-width: 1024px) {
+            .page-hero { grid-template-columns: 1fr; }
+            .page-topbar { top: 0; margin-left: 6px; margin-right: 6px; }
+            .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-
         @media (max-width: 768px) {
-            .step-title {
-                font-size: 1.2em;
-            }
-            .section-title {
-                font-size: 1.8em;
-            }
-            .section-select {
-                width: 100%;
-                min-width: unset;
-            }
-            .container {
-                padding: 15px;
-            }
-            .card {
-                padding: 18px;
-            }
-            .step-number {
-                width: 30px;
-                height: 30px;
-            }
-            .step-content .flex {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .step-content .w-40 {
-                width: 100%;
-            }
-            .main-section-header {
-                padding: 12px 20px;
-            }
-            .main-section-header h2 {
-                font-size: 1.8em;
-            }
-            .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            }
-            .llm-assistant-card button { width: 100%; }
+            .container { padding: 14px 12px 110px; }
+            .navigation-dropdown-container { top: 10px; padding: 10px; }
+            .quick-links { overflow-x: auto; flex-wrap: nowrap; }
+            .hero-actions { flex-direction: column; }
+            .hero-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+            .mobile-sticky-actions { display: flex; }
+            .card { padding: 20px; }
+            .page-hero { gap: 14px; }
+            .shortcut-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .section-select { width: 100%; min-width: unset; }
+            .card-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
         }
-
-        @media (max-width: 480px) {
-            .section-title {
-                font-size: clamp(1.6rem, 5vw, 2rem);
-            }
-            .main-section-header h2 {
-                font-size: clamp(1.4rem, 4.5vw, 1.8rem);
-            }
-            .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 14px;
-            }
-            .card {
-                padding: 16px;
-            }
-            .section-select {
-                font-size: 0.95rem;
-            }
+        @media (max-width: 520px) {
+            .page-topbar { flex-direction: column; align-items: flex-start; }
+            .hero-badges { gap: 6px; }
+            .hero-actions { width: 100%; }
+            .pill-button { justify-content: center; width: 100%; }
+            .shortcut-grid { grid-template-columns: 1fr; }
+            .section-select { font-size: 0.95rem; }
+            .card { padding: 16px; }
+            .main-section-header h2 { font-size: clamp(1.4rem, 4.5vw, 1.8rem); }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 class="section-title">Kasa Kapanışı Rehberi</h1>
-        
+        <div class="page-topbar">
+            <div class="brand"><span class="pulse"></span> Civil Mağaza Asistanı</div>
+            <div class="text-sm text-gray-600">Gün sonu, POS ve alternatif ödemeler tek sayfada</div>
+        </div>
+        <div class="page-hero">
+            <div class="hero-text">
+                <div class="hero-eyebrow">Gün sonu kolaylaştırıldı</div>
+                <h1>Kasa Kapanışı Rehberi</h1>
+                <p>
+                    POS akışları, ödeme alternatifleri ve kasa mutabakatı için görsel adım adım rehber.
+                    En kritik başlıklara tek tıkla erişin, hızlı aksiyon alın.
+                </p>
+                <div class="hero-badges">
+                    <span class="hero-badge">📱 Ekran görüntülü anlatımlar</span>
+                    <span class="hero-badge">✅ Gün sonu kontrol listesi</span>
+                    <span class="hero-badge">🤖 Asistan destekli ipuçları</span>
+                </div>
+                <div class="hero-actions">
+                    <button class="pill-button" data-section-target="section-pos-kullanimi">İlk adımlara git</button>
+                    <button class="pill-button secondary" data-section-target="show-all">Tüm bölümleri aç</button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">13</div>
+                    <div class="stat-label">bölüm</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">54+</div>
+                    <div class="stat-label">görsel adım</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7/24</div>
+                    <div class="stat-label">yardım asistanı</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="shortcut-grid">
+            <div class="shortcut-card" data-section-target="section-pos-kullanimi">
+                <span class="title">POS İşlemleri</span>
+                <span class="hint">Taksit, QR ve slip akışları</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-hareket-ozeti">
+                <span class="title">Hareket Özeti</span>
+                <span class="hint">Kasiyer bazında rapor</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-islem-kaymasi">
+                <span class="title">İşlem Kayması</span>
+                <span class="hint">Bankalar arası düzeltme</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-nakit-yatirma">
+                <span class="title">Nakit Yatırma</span>
+                <span class="hint">Gün sonu yekün sıfırlama</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-taksit-secenekleri">
+                <span class="title">Taksit Seçenekleri</span>
+                <span class="hint">World ve bonus kart detayları</span>
+            </div>
+        </div>
+
+        <div class="quick-links">
+            <button class="quick-link" data-section-target="section-hareket-ozeti">📊 Hareket Özeti</button>
+            <button class="quick-link" data-section-target="section-kasa-fazlasi-acigi">💰 Kasa Fazlası/Açığı</button>
+            <button class="quick-link" data-section-target="section-chippin">🔔 Chippin Ödemesi</button>
+            <button class="quick-link" data-section-target="section-eticaret-fatura">🧾 E-Ticaret Fatura</button>
+            <button class="quick-link" data-section-target="section-sablon">📄 Şablon</button>
+        </div>
+
         <!-- Navigasyon Dropdown -->
         <div class="navigation-dropdown-container">
             <select id="sectionSelector" class="section-select">
@@ -1661,6 +1850,12 @@
             <p>&copy; 2025 Kasa Kapanışı Rehberi <br> Hazırlayan: Mall of Istanbul Kasa Ekibi </p>
         </footer>
 
+        <div class="mobile-sticky-actions">
+            <button id="mobileNavBtn" class="ghost">📂 Bölüm Seç</button>
+            <button id="mobileHelpBtn" class="primary">🤖 Asistan</button>
+            <button id="mobileHotBtn" class="ghost" data-section-target="section-chippin">⚡ Popüler</button>
+        </div>
+
         </div>
 
     <div id="imageModal" class="image-modal">
@@ -1682,348 +1877,71 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-                const sectionSelector = document.getElementById('sectionSelector');
-                const sectionWrappers = document.querySelectorAll('.section-content-wrapper');
+            const sectionSelector = document.getElementById('sectionSelector');
+            const sectionTriggers = document.querySelectorAll('[data-section-target]');
 
-                // LLM Asistanı elementleri
-            const problemInput = document.getElementById('problemInput');
-            const askAssistantBtn = document.getElementById('askAssistantBtn');
-            const assistantResponse = document.getElementById('assistantResponse');
+            const scrollToSection = (id) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            };
 
-            // Helper function to extract text content from a section
-            const getSectionContentText = (sectionId) => {
-                const section = document.getElementById(sectionId);
-                if (!section) return '';
-                let textContent = '';
-                // Iterate over all card elements within the section and extract their text
-                section.querySelectorAll('.card .step-content p, .card .step-content li').forEach(element => {
-                    textContent += element.textContent + '\n';
+            sectionTriggers.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = btn.getAttribute('data-section-target');
+                    scrollToSection(target);
+                    if (sectionSelector) sectionSelector.value = target;
                 });
-                return textContent.trim();
-            };
-
-            // Tüm ana bölüm sarmalayıcılarını gizleyen fonksiyon
-            const hideAllSectionWrappers = () => {
-                sectionWrappers.forEach(wrapper => {
-                    wrapper.classList.remove('active'); // Ana sarmalayıcıyı gizle
-                });
-            };
-
-            // Belirli bir ana bölüm sarmalayıcısını gösteren fonksiyon
-            const showSpecificSectionWrapper = (sectionId) => {
-                hideAllSectionWrappers(); // Önce tüm diğerlerini gizle
-                const targetWrapper = document.getElementById(sectionId);
-                if (targetWrapper) {
-                    targetWrapper.classList.add('active'); // Ana sarmalayıcıyı göster
-                }
-            };
-
-            // Dropdown seçimi değiştiğinde
-            sectionSelector.addEventListener('change', (event) => {
-                const selectedSectionId = event.target.value;
-
-                if (selectedSectionId === 'show-all') {
-                    // Tüm ana bölüm sarmalayıcılarını göster
-                    sectionWrappers.forEach(wrapper => {
-                        wrapper.classList.add('active');
-                    });
-                } else if (selectedSectionId) { // Boş seçenek değilse
-                    // Sadece seçilen ana bölüm sarmalayıcısını göster
-                    showSpecificSectionWrapper(selectedSectionId);
-                } else { // "Bölüm Seçiniz..." seçeneği seçilirse tümünü gizle
-                    hideAllSectionWrappers();
-                }
-                // Seçim yapıldıktan sonra sayfanın başına kaydır
-                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // Sayfa yüklendiğinde varsayılan olarak hiçbir bölüm gözükmesin
-            // Kullanıcı "Bölüm Seçiniz..." dropdown'ından seçim yapsın.
-            hideAllSectionWrappers();
-
-            // Kopyalama tuşları ve şifre yardımcıları
-            const passInput = document.getElementById('portalPassInput');
-            const passCopyBtn = document.querySelector('.copy-btn[data-target="portalPassInput"]');
-            const emailCopyBtn = document.querySelector('.copy-btn[data-target="portalEmailInput"]');
-            const togglePassBtns = document.querySelectorAll('.toggle-pass');
-
-            if (passInput) {
-                const saved = localStorage.getItem('portalPass') || '';
-                passInput.value = saved;
-                if (passCopyBtn) passCopyBtn.disabled = !passInput.value;
-                passInput.addEventListener('input', () => {
-                    localStorage.setItem('portalPass', passInput.value);
-                    if (passCopyBtn) passCopyBtn.disabled = !passInput.value;
+            if (sectionSelector) {
+                sectionSelector.addEventListener('change', (e) => {
+                    const value = e.target.value;
+                    if (value && value !== 'show-all') {
+                        scrollToSection(value);
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                 });
-                const loadBtn = document.getElementById('loadDefaultPassBtn');
-                if (loadBtn) {
-                    loadBtn.addEventListener('click', () => {
-                        let def = '';
-                        if (window.__CVL_DEFAULTS && window.__CVL_DEFAULTS.portalPass) {
-                            def = window.__CVL_DEFAULTS.portalPass;
-                        } else {
-                            def = prompt('Şifreyi girin');
-                        }
-                        if (!def) return;
-                        passInput.value = def;
-                        localStorage.setItem('portalPass', def);
-                        if (passCopyBtn) passCopyBtn.disabled = !passInput.value;
-                    });
-                }
             }
 
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (btn.disabled) return;
-                    const targetId = btn.getAttribute('data-target');
-                    const targetEl = document.getElementById(targetId);
-                    if (!targetEl) return;
-                    const val = targetEl.value || targetEl.textContent || '';
-                    if (!val) return;
-                    navigator.clipboard.writeText(val).then(() => {
-                        btn.textContent = 'Kopyalandı';
-                        setTimeout(() => btn.textContent = 'Kopyala', 1500);
-                    });
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetId = button.getAttribute('data-target');
+                    const targetInput = document.getElementById(targetId);
+                    if (!targetInput) return;
+                    targetInput.select();
+                    document.execCommand('copy');
+                    const originalText = button.textContent;
+                    button.textContent = 'Kopyalandı!';
+                    button.disabled = true;
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.disabled = false;
+                    }, 1200);
                 });
             });
 
-            togglePassBtns.forEach(btn => {
+            document.querySelectorAll('.toggle-pass').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const targetId = btn.getAttribute('data-target');
-                    const targetEl = document.getElementById(targetId);
-                    if (!targetEl) return;
-                    targetEl.type = targetEl.type === 'password' ? 'text' : 'password';
-                    btn.textContent = targetEl.type === 'password' ? 'Göster' : 'Gizle';
+                    const targetInput = document.getElementById(targetId);
+                    if (!targetInput) return;
+                    targetInput.type = targetInput.type === 'password' ? 'text' : 'password';
+                    btn.textContent = targetInput.type === 'password' ? 'Göster' : 'Gizle';
                 });
             });
 
-            const imageModal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImg');
+            const loadDefaultPassBtn = document.getElementById('loadDefaultPassBtn');
+            if (loadDefaultPassBtn) {
+                loadDefaultPassBtn.addEventListener('click', () => {
+                    const passInput = document.getElementById('portalPassInput');
+                    if (passInput) passInput.value = 'Civil123*';
+                });
+            }
+
             document.querySelectorAll('.step-image').forEach(img => {
-                img.addEventListener('click', () => {
-                    modalImg.src = img.src;
-                    imageModal.classList.add('active');
-                });
-            });
-            imageModal.addEventListener('click', () => {
-                imageModal.classList.remove('active');
-                modalImg.src = '';
-            });
-
-            const chatLauncher = document.getElementById('chatLauncher');
-            const chatWidget = document.getElementById('chatWidget');
-            const chatCloseBtn = document.getElementById('chatCloseBtn');
-            const chatMessages = document.getElementById('chatMessages');
-            const chatInput = document.getElementById('chatInput');
-            const sendChatBtn = document.getElementById('sendChatBtn');
-            const sectionDropdown = document.getElementById('sectionSelector');
-
-            const appendMessage = (text, who) => {
-                const div = document.createElement('div');
-                div.className = `message ${who}`;
-                const span = document.createElement('span');
-                span.textContent = text;
-                div.appendChild(span);
-                chatMessages.appendChild(div);
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            };
-
-            const quickNavigate = (sectionId) => {
-                if (!sectionId) return;
-                sectionDropdown.value = sectionId;
-                showSpecificSectionWrapper(sectionId);
-                appendMessage('İlgili bölüme yönlendirildi.', 'bot');
-            };
-
-            const handleChat = (text) => {
-                const t = text.trim();
-                if (!t) return;
-                appendMessage(t, 'user');
-                const l = t.toLowerCase();
-                let guided = false;
-                if (l.includes('setcard')) { quickNavigate('section-setcard'); guided = true; }
-                else if (l.includes('iwallet')) { quickNavigate('section-iwallet'); guided = true; }
-                else if (l.includes('ederned')) { quickNavigate('section-ederned'); guided = true; }
-                else if (l.includes('chippin')) { quickNavigate('section-chippin'); guided = true; }
-                else if (l.includes('taksit')) { quickNavigate('section-taksit-secenekleri'); guided = true; }
-                else if (l.includes('fatura') || l.includes('portal') || l.includes('şifre')) { quickNavigate('section-eticaret-fatura'); guided = true; }
-                if (!guided) {
-                    appendMessage('Sorunu anladım. İlgili bölümü belirtirsen hızlıca yönlendirebilirim: chippin, iwallet, setcard, ederned, taksit, fatura.', 'bot');
-                }
-            };
-
-            chatLauncher.addEventListener('click', () => { chatWidget.classList.add('active'); });
-            chatCloseBtn.addEventListener('click', () => { chatWidget.classList.remove('active'); });
-            sendChatBtn.addEventListener('click', () => { handleChat(chatInput.value); chatInput.value = ''; });
-            chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { handleChat(chatInput.value); chatInput.value = ''; } });
-
-            // Yukarı çık düğmesi kaldırıldı
-
-            askAssistantBtn.addEventListener('click', () => {
-                const problem = problemInput.value.trim();
-                if (!problem) {
-                    assistantResponse.textContent = "Lütfen bir sorun girin.";
-                    assistantResponse.classList.remove('loading');
-                    return;
-                }
-                assistantResponse.textContent = "Cevap hazırlanıyor...";
-                assistantResponse.classList.add('loading');
-                let context = "";
-                if (problem.includes("kasa fazla") || problem.includes("kasa açık") || problem.includes("fazla yatırma") || problem.includes("açık yatırma") || problem.includes("masraf girişi")) {
-                    context += "\n\n[Kasa Fazlası/Açığı]:\n" + getSectionContentText('section-kasa-fazlasi-acigi');
-                }
-                if (problem.includes("nakit yatırma") || problem.includes("kasa hareketleri") || problem.includes("nakit kasa")) {
-                    context += "\n\n[Nakit Yatırma]:\n" + getSectionContentText('section-nakit-yatirma');
-                }
-                if (problem.includes("taksit") || problem.includes("vade") || problem.includes("kart") || problem.includes("world") || problem.includes("albaraka") || problem.includes("vakıfbank") || problem.includes("denizbank") || problem.includes("kuveyttürk")) {
-                    context += "\n\n[Taksit Seçenekleri]:\n" + getSectionContentText('section-taksit-secenekleri');
-                }
-                if (problem.includes("chippin")) {
-                    context += "\n\n[Chippin ile Ödeme]:\n" + getSectionContentText('section-chippin');
-                }
-                if (problem.includes("iwallet")) {
-                    context += "\n\n[iWallet ile Ödeme]:\n" + getSectionContentText('section-iwallet');
-                }
-                if (problem.includes("setcard")) {
-                    context += "\n\n[Setcard ile Ödeme]:\n" + getSectionContentText('section-setcard');
-                }
-                if (problem.includes("ederned")) {
-                    context += "\n\n[Ederned ile Ödeme]:\n" + getSectionContentText('section-ederned');
-                }
-                if (problem.includes("fatura") || problem.includes("portal") || problem.includes("şifre")) {
-                    context += "\n\n[E-Ticaret Fatura Bulma]:\n" + getSectionContentText('section-eticaret-fatura');
-                }
-                if (problem.includes("ara rapor") || problem.includes("pos")) {
-                    context += "\n\n[Ara Rapor Alma]:\n" + getSectionContentText('section-ara-rapor');
-                }
-                if (problem.includes("fiyat hatası") || problem.includes("şablon")) {
-                    context += "\n\n[Şablon]:\n" + getSectionContentText('section-sablon');
-                }
-                const lowers = problem.toLowerCase();
-                const topics = [];
-                if (lowers.includes("işlem kayması") || lowers.includes("kayma")) {
-                    topics.push({
-                        title: "İşlem Kayması Düzeltme",
-                        tips: [
-                            "Alınan Ödemeler Listesi'ni aç.",
-                            "Ödeme(D) bölümünde tespit tutarı ile filtrele.",
-                            "Kart/Nakit referans numarasını kopyala.",
-                            "Fiş Numarası alanına yapıştır ve Kaydet.",
-                            "Gerekirse Kredi/Nakit dönüştür ve doğrula."
-                        ]
-                    });
-                }
-                if (lowers.includes("kasa fazla") || lowers.includes("kasa açık") || lowers.includes("fazla") || lowers.includes("açık") || lowers.includes("yekün")) {
-                    topics.push({
-                        title: "Kasa Fazlası/Açığı",
-                        tips: [
-                            "Masraf Girişi üzerinden fazla/açığı beyan et.",
-                            "Mağaza seçiminden doğru mağazayı seç.",
-                            "Seri Numarası alanını günün tarihiyle doldur.",
-                            "Kaydet ve Hareket Özeti'nde sonucu kontrol et."
-                        ]
-                    });
-                }
-                if (lowers.includes("nakit") && lowers.includes("yatırma")) {
-                    topics.push({
-                        title: "Nakit Yatırma",
-                        tips: [
-                            "Alacak alanına gün sonu nakit kasa yekününü gir.",
-                            "Alt yön tuşu ile kaydet butonunu aktifleştir.",
-                            "Kaydedip Nakit Kasa Yekünü'nü 0 doğrula."
-                        ]
-                    });
-                }
-                if (lowers.includes("taksit") || lowers.includes("vade") || lowers.includes("world") || lowers.includes("vakıfbank") || lowers.includes("albaraka") || lowers.includes("denizbank") || lowers.includes("kuveyttürk")) {
-                    topics.push({
-                        title: "Taksit Seçenekleri",
-                        tips: [
-                            "Kart tipine göre taksit seçeneklerini kontrol et.",
-                            "Pos ekranında vade ve kampanya bilgilerini teyit et."
-                        ]
-                    });
-                }
-                if (lowers.includes("chippin")) {
-                    topics.push({
-                        title: "Chippin ile Ödeme",
-                        tips: [
-                            "Kasada Chippin'i seç ve tutarı doğrula.",
-                            "QR/OTP ile onayla ve işlemi bitir."
-                        ]
-                    });
-                }
-                if (lowers.includes("iwallet")) {
-                    topics.push({
-                        title: "iWallet ile Ödeme",
-                        tips: [
-                            "Giriş yap ve satış işlemini başlat.",
-                            "Kart bilgilerini al; kesin tutarda 7 haneli QR pratik."
-                        ]
-                    });
-                }
-                if (lowers.includes("setcard")) {
-                    topics.push({
-                        title: "Setcard ile Ödeme",
-                        tips: [
-                            "Setcard girişinden sonra müşteri telefonunu doğrula.",
-                            "SMS doğrulama ile işlemi tamamla."
-                        ]
-                    });
-                }
-                if (lowers.includes("ederned")) {
-                    topics.push({
-                        title: "Ederned ile Ödeme",
-                        tips: [
-                            "Kasada Ederned'i seç ve ödeme oluştur.",
-                            "Uygulama onayı ve doğrulama adımlarını takip et."
-                        ]
-                    });
-                }
-                if (lowers.includes("fatura") || lowers.includes("portal") || lowers.includes("şifre")) {
-                    topics.push({
-                        title: "E-Ticaret Fatura Bulma",
-                        tips: [
-                            "Portal linkini aç, e-posta ve şifreyi gir.",
-                            "Sipariş/fatura arayıp PDF indirme seçeneklerini kullan."
-                        ]
-                    });
-                }
-                if (lowers.includes("ara rapor") || lowers.includes("pos")) {
-                    topics.push({
-                        title: "Ara Rapor Alma",
-                        tips: [
-                            "POS cihazından ara rapor al.",
-                            "İşlem toplamları ile kasa kayıtlarını karşılaştır."
-                        ]
-                    });
-                }
-                if (lowers.includes("fiyat hatası") || lowers.includes("şablon")) {
-                    topics.push({
-                        title: "Şablon",
-                        tips: [
-                            "Barkodu ve kasa açığı/fazlası olan kişinin adını yaz.",
-                            "Şablon bağlantısını doldur ve paylaş."
-                        ]
-                    });
-                }
-                let output = "";
-                if (topics.length === 0) {
-                    output += "- Hareket Özeti'nden Kasa-Kasiyer raporu ile kontrol et.\n";
-                    output += "- Alınan Ödemeler Listesi'nde tutarı filtreleyip referansı bul.\n";
-                    output += "- Gerekirse Kredi/Nakit dönüştür ve Kaydet.\n";
-                    output += "- Son Kontrol: Nakit Kasa Yekünü 0 olmalı.";
-                } else {
-                    topics.forEach(t => {
-                        output += `${t.title}:\n`;
-                        t.tips.forEach(tip => { output += `- ${tip}\n`; });
-                        output += "\n";
-                    });
-                }
-                if (context) {
-                    output += "Bağlantılı içerik:\n" + context;
-                }
-                assistantResponse.textContent = output.trim();
-                assistantResponse.classList.remove('loading');
+                img.addEventListener('click', () => window.open(img.src, '_blank'));
             });
         });
     </script>
