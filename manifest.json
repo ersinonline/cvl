@@ -1,0 +1,21 @@
+{
+  "name": "Kasa Asistanım",
+  "short_name": "Kasa Asistanım",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#dd3612",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
