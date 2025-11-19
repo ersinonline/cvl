@@ -346,24 +346,6 @@
             <div class="mobile-title-container flex-1 text-right lg:hidden">
                 <h2 class="text-lg font-semibold text-slate-800" id="mobileTitle">Kasa Yardımcım</h2>
             </div>
-
-                <!-- MASAÜSTÜ BAŞLIK -->
-                <h2 id="pageTitle" class="text-lg font-semibold text-slate-800 hidden sm:block">Ana Sayfa</h2>
-            </div>
-
-            <!-- Arama Çubuğu (MOBİLDE GİZLİ) -->
-            <div class="flex-1 max-w-md mx-4 search-input-container">
-                <div class="relative group">
-                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-civil-red transition-colors"></i>
-                    <input type="text" id="globalSearch" placeholder="İşlem ara... (örn: iade, setcard, şifre)" 
-                           class="w-full bg-slate-100 border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-civil-red/20 focus:bg-white transition-all"
-                           oninput="handleSearch(this.value)">
-                </div>
-            </div>
-
-            <div class="flex items-center gap-2">
-                <span class="hidden md:block text-sm font-medium text-slate-600">Merhaba, İyi Çalışmalar! 👋</span>
-            </div>
         </header>
 
         <!-- Scroll Edilebilir İçerik -->
@@ -373,7 +355,7 @@
             <section id="dashboard" class="content-section fade-in block">
                 <div class="mb-8">
                     <h1 class="text-2xl font-bold text-slate-800 mb-2">Hızlı Erişim Menüsü</h1>
-                    <p class="text-slate-500">Yapmak istediğiniz işlemi seçin veya yukarıdan arama yapın.</p>
+                    <p class="text-slate-500">Yapmak istediğiniz işlemi seçin.</p>
                 </div>
 
                 <!-- Hızlı Kartlar Grid -->
@@ -384,7 +366,6 @@
                             <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">Kasa Raporları</h3>
-                        <p class="text-xs text-slate-500 mt-1">Hareket Özeti</p>
                     </div>
 
                     <div onclick="showSection('pos-islemleri')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
@@ -392,7 +373,6 @@
                             <i data-lucide="credit-card" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">POS İşlemleri</h3>
-                        <p class="text-xs text-slate-500 mt-1">İade, İptal, QR, Gün Sonu</p>
                     </div>
 
                     <div onclick="showSection('nakit-yatirma')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
@@ -400,7 +380,6 @@
                             <i data-lucide="wallet-2" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">Nakit Yatırma</h3>
-                        <p class="text-xs text-slate-500 mt-1">Nakit Yekün 0 Kontrolü</p>
                     </div>
                     
                     <!-- 2. Sıra -->
@@ -409,7 +388,6 @@
                             <i data-lucide="trending-down" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">Hatalı İşlemler</h3>
-                        <p class="text-xs text-slate-500 mt-1">Bankalar arası düzeltmeler</p>
                     </div>
                     
                     <div onclick="showSection('masraf-duzeltme')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
@@ -417,7 +395,6 @@
                             <i data-lucide="coins" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">Masraf Girişi</h3>
-                        <p class="text-xs text-slate-500 mt-1">Fazla/Açık ve Fiyat Hatası</p>
                     </div>
 
 
@@ -426,7 +403,6 @@
                             <i data-lucide="gift" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">Hediye Kartları</h3>
-                        <p class="text-xs text-slate-500 mt-1">Chippin, iWallet, Setcard ...</p>
                     </div>
 
                     <div onclick="showSection('fatura-portal')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
@@ -434,15 +410,13 @@
                             <i data-lucide="file-text" class="w-5 h-5"></i>
                         </div>
                         <h3 class="font-semibold text-slate-800">Online Alışveriş</h3>
-                        <p class="text-xs text-slate-500 mt-1">Fatura Bulma</p>
                     </div>
 
                     <div onclick="showSection('taksitler')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
                         <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mb-3 group-hover:bg-pink-200 transition-colors">
                             <i data-lucide="percent" class="w-5 h-5"></i>
                         </div>
-                        <h3 class="font-semibold text-slate-800">Taksit Seçenekleri</h3>
-                        <p class="text-xs text-slate-500 mt-1">Kartlar</p>
+                        <h3 class="font-semibold text-slate-800">Taksit İşlemleri</h3>
                     </div>
                 </div>
 
