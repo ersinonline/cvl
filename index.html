@@ -1495,14 +1495,22 @@
     </script>
 
 
-        <script>
+    <script>
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/sw.js')
         .then(() => console.log("Service worker başarıyla yüklendi"))
         .catch(err => console.log("SW hatası:", err));
     }
     </script>
-    
+
+    <script>
+    if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js")
+        .then(() => console.log("Service Worker aktif (offline mod hazır)."))
+        .catch(err => console.log("Service Worker hatası:", err));
+    }
+    </script>
+
         
 </body>
 </html>
