@@ -13,30 +13,70 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --cvl-primary: #dd3612;
+            --cvl-primary-strong: #c22f0f;
+            --cvl-ink: #1f2937;
+            --cvl-muted: #4b5563;
+            --cvl-surface: #ffffff;
+            --cvl-soft: #fff3f1;
+            --cvl-border: rgba(0, 0, 0, 0.05);
+        }
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(180deg, #fef2ef 0%, #f6f7fb 30%, #f6f7fb 100%);
-            color: #1f2937;
+            background: radial-gradient(circle at 20% 20%, rgba(221, 54, 18, 0.06), transparent 28%),
+                        linear-gradient(180deg, #fdf2ec 0%, #f6f7fb 40%, #f6f7fb 100%);
+            color: var(--cvl-ink);
             scroll-behavior: smooth; /* Yumuşak kaydırma için */
             min-height: 100vh;
         }
         .container {
-            max-width: 1160px;
+            max-width: 1180px;
             margin: 0 auto 40px;
             padding: clamp(14px, 3vw, 28px);
         }
+        .page-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 16px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(221, 54, 18, 0.12);
+            border-radius: 14px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+            backdrop-filter: blur(6px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+        .page-topbar .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 800;
+            color: var(--cvl-primary-strong);
+        }
+        .page-topbar .pulse {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.18);
+        }
         .page-hero {
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1.6fr 1fr;
             gap: 20px;
-            background: radial-gradient(circle at 10% 10%, rgba(221, 54, 18, 0.12), transparent 35%),
-                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.9), transparent 40%),
-                        linear-gradient(135deg, #ffffff 0%, #fff3f1 100%);
+            background: radial-gradient(circle at 12% 12%, rgba(221, 54, 18, 0.16), transparent 34%),
+                        radial-gradient(circle at 90% 10%, rgba(255, 255, 255, 0.9), transparent 40%),
+                        linear-gradient(135deg, #ffffff 0%, #fff5f3 100%);
             border: 1px solid rgba(221, 54, 18, 0.14);
             box-shadow: 0 12px 30px rgba(221, 54, 18, 0.08);
             border-radius: 20px;
             padding: clamp(18px, 3vw, 26px);
-            margin-bottom: 26px;
+            margin-bottom: 18px;
             position: relative;
             overflow: hidden;
         }
@@ -51,11 +91,11 @@
         .hero-text h1 {
             font-size: clamp(1.9rem, 3vw, 2.6rem);
             font-weight: 800;
-            color: #c22f0f;
+            color: var(--cvl-primary-strong);
             margin-bottom: 8px;
         }
         .hero-text p {
-            color: #374151;
+            color: var(--cvl-muted);
             line-height: 1.6;
             margin-bottom: 16px;
         }
@@ -65,7 +105,7 @@
             gap: 8px;
             padding: 6px 12px;
             border-radius: 999px;
-            background: rgba(221, 54, 18, 0.08);
+            background: rgba(221, 54, 18, 0.1);
             color: #9a230b;
             font-weight: 700;
             text-transform: uppercase;
@@ -84,11 +124,11 @@
             gap: 6px;
             padding: 8px 12px;
             border-radius: 12px;
-            background: #fff;
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            background: var(--cvl-surface);
+            border: 1px solid var(--cvl-border);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
             font-weight: 600;
-            color: #1f2937;
+            color: var(--cvl-ink);
         }
         .hero-actions {
             display: flex;
@@ -101,7 +141,7 @@
             gap: 8px;
             padding: 12px 16px;
             border-radius: 12px;
-            background: #dd3612;
+            background: var(--cvl-primary);
             color: #fff;
             font-weight: 700;
             border: none;
@@ -111,12 +151,12 @@
         }
         .pill-button:hover {
             transform: translateY(-1px);
-            background: #c22f0f;
+            background: var(--cvl-primary-strong);
             box-shadow: 0 12px 28px rgba(194, 47, 15, 0.26);
         }
         .pill-button.secondary {
             background: #fff;
-            color: #c22f0f;
+            color: var(--cvl-primary-strong);
             border: 1px solid rgba(194, 47, 15, 0.35);
             box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
         }
@@ -130,24 +170,48 @@
             align-self: center;
         }
         .stat-card {
-            background: #fff;
+            background: var(--cvl-surface);
             padding: 16px;
             border-radius: 14px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--cvl-border);
             box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
         }
         .stat-number {
             font-size: 1.8rem;
             font-weight: 800;
-            color: #c22f0f;
+            color: var(--cvl-primary-strong);
         }
         .stat-label {
-            color: #4b5563;
+            color: var(--cvl-muted);
             margin-top: 4px;
             font-weight: 600;
         }
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin: 18px 0 12px;
+        }
+        .shortcut-card {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding: 12px 14px;
+            border-radius: 12px;
+            background: #fff;
+            border: 1px solid rgba(221, 54, 18, 0.12);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.18s ease;
+        }
+        .shortcut-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+        }
+        .shortcut-card .title { font-weight: 700; color: var(--cvl-ink); }
+        .shortcut-card .hint { color: var(--cvl-muted); font-size: 0.95em; }
         .card {
-            background-color: #fff;
+            background-color: var(--cvl-surface);
             border-radius: 14px;
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
             margin-bottom: 22px;
@@ -333,14 +397,15 @@
             justify-content: center;
             margin-bottom: 24px;
             padding: 12px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.92);
             border-radius: 14px;
             box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
             position: sticky;
             top: 14px;
-            z-index: 999;
+            z-index: 900;
             backdrop-filter: saturate(180%) blur(8px);
             border: 1px solid rgba(221, 54, 18, 0.12);
+            overflow-x: auto;
         }
         .quick-links {
             display: flex;
@@ -365,9 +430,9 @@
         }
         .section-select {
             padding: 10px 18px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 0.95em;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.98em;
             cursor: pointer;
             background-color: #fef2f2; /* Çok açık kırmızı */
             color: #dd3612; /* Civil rengi */
@@ -392,6 +457,7 @@
 
         .section-content-wrapper {
             display: none; /* Varsayılan olarak tüm bölümleri gizle */
+            scroll-margin-top: 120px;
         }
         .section-content-wrapper.active {
             display: block; /* Aktif olan bölümü göster */
@@ -520,100 +586,81 @@
             transform: translateY(0);
         }
         .llm-response {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: #ffebeb; /* Çok açık kırmızı */
-            border-radius: 8px;
-            border: 1px solid #fcdada; /* Açık kırmızı border */
-            white-space: pre-wrap; /* Metin formatını koru */
-            font-size: 0.95em;
-            color: #c22f0f; /* Koyu Civil rengi */
-            min-height: 50px;
-            display: flex;
+            white-space: pre-wrap;
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #fca5a5;
+            padding: 12px;
+            margin-top: 10px;
+            min-height: 46px;
+            transition: all 0.2s ease;
+        }
+        .llm-response.loading { opacity: 0.7; }
+        .mobile-sticky-actions {
+            position: fixed;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: none;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(221, 54, 18, 0.18);
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.15);
+            z-index: 1200;
+            backdrop-filter: blur(8px);
+        }
+        .mobile-sticky-actions button {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
+            gap: 8px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(0,0,0,0.05);
+            background: #fff7f7;
+            color: var(--cvl-primary-strong);
+            font-weight: 700;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
         }
-        .llm-response.loading {
-            font-style: italic;
-            color: #6b7280;
+        .mobile-sticky-actions .primary { background: var(--cvl-primary); color: #fff; border-color: rgba(0,0,0,0.08); }
+        .mobile-sticky-actions .ghost { background: #fff; color: var(--cvl-primary-strong); }
+        @media (max-width: 1024px) {
+            .page-hero { grid-template-columns: 1fr; }
+            .page-topbar { top: 0; margin-left: 6px; margin-right: 6px; }
+            .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
-
         @media (max-width: 768px) {
-            .step-title {
-                font-size: 1.2em;
-            }
-            .section-title {
-                font-size: 1.8em;
-            }
-            .page-hero {
-                grid-template-columns: 1fr;
-            }
-            .hero-actions .pill-button {
-                width: 100%;
-                justify-content: center;
-            }
-            .hero-stats {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            }
-            .section-select {
-                width: 100%;
-                min-width: unset;
-            }
-            .container {
-                padding: 15px;
-            }
-            .card {
-                padding: 18px;
-            }
-            .step-number {
-                width: 30px;
-                height: 30px;
-            }
-            .step-content .flex {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .step-content .w-40 {
-                width: 100%;
-            }
-            .main-section-header {
-                padding: 12px 20px;
-            }
-            .main-section-header h2 {
-                font-size: 1.8em;
-            }
-            .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            }
-            .llm-assistant-card button { width: 100%; }
+            .container { padding: 14px 12px 110px; }
+            .navigation-dropdown-container { top: 10px; padding: 10px; }
+            .quick-links { overflow-x: auto; flex-wrap: nowrap; }
+            .hero-actions { flex-direction: column; }
+            .hero-stats { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+            .mobile-sticky-actions { display: flex; }
+            .card { padding: 20px; }
+            .page-hero { gap: 14px; }
+            .shortcut-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+            .section-select { width: 100%; min-width: unset; }
+            .card-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
         }
-
-        @media (max-width: 480px) {
-            .section-title {
-                font-size: clamp(1.6rem, 5vw, 2rem);
-            }
-            .main-section-header h2 {
-                font-size: clamp(1.4rem, 4.5vw, 1.8rem);
-            }
-            .card-grid {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-                gap: 14px;
-            }
-            .card {
-                padding: 16px;
-            }
-            .section-select {
-                font-size: 0.95rem;
-            }
-            .quick-links {
-                gap: 8px;
-            }
+        @media (max-width: 520px) {
+            .page-topbar { flex-direction: column; align-items: flex-start; }
+            .hero-badges { gap: 6px; }
+            .hero-actions { width: 100%; }
+            .pill-button { justify-content: center; width: 100%; }
+            .shortcut-grid { grid-template-columns: 1fr; }
+            .section-select { font-size: 0.95rem; }
+            .card { padding: 16px; }
+            .main-section-header h2 { font-size: clamp(1.4rem, 4.5vw, 1.8rem); }
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="page-topbar">
+            <div class="brand"><span class="pulse"></span> Civil Mağaza Asistanı</div>
+            <div class="text-sm text-gray-600">Gün sonu, POS ve alternatif ödemeler tek sayfada</div>
+        </div>
         <div class="page-hero">
             <div class="hero-text">
                 <div class="hero-eyebrow">Gün sonu kolaylaştırıldı</div>
@@ -645,6 +692,29 @@
                     <div class="stat-number">7/24</div>
                     <div class="stat-label">yardım asistanı</div>
                 </div>
+            </div>
+        </div>
+
+        <div class="shortcut-grid">
+            <div class="shortcut-card" data-section-target="section-pos-kullanimi">
+                <span class="title">POS İşlemleri</span>
+                <span class="hint">Taksit, QR ve slip akışları</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-hareket-ozeti">
+                <span class="title">Hareket Özeti</span>
+                <span class="hint">Kasiyer bazında rapor</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-islem-kaymasi">
+                <span class="title">İşlem Kayması</span>
+                <span class="hint">Bankalar arası düzeltme</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-nakit-yatirma">
+                <span class="title">Nakit Yatırma</span>
+                <span class="hint">Gün sonu yekün sıfırlama</span>
+            </div>
+            <div class="shortcut-card" data-section-target="section-taksit-secenekleri">
+                <span class="title">Taksit Seçenekleri</span>
+                <span class="hint">World ve bonus kart detayları</span>
             </div>
         </div>
 
@@ -1858,6 +1928,12 @@
             <p>&copy; 2025 Kasa Kapanışı Rehberi <br> Hazırlayan: Mall of Istanbul Kasa Ekibi </p>
         </footer>
 
+        <div class="mobile-sticky-actions">
+            <button id="mobileNavBtn" class="ghost">📂 Bölüm Seç</button>
+            <button id="mobileHelpBtn" class="primary">🤖 Asistan</button>
+            <button id="mobileHotBtn" class="ghost" data-section-target="section-chippin">⚡ Popüler</button>
+        </div>
+
         </div>
 
     <div id="imageModal" class="image-modal">
@@ -2025,6 +2101,24 @@
             const chatInput = document.getElementById('chatInput');
             const sendChatBtn = document.getElementById('sendChatBtn');
             const sectionDropdown = document.getElementById('sectionSelector');
+            const navContainer = document.querySelector('.navigation-dropdown-container');
+            const mobileNavBtn = document.getElementById('mobileNavBtn');
+            const mobileHelpBtn = document.getElementById('mobileHelpBtn');
+
+            if (mobileNavBtn) {
+                mobileNavBtn.addEventListener('click', () => {
+                    if (navContainer) {
+                        navContainer.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    sectionSelector.focus();
+                });
+            }
+            if (mobileHelpBtn) {
+                mobileHelpBtn.addEventListener('click', () => {
+                    chatWidget.classList.add('active');
+                    chatInput.focus();
+                });
+            }
 
             const appendMessage = (text, who) => {
                 const div = document.createElement('div');
