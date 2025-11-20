@@ -1,225 +1,383 @@
-body {
-    background-color: #f8fafc;
-    font-family: 'Inter', sans-serif;
+// === API Ayarları (şu an kullanılmıyor ama ilerde lazım olabilir) ===
+const API_KEY = "";
+const LLM_MODEL = "gemini-2.5-flash-preview-09-2025";
+const API_URL =
+  "https://generativelanguage.googleapis.com/v1beta/models/" +
+  LLM_MODEL +
+  ":generateContent?key=" +
+  API_KEY;
+
+// === Lucide ikonları yükle ===
+document.addEventListener("DOMContentLoaded", () => {
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+
+  // Başlangıçta Ana Sayfayı Göster
+  showSection("dashboard");
+
+  // Chat form submit
+  const chatForm = document.getElementById("chatForm");
+  const llmInput = document.getElementById("llmInput");
+
+  if (chatForm) {
+    chatForm.addEventListener("submit", handleChatRequest);
+  }
+
+  // Enter (shift'siz) ile gönderme
+  if (llmInput) {
+    llmInput.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        if (chatForm) {
+          chatForm.dispatchEvent(new Event("submit", { cancelable: true }));
+        }
+      }
+    });
+  }
+
+  // Service Worker kaydı
+  registerServiceWorker();
+});
+
+// === Service Worker ===
+function registerServiceWorker() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then(() => console.log("Service Worker aktif (offline mod hazır)."))
+      .catch((err) => console.log("Service Worker hatası:", err));
+  }
 }
 
-/* Özel Scrollbar */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: #f1f1f1; 
-}
-::-webkit-scrollbar-thumb {
-    background: #cbd5e1; 
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #94a3b8; 
-}
-
-/* Sidebar Animasyonları */
-.sidebar-transition {
-    transition: transform 0.3s ease-in-out;
-}
-
-/* Kart Stilleri */
-.guide-card {
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    border: 1px solid #e2e8f0;
-}
-
-/* Step Stilleri */
-.step-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-}
-.step-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-}
-.step-number {
-    background-color: #dd3612;
-    color: #fff;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: 700;
-    font-size: 1em;
-    margin-right: 12px;
-    flex-shrink: 0;
-}
-.step-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #1a202c;
-}
-.step-content p {
-    font-size: 0.95em;
-    line-height: 1.6;
-    color: #4a5568;
-    margin-bottom: 10px;
-}
-.step-image {
-    width: 100%;
-    max-width: 600px;
-    border-radius: 8px;
-    margin-top: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: opacity 0.2s;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-.step-image:hover {
-    opacity: 0.9;
-}
-
-/* Görüntü Modalı */
-.image-modal {
-    backdrop-filter: blur(5px);
-}
-
-/* Yumuşak Geçiş */
-.fade-in {
-    animation: fadeIn 0.3s ease-in;
-}
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Kart Resmi Stilleri (Taksitler için) */
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
-}
-.card-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    background-color: #f9fafb;
-    padding: 10px 5px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    border: 1px solid #f3f4f6;
-}
-.card-item img {
-    max-width: 130px;
-    height: auto;
-    border-radius: 4px;
-    margin-bottom: 8px;
-}
-
-/* Chat Widget Styles */
-.chat-widget {
-    position: fixed;
-    bottom: 4px;
-    right: 4px;
-    width: 95%;
-    max-width: 400px;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    transform: translateY(120%);
-    transition: transform 0.3s ease-in-out;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-}
-.chat-widget.active {
-     transform: translateY(0);
-}
-
-.llm-response {
-    white-space: pre-wrap;
-    font-size: 0.95em;
-    color: #333;
-    min-height: 50px;
-    text-align: left;
-}
-.llm-response.loading {
-    font-style: italic;
-    color: #6b7280;
-    text-align: center;
-}
-.chat-input-area {
-    resize: none;
-    min-height: 60px !important;
-    max-height: 120px;
-}
-
-/* Hızlı Erişim Kartları Düzeni (3x3) */
-@media (min-width: 1024px) {
-    .quick-access-grid {
-        grid-template-columns: repeat(3, minmax(200px, 1fr)); 
-        gap: 20px;
+// === Kılavuz içeriğini düz metin olarak almak için (şu an kullanılmıyor) ===
+function getFullContextText() {
+  let context = "";
+  const sections = document.querySelectorAll(".content-section");
+  sections.forEach((section) => {
+    const title = section.querySelector("h2");
+    if (title) {
+      context += `\n--- BÖLÜM: ${title.textContent.trim()} ---\n`;
     }
-    .search-input-container {
-        display: block;
-    }
-    .mobile-title-container {
-        display: none;
-    }
-}
-@media (max-width: 1023px) {
-    .quick-access-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .search-input-container {
-        display: none;
-    }
-    .mobile-title-container {
-        flex-grow: 1;
-        text-align: right;
-    }
-}
+    section.querySelectorAll(".step-container").forEach((step) => {
+      const stepTitle = step.querySelector(".step-title");
+      const stepContent = step.querySelector(".step-content p");
+      if (stepTitle && stepContent) {
+        context += `- ${stepTitle.textContent.trim()}: ${stepContent.textContent.trim()}\n`;
+      }
+    });
+  });
 
-@media (max-width: 768px) {
-    .chat-widget {
-        max-width: 95%;
-        bottom: 10px;
-        right: 10px;
-    }
+  const taksitSection = document.getElementById("taksitler");
+  if (taksitSection) {
+    context += "\n--- EK KURALLAR: TAKSİT SEÇENEKLERİ ---\n";
+    taksitSection.querySelectorAll("ul.list-disc li").forEach((li) => {
+      context += `- ${li.textContent.trim()}\n`;
+    });
+    taksitSection.querySelectorAll("h3").forEach((h3) => {
+      context += `- Kural: ${h3.textContent.trim()}\n`;
+    });
+  }
+
+  return context;
 }
 
-@media (max-width: 768px) {
-    .chat-widget {
-        width: 85% !important;
-        right: 12px !important;
-        bottom: 12px !important;
-        border-radius: 16px !important;
-    }
+// === Basit Anahtar Kelimeye Göre Yönlendirme ===
+function navigateByKeyword(query) {
+  query = query.toLowerCase();
 
-    #floatingChatButton {
-        right: 16px !important;
-        bottom: 16px !important;
+  const keywordMap = {
+    pos: "pos-islemleri",
+    iade: "pos-islemleri",
+    iptal: "pos-islemleri",
+    taksit: "taksitler",
+    vade: "taksitler",
+    chippin: "chippin",
+    setcard: "ozel-odemeler",
+    hediye: "ozel-odemeler",
+    "hediye kartı": "ozel-odemeler",
+    iwallet: "ozel-odemeler",
+    ederned: "ozel-odemeler", // yazım hatalı arayanlar için
+    edenred: "ozel-odemeler", // doğru yazım
+    nakit: "nakit-yatirma",
+    "nakit yatırma": "nakit-yatirma",
+    "kasa hatası": "kasa-duzeltme",
+    "işlem kayması": "kasa-duzeltme",
+    kayma: "kasa-duzeltme",
+    masraf: "masraf-duzeltme",
+    "fiyat hatası": "masraf-duzeltme",
+    fatura: "fatura-portal",
+    portal: "fatura-portal",
+    online: "fatura-portal",
+    alışveriş: "fatura-portal",
+    rapor: "raporlar",
+  };
+
+  for (const [keyword, sectionId] of Object.entries(keywordMap)) {
+    if (query.includes(keyword)) {
+      return sectionId;
     }
+  }
+  return null;
 }
 
-@media (max-width: 768px) {
-    #chatWidget {
-        width: 85% !important;
-        max-width: 85% !important;
-        right: 12px !important;
-        bottom: 12px !important;
-    }
+// === Chat İşleyicisi ===
+function handleChatRequest(e) {
+  e.preventDefault();
+  const input = document.getElementById("llmInput");
+  const responseArea = document.getElementById("llmResponseArea");
+  const userText = input.value.trim();
 
-    #floatingChatButton {
-        right: 16px !important;
-        bottom: 16px !important;
+  if (!userText) {
+    responseArea.textContent = "Lütfen bir anahtar kelime veya soru girin.";
+    responseArea.classList.remove("hidden");
+    return;
+  }
+
+  addChatMessage(userText, "user");
+  input.value = "";
+
+  const targetSectionId = navigateByKeyword(userText);
+
+  if (targetSectionId) {
+    showSection(targetSectionId);
+    const pageTitleEl = document.getElementById("pageTitle");
+    const currentTitle = pageTitleEl ? pageTitleEl.innerText : "";
+    addChatMessage(
+      `"${userText}" anahtar kelimesi ile ilgili olarak sizi "${currentTitle}" bölümüne yönlendiriyorum.`,
+      "bot"
+    );
+
+    // Yönlendirme başarılıysa chat'i kapat
+    closeChat();
+  } else {
+    addChatMessage(
+      `"${userText}" için özel bir sayfa bulunamadı, ancak yardımcı olmaya hazırım.`,
+      "bot"
+    );
+  }
+}
+
+// === Mesaj Ekleme ===
+function addChatMessage(text, sender) {
+  const messagesContainer = document.getElementById("chatMessages");
+  if (!messagesContainer) return;
+
+  const messageDiv = document.createElement("div");
+  const messageSpan = document.createElement("span");
+
+  messageDiv.className = `message mb-2 ${
+    sender === "user" ? "text-right" : "text-left"
+  }`;
+
+  messageSpan.className = `inline-block p-2 rounded-lg max-w-[85%] ${
+    sender === "user"
+      ? "bg-civil-red text-white"
+      : "bg-slate-200 text-slate-800"
+  }`;
+  messageSpan.textContent = text;
+
+  messageDiv.appendChild(messageSpan);
+  messagesContainer.appendChild(messageDiv);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+// === Navigasyon & Arayüz Fonksiyonları ===
+function showSection(sectionId) {
+  if (window.innerWidth < 1024) {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("mobileOverlay");
+    if (sidebar) sidebar.classList.add("-translate-x-full");
+    if (overlay) overlay.classList.add("hidden");
+  }
+
+  document.querySelectorAll(".content-section").forEach((el) => {
+    el.classList.add("hidden");
+    el.classList.remove("block");
+  });
+
+  const target = document.getElementById(sectionId);
+  if (target) {
+    target.classList.remove("hidden");
+    target.classList.add("block");
+
+    const titleMap = {
+      dashboard: "Ana Sayfa",
+      raporlar: "Kasa Raporları",
+      "pos-islemleri": "POS İşlemleri",
+      "ozel-odemeler": "Hediye Kartları",
+      "nakit-yatirma": "Nakit Yatırma",
+      "kasa-duzeltme": "İşlem Kayması Düzeltme",
+      "masraf-duzeltme": "Masraf / Fiyat Düzeltme",
+      "fatura-portal": "E-Fatura & Portal",
+      taksitler: "Taksit Seçenekleri",
+      sablon: "Şablon",
+      "havale-eft": "Havale / EFT",
+      chippin: "Chippin ile Ödeme",
+    };
+
+    const pageTitleEl = document.getElementById("pageTitle");
+    if (pageTitleEl) {
+      pageTitleEl.innerText = titleMap[sectionId] || "Kasa Asistanı";
     }
+  }
+
+  document.querySelectorAll(".nav-item").forEach((btn) => {
+    if (btn.dataset.target === sectionId) {
+      btn.classList.add("bg-civil-light", "text-civil-red");
+      btn.classList.remove("text-slate-600");
+    } else {
+      btn.classList.remove("bg-civil-light", "text-civil-red");
+      btn.classList.add("text-slate-600");
+    }
+  });
+
+  const contentArea = document.getElementById("contentArea");
+  if (contentArea) {
+    contentArea.scrollTo(0, 0);
+  }
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById("sidebar");
+  const overlay = document.getElementById("mobileOverlay");
+
+  if (!sidebar || !overlay) return;
+
+  if (sidebar.classList.contains("-translate-x-full")) {
+    sidebar.classList.remove("-translate-x-full");
+    overlay.classList.remove("hidden");
+  } else {
+    sidebar.classList.add("-translate-x-full");
+    overlay.classList.add("hidden");
+  }
+}
+
+// Basit text search (kılavuz içi)
+function handleSearch(query) {
+  query = query.toLowerCase();
+  const searchItems = document.querySelectorAll(".step-container");
+
+  if (query.length > 2) {
+    document.querySelectorAll(".content-section").forEach((sec) => {
+      sec.classList.add("hidden");
+      sec.classList.remove("block");
+    });
+    const dashboard = document.getElementById("dashboard");
+    if (dashboard) dashboard.classList.add("hidden");
+
+    const mobileTitle = document.getElementById("mobileTitle");
+    const pageTitle = document.getElementById("pageTitle");
+    if (mobileTitle) mobileTitle.innerText = "Arama Sonuçları";
+    if (pageTitle) pageTitle.innerText = "Arama Sonuçları";
+
+    searchItems.forEach((item) => {
+      if (item.innerText.toLowerCase().includes(query)) {
+        item.classList.remove("hidden");
+        const section = item.closest(".content-section");
+        if (section) {
+          section.classList.remove("hidden");
+          section.classList.add("block");
+        }
+      } else {
+        item.classList.add("hidden");
+      }
+    });
+
+    document.querySelectorAll(".content-section").forEach((sec) => {
+      const visibleItems = sec.querySelectorAll(".step-container:not(.hidden)")
+        .length;
+      if (visibleItems === 0) {
+        sec.classList.add("hidden");
+      }
+    });
+  } else if (query.length === 0) {
+    showSection("dashboard");
+    const mobileTitle = document.getElementById("mobileTitle");
+    if (mobileTitle) mobileTitle.innerText = "Kasa Yardımcım";
+    searchItems.forEach((item) => item.classList.remove("hidden"));
+  }
+}
+
+// Kopyalama
+function copyToClipboard(elementId) {
+  const el = document.getElementById(elementId);
+  if (!el) return;
+
+  el.select();
+  document.execCommand("copy");
+
+  const btn = el.nextElementSibling;
+  if (!btn) return;
+
+  const originalText = btn.innerText;
+  btn.innerText = "Kopyalandı!";
+  btn.classList.add("text-green-600", "bg-green-50");
+
+  setTimeout(() => {
+    btn.innerText = originalText;
+    btn.classList.remove("text-green-600", "bg-green-50");
+  }, 2000);
+}
+
+// Şifre göster/gizle (şu an kullanılmıyor ama dursun)
+function togglePassword(inputId) {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+  input.type = input.type === "password" ? "text" : "password";
+}
+
+// Görsel modal
+function openModal(src) {
+  const modal = document.getElementById("imageModal");
+  const img = document.getElementById("modalImage");
+  if (!modal || !img) return;
+
+  img.src = src;
+  modal.classList.remove("hidden");
+  setTimeout(() => img.classList.remove("scale-95"), 10);
+}
+
+function closeModal() {
+  const modal = document.getElementById("imageModal");
+  const img = document.getElementById("modalImage");
+  if (!modal || !img) return;
+
+  img.classList.add("scale-95");
+  setTimeout(() => modal.classList.add("hidden"), 200);
+}
+
+// Chat aç/kapat
+function openChat() {
+  const chatWidget = document.getElementById("chatWidget");
+  const floatingBtn = document.getElementById("floatingChatButton");
+  const responseArea = document.getElementById("llmResponseArea");
+  const input = document.getElementById("llmInput");
+  const messagesContainer = document.getElementById("chatMessages");
+
+  if (chatWidget) chatWidget.classList.remove("translate-y-[120%]");
+  if (floatingBtn) floatingBtn.classList.add("hidden");
+  if (responseArea) responseArea.classList.add("hidden");
+  if (input) input.value = "";
+  if (messagesContainer) {
+    messagesContainer.innerHTML = "";
+    addChatMessage(
+      "Hangi işlemle ilgili yardıma ihtiyacınız var? (Örn: setcard, nakit yatırma, taksit..)",
+      "bot"
+    );
+  }
+
+  if (window.innerWidth < 1024) {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("mobileOverlay");
+    if (sidebar) sidebar.classList.add("-translate-x-full");
+    if (overlay) overlay.classList.add("hidden");
+  }
+}
+
+function closeChat() {
+  const chatWidget = document.getElementById("chatWidget");
+  const floatingBtn = document.getElementById("floatingChatButton");
+  if (chatWidget) chatWidget.classList.add("translate-y-[120%]");
+  if (floatingBtn) floatingBtn.classList.remove("hidden");
 }
