@@ -1,1682 +1,732 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-        
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPWVHCCP00"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-EPWVHCCP00');
-    </script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="robots" content="noindex, nofollow">
-    <title>Civil Kasa Asistanı</title>
-    <!-- Favicon -->
-    <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
-    <!-- PWA Manifest Eklendi -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts (Inter) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons (Lucide) -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
 
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        civil: {
-                            red: '#dd3612',
-                            dark: '#c22f0f',
-                            light: '#fff1f0',
-                            bg: '#f8fafc'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            civil: {
+              red: '#dd3612',
+              dark: '#c22f0f',
+              light: '#fff1f0',
+              bg: '#f8fafc'
             }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
         }
-    </script>
+      }
+    }
+  </script>
 
-    <style>
-        body {
-            background-color: #f8fafc;
-            font-family: 'Inter', sans-serif;
-        }
-        
-        /* Özel Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1; 
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1; 
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8; 
-        }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Icons (Lucide) -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- React -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-        /* Sidebar Animasyonları */
-        .sidebar-transition {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        /* Kart Stilleri */
-        .guide-card {
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e2e8f0;
-        }
-        /* Yeni Step Stilleri */
-        .step-container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        .step-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 12px;
-        }
-        .step-number {
-            background-color: #dd3612;
-            color: #fff;
-            border-radius: 50%;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 700;
-            font-size: 1em;
-            margin-right: 12px;
-            flex-shrink: 0;
-        }
-        .step-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1a202c;
-        }
-        .step-content p {
-            font-size: 0.95em;
-            line-height: 1.6;
-            color: #4a5568;
-            margin-bottom: 10px;
-        }
-        .step-image {
-            width: 100%;
-            max-width: 600px;
-            border-radius: 8px;
-            margin-top: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: opacity 0.2s;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .step-image:hover {
-            opacity: 0.9;
-        }
-
-        /* Görüntü Modalı */
-        .image-modal {
-            backdrop-filter: blur(5px);
-        }
-
-        /* Yumuşak Geçiş */
-        .fade-in {
-            animation: fadeIn 0.3s ease-in;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Kart Resmi Stilleri (Taksitler için) */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); /* Daha kompakt mobil uyum */
-            gap: 12px;
-            margin-top: 20px;
-        }
-        .card-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            background-color: #f9fafb;
-            padding: 10px 5px;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            border: 1px solid #f3f4f6;
-        }
-        .card-item img {
-            max-width: 90px;
-            height: auto;
-            border-radius: 4px;
-            margin-bottom: 8px;
-        }
-
-        /* Chat Widget Styles */
-        .chat-widget {
-            position: fixed;
-            bottom: 4px;
-            right: 4px;
-            width: 95%;
-            max-width: 400px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            transform: translateY(120%);
-            transition: transform 0.3s ease-in-out;
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
-        }
-        .chat-widget.active {
-             transform: translateY(0);
-        }
-
-        .llm-response {
-            white-space: pre-wrap;
-            font-size: 0.95em;
-            color: #333;
-            min-height: 50px;
-            text-align: left;
-        }
-        .llm-response.loading {
-            font-style: italic;
-            color: #6b7280;
-            text-align: center;
-        }
-        .chat-input-area {
-            resize: none;
-            min-height: 60px !important;
-            max-height: 120px;
-        }
-
-        /* Hızlı Erişim Kartları Düzeni (3x3) */
-        @media (min-width: 1024px) {
-            .quick-access-grid {
-                /* Masaüstünde 3 sütun ve daha büyük kartlar */
-                grid-template-columns: repeat(3, minmax(200px, 1fr)); 
-                gap: 20px; /* Daha fazla boşluk */
-            }
-            .search-input-container {
-                display: block; /* Masaüstünde arama çubuğu görünür */
-            }
-            .mobile-title-container {
-                display: none;
-            }
-        }
-        @media (max-width: 1023px) {
-            .quick-access-grid {
-                grid-template-columns: repeat(2, minmax(0, 1fr)); /* Mobil/Tablet'te 2 sütun */
-            }
-             .search-input-container {
-                display: none; /* Mobilde arama çubuğunu gizle */
-            }
-             .mobile-title-container {
-                flex-grow: 1;
-                text-align: right; /* Mobilde başlığı sağa hizala */
-            }
-        }
-
-        @media (max-width: 768px) {
-            .chat-widget {
-                max-width: 95%;
-                bottom: 10px;
-                right: 10px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .chat-widget {
-                width: 85% !important;   /* %95 → %85 küçültüldü */
-                right: 12px !important;
-                bottom: 12px !important;
-                border-radius: 16px !important;
-            }
-        
-            #floatingChatButton {
-                right: 16px !important;
-                bottom: 16px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-                #chatWidget {
-                    width: 85% !important;
-                    max-width: 85% !important;
-                    right: 12px !important;
-                    bottom: 12px !important;
-                }
-            
-                #floatingChatButton {
-                    right: 16px !important;
-                    bottom: 16px !important;
-                }
-            }
-
-    </style>
+  <style>
+    body { background-color: #f8fafc; font-family: 'Inter', sans-serif; }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f1f1f1; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    .content-card { box-shadow: 0 4px 6px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+    .step-number { background-color: #dd3612; color: #fff; border-radius: 9999px; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 700; }
+    .step-image { width: 100%; max-width: 640px; border-radius: 10px; margin-top: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); cursor: pointer; transition: opacity 0.2s ease; }
+    .step-image:hover { opacity: 0.9; }
+    .chat-widget { box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
+    @media (min-width: 1024px) { .quick-grid { grid-template-columns: repeat(3, minmax(200px, 1fr)); } }
+    @media (max-width: 1023px) { .quick-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  </style>
 </head>
 <body class="text-slate-800 h-screen flex overflow-hidden">
-    <script>
-        const API_KEY = ""; 
-        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=" + API_KEY;
-        const LLM_MODEL = "gemini-2.5-flash-preview-09-2025";
-    </script>
-  
-        <button 
-          onclick="openChat()" 
-          id="floatingChatButton"
-          class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center lg:hidden">
-          <i data-lucide="bot" class="w-6 h-6"></i>
-      </button>
+  <div id="root" class="flex-1 flex flex-col"></div>
 
-    
-    <!-- MOBİL OVERLAY (Sidebar açıkken arka planı karartır) -->
-    <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <script type="text/babel" data-presets="env,react">
+    const { useState, useEffect } = React;
 
-    <!-- SIDEBAR (MENÜ) -->
-    <aside id="sidebar" class="bg-white w-72 fixed inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto border-r border-slate-200 flex flex-col sidebar-transition shadow-2xl lg:shadow-none">
-        <!-- Logo Alanı -->
-        <div class="h-16 flex items-center px-6 border-b border-slate-100 bg-civil-red">
-            <div class="flex items-center gap-3 text-white">
-                <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-                <span class="font-bold text-xl tracking-wide">Kasa Asistanı</span>
+    const navItems = [
+      { id: 'dashboard', title: 'Ana Sayfa', icon: 'layout-grid' },
+      { id: 'raporlar', title: 'Kasa Raporları', icon: 'bar-chart-2' },
+      { id: 'pos-islemleri', title: 'POS İşlemleri', icon: 'credit-card' },
+      { id: 'ozel-odemeler', title: 'Chippin & Hediye Kartları', icon: 'gift' },
+      { id: 'nakit-yatirma', title: 'Nakit Yatırma', icon: 'wallet-2' },
+      { id: 'kasa-duzeltme', title: 'İşlem Kayması', icon: 'alert-triangle' },
+      { id: 'masraf-duzeltme', title: 'Masraf Girişi', icon: 'coins' },
+      { id: 'sablon', title: 'Şablon', icon: 'file-spreadsheet' },
+      { id: 'fatura-portal', title: 'E-Fatura & Portal', icon: 'file-text' },
+      { id: 'havale-eft', title: 'Havale / EFT', icon: 'refresh-ccw' },
+      { id: 'taksitler', title: 'Taksitler', icon: 'percent' },
+    ];
+
+    const quickLinks = [
+      'raporlar','pos-islemleri','nakit-yatirma','kasa-duzeltme','masraf-duzeltme','ozel-odemeler','sablon','fatura-portal','havale-eft','taksitler'
+    ];
+
+    const policyHighlights = [
+      {
+        title: 'QR Ödeme Banka Seçimi',
+        color: 'amber',
+        details: [
+          'Müşteri hangi banka hesabından QR ile ödeme yapacaksa POS\'ta o bankayı seçin.',
+          'Anlaşmamız olmayan bankalarda öncelikli olarak Yapı Kredi seçilerek QR ödeme alınmalıdır.'
+        ]
+      },
+      {
+        title: 'POS İade Limiti Aşıldı Uyarısı',
+        color: 'rose',
+        details: [
+          'Mağazadan limit aşımı işlemi yapılmaz, iade merkez muhasebe tarafından yapılır.',
+          'Fatura, slip, uzun barkod ve iade tutarı ile birlikte ztomruk@civil.com.tr, akurt@civil.com.tr, ksezgin@civil.com.tr adreslerine mail gönderin.',
+          'Mağaza ürünleri sistemden iade almamalıdır; merkez talimat oluşturduktan sonra ürünler envantere eklenir.',
+          'İade süresi banka ve müşteri anlaşmasına bağlıdır, kesin gün verilmez.'
+        ]
+      },
+      {
+        title: 'Kısmi / Çapraz İadeler',
+        color: 'indigo',
+        details: [
+          'Tüm bankalarda kısmi iade mümkündür.',
+          'Mağaza çapraz iade yapamıyorsa POS terminal no ve üye işyeri no bilgilerini aynı muhasebe adreslerine iletin.'
+        ]
+      },
+      {
+        title: 'Ödeme Araçları Mutabakatı',
+        color: 'emerald',
+        details: [
+          'Edenred, Setcard ve iWallet tutarlarını portal ile sistem arasında her akşam karşılaştırın.',
+          'Hatalı kayıt varsa "Hatalı Girilmiş Ödeme Kayıtlarını Yeniden Düzenle" raporundan düzeltin.'
+        ]
+      },
+      {
+        title: 'Nakit Çıkışı Fiş Tipi',
+        color: 'cyan',
+        details: ['Nakit çıkışı yapılırken fiş tipi mutlaka "Tediyeden" seçilmeli, tahsil olmamalı.']
+      },
+      {
+        title: 'Hatalı İşlemler Kuralı',
+        color: 'slate',
+        details: ['Karşılığı olan işlemler düzeltilebilir, karşılığı olmayan işlemler düzeltilmez.']
+      }
+    ];
+
+    const SectionContainer = ({ id, activeSection, children }) => (
+      <section className={`${activeSection === id ? 'block' : 'hidden'} fade-in`}>{children}</section>
+    );
+
+    const StepCard = ({ number, title, children }) => (
+      <div className="content-card bg-white rounded-xl p-5 space-y-3">
+        {title && (
+          <div className="flex items-center gap-3 mb-1">
+            {number && <div className="step-number text-sm">{number}</div>}
+            <h3 className="text-lg font-semibold text-slate-800">{title}</h3>
+          </div>
+        )}
+        <div className="space-y-3 text-slate-700 text-sm leading-relaxed">{children}</div>
+      </div>
+    );
+
+    const Image = ({ src, alt }) => (
+      <img src={src} alt={alt} className="step-image" onClick={() => openModal(src)} />
+    );
+
+    const PaymentFlow = ({ title, color, steps }) => (
+      <div className="content-card bg-white rounded-xl p-5 space-y-4">
+        <h3 className={`text-xl font-bold flex items-center gap-2 text-${color}-700`}>
+          <i data-lucide="credit-card" className="w-6 h-6"></i> {title}
+        </h3>
+        <div className="grid md:grid-cols-2 gap-4 text-sm text-slate-700">
+          {steps.map((step, idx) => (
+            <div key={idx} className="space-y-3">
+              <p className="font-semibold">{step.title}</p>
+              {step.image && <Image src={step.image} alt={step.title} />}
             </div>
-            <button class="lg:hidden ml-auto text-white" onclick="toggleSidebar()">
-                <i data-lucide="x" class="w-6 h-6"></i>
-            </button>
+          ))}
         </div>
+      </div>
+    );
 
-        <!-- Menü Linkleri -->
-        <nav class="flex-1 overflow-y-auto p-4 space-y-1">
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Genel</div>
-            
-            <button onclick="showSection('dashboard')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors active-nav" data-target="dashboard">
-                <i data-lucide="layout-grid" class="w-5 h-5"></i>
-                Ana Sayfa
-            </button>
-
-            <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-2 px-2">İşlemler</div>
-
-            <button onclick="showSection('raporlar')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="raporlar">
-                <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                Kasa Raporları
-            </button>
-
-            <button onclick="showSection('pos-islemleri')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="pos-islemleri">
-                <i data-lucide="credit-card" class="w-5 h-5"></i>
-                POS İşlemleri
-            </button>
-
-            <button onclick="showSection('ozel-odemeler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="ozel-odemeler">
-                <i data-lucide="gift" class="w-5 h-5"></i>
-                Chippin & Hediye Kartları
-            </button>
-
-            <button onclick="showSection('nakit-yatirma')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="nakit-yatirma">
-                <i data-lucide="wallet-2" class="w-5 h-5"></i>
-                Nakit Yatırma
-            </button>
-
-            <button onclick="showSection('kasa-duzeltme')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="kasa-duzeltme">
-                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                Hatalı İşlemler
-            </button>
-            
-            <button onclick="showSection('masraf-duzeltme')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="masraf-duzeltme">
-                <i data-lucide="coins" class="w-5 h-5"></i>
-                Masraf Girişi
-            </button>
-
-                <button onclick="showSection('sablon')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="sablon">
-                    <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-                    Şablon
-                </button>
-
-            <button onclick="showSection('fatura-portal')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="fatura-portal">
-                <i data-lucide="file-text" class="w-5 h-5"></i>
-                Online Alışveriş
-            </button>
-
-                <button onclick="showSection('havale-eft')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="havale-eft">
-                    <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
-                    Havale / EFT
-                </button>
-
-             <button onclick="showSection('taksitler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="taksitler">
-                <i data-lucide="percent" class="w-5 h-5"></i>
-                Taksit Seçenekleri
-            </button>
-        </nav>
-
-        <!-- Alt Bilgi -->
-        <div class="p-4 border-t border-slate-100 bg-slate-50">
-            <button onclick="openChat()" class="w-full bg-civil-red text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-md shadow-red-200 hover:bg-civil-dark transition-colors flex items-center justify-center gap-2">
-                <i data-lucide="bot" class="w-4 h-4"></i>
-                Asistan
-            </button>
-            <div class="text-xs text-center text-slate-400 mt-3">v2.4 • Mall of Istanbul Ekibi</div>
+    const SearchBar = ({ value, onChange }) => (
+      <div className="mb-6">
+        <div className="flex items-center bg-white rounded-xl border border-slate-200 px-4 py-2 shadow-sm">
+          <i data-lucide="search" className="w-5 h-5 text-slate-500"></i>
+          <input
+            type="text"
+            placeholder="Başlık veya anahtar kelime ara..."
+            className="ml-2 w-full focus:outline-none text-sm py-2"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+          />
         </div>
-    </aside>
-
-    <!-- ANA İÇERİK ALANI -->
-    <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
-        
-    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 z-10">
-        <div class="flex items-center gap-3 w-full">
-
-            <button onclick="toggleSidebar()" class="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
-
-            <!-- Mobil başlık -->
-            <div class="mobile-title-container flex-1 text-right lg:hidden">
-                <h2 class="text-lg font-semibold text-slate-800" id="mobileTitle">Kasa Yardımcım</h2>
-            </div>
-
-            <!-- MASAÜSTÜ BAŞLIĞI EKLEDİK (pageTitle) -->
-            <h2 id="pageTitle" class="hidden lg:block text-xl font-semibold text-slate-800">
-                Kasa Yardımcım
-            </h2>
-
-        </div>
-    </header>
-
-
-        <!-- Scroll Edilebilir İçerik -->
-        <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
-            
-            <!-- BÖLÜM: DASHBOARD (Ana Sayfa) -->
-            <section id="dashboard" class="content-section fade-in block">
-                <div class="mb-8">
-                    <h1 class="text-2xl font-bold text-slate-800 mb-2">Hızlı Erişim Menüsü</h1>
-                    <p class="text-slate-500">Öğrenmek istediğiniz işlemi seçin.</p>
-                </div>
-
-                <!-- Hızlı Kartlar Grid -->
-                <!-- Yeni Kartlar eklendi -->
-                <div class="grid quick-access-grid gap-4 mb-8">
-                    <div onclick="showSection('raporlar')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3 group-hover:bg-indigo-200 transition-colors">
-                            <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Kasa Raporları</h3>
-                    </div>
-
-                    <div onclick="showSection('pos-islemleri')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors">
-                            <i data-lucide="credit-card" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">POS İşlemleri</h3>
-                    </div>
-
-                    <div onclick="showSection('nakit-yatirma')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3 group-hover:bg-yellow-200 transition-colors">
-                            <i data-lucide="wallet-2" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Nakit Yatırma</h3>
-                    </div>
-                    
-                    <!-- 2. Sıra -->
-                    <div onclick="showSection('kasa-duzeltme')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-red-100 text-civil-red flex items-center justify-center mb-3 group-hover:bg-red-200 transition-colors">
-                            <i data-lucide="trending-down" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Hatalı İşlemler</h3>
-                    </div>
-                    
-                    <div onclick="showSection('masraf-duzeltme')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mb-3 group-hover:bg-orange-200 transition-colors">
-                            <i data-lucide="coins" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Masraf Girişi</h3>
-                    </div>
-
-
-                    <div onclick="showSection('ozel-odemeler')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3 group-hover:bg-green-200 transition-colors">
-                            <i data-lucide="gift" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Hediye Kartları</h3>
-                    </div>
-
-                        <div onclick="showSection('sablon')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                            <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center mb-3 group-hover:bg-teal-200 transition-colors">
-                                <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-                            </div>
-                            <h3 class="font-semibold text-slate-800">Şablon</h3>
-                        </div>
-
-                    <div onclick="showSection('fatura-portal')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mb-3 group-hover:bg-purple-200 transition-colors">
-                            <i data-lucide="file-text" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Online Alışveriş</h3>
-                    </div>
-
-                        <div onclick="showSection('havale-eft')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                            <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3 group-hover:bg-cyan-200 transition-colors">
-                                <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
-                            </div>
-                            <h3 class="font-semibold text-slate-800">Havale / EFT</h3>
-                        </div>
-
-                    <div onclick="showSection('taksitler')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-                        <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mb-3 group-hover:bg-pink-200 transition-colors">
-                            <i data-lucide="percent" class="w-5 h-5"></i>
-                        </div>
-                        <h3 class="font-semibold text-slate-800">Taksit İşlemleri</h3>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BÖLÜM: KASA RAPORLARI (YENİ) -->
-            <section id="raporlar" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="bar-chart-2" class="text-civil-red"></i> Kasa Raporları
-                </h2>
-                <div class="space-y-6 search-container">
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <h3 class="step-title">Hareket Özeti Alma</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Mağaza hareket özeti kısmına tıklayarak <b class="font-semibold">'Kasa-Kasiyer Raporu'</b> kısmını seçiyoruz. Böylelikle gün sonu yekünleri tek bir kasa halinde değil, kişi kasalarına ayrılmış olarak listelenir.</p>
-                            <img src="https://i.hizliresim.com/mnf88h7.png" alt="Kasa-Kasiyer Raporu Seçimi görseli" class="step-image" onclick="openModal(this.src)"> <br>
-                            <p>Kasiyer Bazında Listelensin kısmını <b class="font-semibold">'Evet'e</b> çevirerek kasiyer bazında listelemiş oluyoruz.</p>
-                            <img src="https://i.hizliresim.com/o0hi6mp.png" alt="Kasiyer Bazında Listeleme görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BÖLÜM: POS İŞLEMLERİ (Tüm Görsel Adımlarla Birlikte) -->
-            <section id="pos-islemleri" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="credit-card" class="text-civil-red"></i> POS İşlemleri
-                </h2>
-                
-                <div class="space-y-6 search-container">
-                    <!-- ADIM 1: Taksitli Satış -->
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">1</div>
-                            <h3 class="step-title">Taksitli Satış Nasıl Yapılır</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Taksitli satışlarda kart her zaman POS'a takılır. Kartta çip yoksa yan taraftan çekme (swipe) denenir.</p>
-                            <img src="https://i.hizliresim.com/izfkfvm.png" alt="Taksitli satış POS kullanımı" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <!-- ADIM 2: POS'ta QR ile İşlem Alma -->
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">2</div>
-                            <h3 class="step-title">POS'ta QR ile İşlem Alma</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Satış tutarını POS'a girdikten sonra <b class="font-semibold">0'a basın</b> ve Yapı Kredi bankasını seçin; ardından QR ekranı açılacaktır.</p>
-                            <img src="https://i.hizliresim.com/q6ulr01.png" alt="POS QR işlem alma" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <!-- ADIM 3: Sliplerin Kullanımı -->
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">3</div>
-                            <h3 class="step-title">Sliplerin Kullanımı</h3>
-                        </div>
-                        <div class="step-content">
-                            <img src="https://i.hizliresim.com/b9ehkip.png" alt="Slip kullanımı" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <!-- ADIM 4: İptal vs İade -->
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">4</div>
-                            <h3 class="step-title">İşlem İptali ve İadesi</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>İşlem aynı gün içinde ve <b class="font-semibold text-civil-dark">gün sonu alınmadan önce yapıldıysa İPTAL</b> yapılır. Gün sonu alındıysa İADE edilebilir. İptal anlık yansır.</p>
-                            <div class="grid md:grid-cols-2 gap-4 mt-4">
-                                <div>
-                                    <p class="text-xs font-semibold mb-1">İptal Ekranı</p>
-                                    <img src="https://i.hizliresim.com/c87t4mo.png" alt="İşlem iptali" class="step-image" onclick="openModal(this.src)">
-                                </div>
-                                <div>
-                                    <p class="text-xs font-semibold mb-1">İade Ekranı</p>
-                                    <img src="https://i.hizliresim.com/38lrif4.png" alt="İşlem iadesi" class="step-image" onclick="openModal(this.src)">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- ADIM 5: Gün Sonu Alma -->
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">5</div>
-                            <h3 class="step-title">Gün Sonu Alma ve Ek Nüsha</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Gün sonlarında işlem kontrolü için mutlaka <b class="font-semibold text-civil-dark">detay rapor</b> seçilmelidir. Ayrıca slip çıkmazsa ek nüsha alın.</p>
-                            <img src="https://i.hizliresim.com/eu6nsil.png" alt="Gün sonu detay raporu" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/hirbfbh.png" alt="Ek nüsha alma" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                     <!-- ADIM 6: Ara Rapor Alma -->
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">6</div>
-                            <h3 class="step-title">Ara Rapor Alma</h3>
-                        </div>
-                        <div class="step-content">
-                            <ul class="list-disc ml-5 space-y-2">
-                                <li><b class="font-semibold">Yapı Kredi:</b> POS cihazında <b class="font-semibold">#</b> tuşuna basın. Ardından sırasıyla <b class="font-semibold">YKB Ana > Liste İşlemleri > Toplamlar</br> menülerini takip edin.</li>
-                                <li><b class="font-semibold">QNB, Ziraat, Halkbankası:</b> POS cihazında <b class="font-semibold">*</b> tuşuna basın ve <b class="font-semibold">Ara Rapor</b> seçeneğini seçin.</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BÖLÜM: ÖZEL ÖDEMELER (Hediye Kartları) -->
-            <section id="ozel-odemeler" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="gift" class="text-civil-red"></i> Chippin & Hediye Kartları
-                </h2>
-
-                <div class="space-y-6 search-container">
-                    <!-- CHIPPIN -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item">
-                        <h3 class="text-xl font-bold text-blue-700 mb-4 flex items-center gap-2"><i data-lucide="wallet" class="w-6 h-6"></i> Chippin ile Ödeme</h3>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">1. Mobile Pay'i seçin</b></p>
-                                <img src="https://i.hizliresim.com/tgpzdlu.jpg" alt="Chippin başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">2. Kasada Chippin seçin</p>
-                                <img src="https://i.hizliresim.com/nzbgwjx.jpg" alt="Kasada Chippin seçimi" class="step-image" onclick="openModal(this.src)"> <br>
-                                
-                                <p><b class="font-semibold">3. Ödemeyi uygulamaya gönderin</p>
-                                <img src="https://i.hizliresim.com/cn4xn4c.jpg" alt="Kampanya ve puan kontrolü" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">4. Müşteri bilgilerini kontrol edin.</p>
-                                <img src="https://i.hizliresim.com/rqjv4cy.jpg" alt="Ödeme onayı" class="step-image" onclick="openModal(this.src)"> <br>
-                                
-                                <p><b class="font-semibold">5. Müşteri onayına gönderin.</p>
-                                <img src="https://i.hizliresim.com/85fgb54.jpg" alt="QR / OTP doğrulama" class="step-image" onclick="openModal(this.src)"> <br>
-
-                                <p><b class="font-semibold">6. İşlemin tamamlandı.</p>
-                                <img src="https://i.hizliresim.com/mcmfgsz.jpg" alt="Başarılı işlem ekranı" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                        </div>
-                    </div>
-                  
-                  <br>
-
-                    <!-- IWALLET -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item">
-                        <h3 class="text-xl font-bold text-green-700 mb-4 flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6"></i> iWallet ile Ödeme</h3>
-                        <p class="text-sm text-slate-600 mb-4 font-semibold">İPUCU: Tutar kesinse, kart numarası yerine <b class="font-semibold">7 haneli QR kod</b> kullanmak daha pratiktir.</p>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">1. Başlangıç Ekranı</b></p>
-                                <img src="https://i.hizliresim.com/ahvb0na.jpg" alt="iWallet başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">2. Kasada iWallet Seçimi</b></p>
-                                <img src="https://i.hizliresim.com/fnjkgpo.jpg" alt="Kasada iWallet seçimi" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">3. iWallet Giriş</b></p>
-                                <img src="https://i.hizliresim.com/bl7t28d.jpg" alt="Ödeme oluşturma ekranı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">4. Satış İşlemini Başlatma</b></p>
-                                <img src="https://i.hizliresim.com/1jpga57.jpg" alt="Müşteri bilgileri ekranı" class="step-image" onclick="openModal(this.src)">
-
-                            </div>
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">5. Kart Bilgilerini Alma ve Onay</b></p>
-                                <img src="https://i.hizliresim.com/e9zf814.jpg" alt="Uygulama onayı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">6. Doğrulama</b></p>
-                                <img src="https://i.hizliresim.com/cnrof3m.jpg" alt="Doğrulama ekranı" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">7. Başarılı İşlem</b></p>
-                                <img src="https://i.hizliresim.com/91jrum4.jpg" alt="Başarılı işlem ekranı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">8. İşlemi Bitirme</b></p>
-                                <img src="https://i.hizliresim.com/5ukfbj4.jpg" alt="Makbuz / Fiş" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                        </div>
-                    </div>
-                  
-                                    <br>
-
-
-                    <!-- SETCARD -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item">
-                        <h3 class="text-xl font-bold text-orange-700 mb-4 flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6"></i> Setcard ile Ödeme</h3>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">1. Başlangıç Ekranı</b></p>
-                                <img src="https://i.hizliresim.com/7i6ev8n.jpg" alt="Setcard başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">2. Kasada Setcard Seçme</b></p>
-                                <img src="https://i.hizliresim.com/2mlz5mo.jpg" alt="Kasada Setcard seçimi" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">3. Setcard Giriş</b></p>
-                                <img src="https://i.hizliresim.com/tbne02l.jpg" alt="Ödeme oluşturma ekranı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">4. Müşteri Bilgileri</b></p>
-                                <img src="https://i.hizliresim.com/jgc5vyp.jpg" alt="Müşteri bilgileri ekranı" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">5. Uygulama Onayı</b></p>
-                                <img src="https://i.hizliresim.com/lpxzj6v.jpg" alt="Uygulama onayı" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">6. Müşteri Telefon No Doğrulama</p>
-                                <img src="https://i.hizliresim.com/ciyowa4.jpg" alt="Müşteri Telefon No Doğrulama" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">7. SMS Doğrulama</b></p>
-                                <img src="https://i.hizliresim.com/4lmtdqm.jpg" alt="SMS Doğrulama" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">8. Başarılı İşlem</b></p>
-                                <img src="https://i.hizliresim.com/8bzyd2k.jpg" alt="Özet / Kayıt" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                        </div>
-                    </div>
-                  
-                                    <br>
-
-
-                    <!-- EDERNED -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item">
-                        <h3 class="text-xl font-bold text-purple-700 mb-4 flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6"></i> Ederned ile Ödeme</h3>
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">1. Başlangıç Ekranı</b></p>
-                                <img src="https://i.hizliresim.com/is4janf.jpg" alt="Ederned başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">2. Kasada Ederned Seçme</b></p>
-                                <img src="https://i.hizliresim.com/ny1vhyj.jpg" alt="Kasada Ederned seçimi" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">3. Satış Oluşturma İşlemi</b></p>
-                                <img src="https://i.hizliresim.com/bawc1b6.jpg" alt="Ödeme oluşturma ekranı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">4. SMS Doğrulama İşlemi</b></p>
-                                <img src="https://i.hizliresim.com/dy5qpst.jpg" alt="Müşteri bilgileri ekranı" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                            <div class="space-y-3">
-                                <p><b class="font-semibold">5. Doğrulama</b></p>
-                                <img src="https://i.hizliresim.com/nsrgb5e.jpg" alt="Doğrulama ekranı" class="step-image" onclick="openModal(this.src)">
-
-                                <p><b class="font-semibold">6. Başarılı İşlem</b></p>
-                                <img src="https://i.hizliresim.com/goy0aer.jpg" alt="Başarılı işlem ekranı" class="step-image" onclick="openModal(this.src)">
-                                
-                                <p><b class="font-semibold">7. Ödeme Tamamlama</b></p>
-                                <img src="https://i.hizliresim.com/awpxe3u.jpg" alt="Makbuz / Fiş" class="step-image" onclick="openModal(this.src)">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BÖLÜM: NAKİT YATIRMA -->
-            <section id="nakit-yatirma" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="wallet-2" class="text-civil-red"></i>Nakit Yatırma
-                </h2>
-
-                <div class="space-y-6 search-container">
-                    <!-- ADIM 1: Kasa Hareketleri Ekranı -->
-                    <div class="step-container search-item">
-                        <div class="step-content">
-                            <p>Gün sonu cirolarını teyit ettikten sonra 'Ara...' kısmına <b class="font-semibold">'Kasa Hareketleri'</b> yazıp 2. sırada çıkan seçeneği seçiyoruz. Burada ilk işimiz <b class="font-semibold">'Nakit Hesap Kodu'</b> kısmındaki 3 noktaya tıklayarak kendi şubemizi seçmektir.</p>
-                            <img src="https://i.hizliresim.com/hase4r9.png" alt="Kasa Hareketleri Ekranı görseli" class="step-image" onclick="openModal(this.src)">
-                            
-                            <p class="mt-4"><b class="font-semibold">'Cari Hesap Kodu'</b> kısmından üç noktaya tıklayarak çıkan arama bölümüne <b class="font-semibold">"Muhtelif"</b> yazıp çıkan tedarikçiyi seçiyoruz.</p>
-                            <img src="https://i.hizliresim.com/1nxesxg.png" alt="Cari Hesap Kodu Seçimi görseli" class="step-image" onclick="openModal(this.src)">
-                            
-                            <p class="mt-4">Ekranı sağa çekip <b class="font-semibold">'Maliyet Merkezi'</b> kısmında kendi mağazamızın kodunu onaylıyoruz.</p>
-                            <img src="https://i.hizliresim.com/hsxa0mv.png" alt="Maliyet Merkezi Seçimi görseli" class="step-image" onclick="openModal(this.src)">
-                            
-                            <p class="mt-4"><b class="font-semibold">Alacak</b> kısmına o günkü nakit kasa yekünü tutarını yazıp kaydet butonuna tıklıyoruz. Bu işlemle kasa kapanmış olur.</p>
-                            <img src="https://i.hizliresim.com/r9h71th.png" alt="Nakit Kasa Yekünü Girişi ve Kaydetme görseli" class="step-image" onclick="openModal(this.src)">
-                            
-                            <p class="font-bold text-red-600 mt-4">SON KONTROL: 'Mağaza Hareket Özeti' kısmında <b class="font-semibold text-civil-dark">'Nakit Kasa Yekünü' 0 olmak zorundadır</b>.</p>
-                            <img src="https://i.hizliresim.com/th2kl5w.png" alt="Son Kontrol: Nakit Kasa Yekünü görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BÖLÜM: KASA DÜZELTME (İŞLEM KAYMASI - YENİ DÜZEN) -->
-            <section id="kasa-duzeltme" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="alert-triangle" class="text-civil-red"></i> İşlem Kayması Düzeltme
-                </h2>
-
-                <div class="space-y-6 search-container">
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">1</div>
-                            <h3 class="step-title">Alınan Ödemeler Listesini Aç</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Kasa cirolarını ve kredi işlemlerini teyit ettikten sonra kayma tespiti için: Ara kısmına <b class="font-semibold">'Alınan Ödemeler Listesi'</b> yazıp çalıştırın.</p>
-                            <img src="https://i.hizliresim.com/6i75o54.png" alt="Alınan Ödemeler Listesi görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">2</div>
-                            <h3 class="step-title">İşlem Tespiti ve Filtreleme</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Tespit edilen işlem türünü seçin (Kredi Kartı/Nakit). Kaymaya neden olan tutarı bulmak için <b class="font-semibold">'Ödeme(D)'</b> kısmından filtreleme yapın.</p>
-                            <img src="https://i.hizliresim.com/6u77fsi.png" alt="İşlem Tespiti görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/fo77a8x.png" alt="Ödeme Filtreleme görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">3</div>
-                            <h3 class="step-title">Fatura Referans Numarasını Kopyala</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Tespit ettiğiniz işlemin 'Fatura Referans Numarasını' kopyalayın.</p>
-                            <img src="https://i.hizliresim.com/oumum0x.png" alt="Fatura Referans Kopyalama görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                    
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">4</div>
-                            <h3 class="step-title">Düzeltme Ekranına Git ve Kayıt Gir</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Ara kısmına <b class="font-semibold">'Hatalı Girilmiş Ödeme Kayıtlarını Düzelt'</b> yazıp açın. Kopyaladığınız Fatura Referans Numarasını 'Fiş Numarası' kısmına yapıştırın.</p>
-                            <img src="https://i.hizliresim.com/f20cm4g.png" alt="Hatalı Ödeme Düzeltme görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/sug6i4p.png" alt="Fiş Numarası Kaydetme görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">5</div>
-                            <h3 class="step-title">Bankayı Seç/Nakit'e Çevir ve Kaydet</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Açılan ekranda düzeltmek istediğiniz bankayı seçebilir veya işlemi nakite çevirebilirsiniz. Değişiklikleri yapıp 'Kaydet' simgesine tıklayın.</p>
-                            <img src="https://i.hizliresim.com/elq0rok.png" alt="Kredi Kartı İşlemini Nakit/Bankalar Arası Çevirme Seçeneği görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/5j7dwfq.png" alt="Değişiklikleri Kaydetme görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                </div>
-            </section>
-            
-            <!-- BÖLÜM: MASRAF/FİYAT DÜZELTME (YENİ) -->
-            <section id="masraf-duzeltme" class="content-section hidden fade-in">
-                 <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="coins" class="text-civil-red"></i> Masraf Girişi
-                </h2>
-                <div class="space-y-6 search-container">
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">1</div>
-                            <h3 class="step-title">Masraf Girişi Ekranını Açma</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Herhangi bir kasa eksik veya fazla durumunda 'Ara...' kısmına <b class="font-semibold">'Mağaza Masraf Girişi'</b> yazıp ilk çıkan seçeneğe tıklayın. Masraf gireceğiniz POS'u seçip 'Tik'e tıklayın.</p>
-                            <img src="https://i.hizliresim.com/r7uywx2.png" alt="Mağaza Masraf Girişi görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">2</div>
-                            <h3 class="step-title">Tedarikçi, Masraf Beyanı ve İade Seçimi</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>Tedarikçi: <b class="font-semibold">'Kasa Fazlası / Kasa Açığı'</b>. Muhasebe Döküman Tipi: <b class="font-semibold">'Masraf Beyan'</b> seçilir.</p>
-                            <img src="https://i.hizliresim.com/aaey7pv.png" alt="Tedarikçi Seçimi görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/ilrvgi7.png" alt="Masraf Beyanı Seçme görseli" class="step-image" onclick="openModal(this.src)">
-                            <p class="mt-4">Kasamızda **FAZLA VARSA 'İade' TİK ATILIR**. Eksik varsa TİK boş bırakılır.</p>
-                            <img src="https://i.hizliresim.com/dp9c75z.png" alt="İade Kısmını İşaretleme görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">3</div>
-                            <h3 class="step-title">Madde Kodu ve Fiyat Girişi</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>'Madde Kodu'ndan <b class="font-semibold">'Kasa Açığı'</b> veya <b class="font-semibold">'Kasa Fazlası'</b> seçeneği seçilir. Mağaza fiyat hatası varsa <b class="font-semibold">"Mağaza Fiyat Hatası"</b> yazılır.</p>
-                            <img src="https://i.hizliresim.com/g3y9bw2.png" alt="Kasa Açığı/Fazlası Seçimi görseli" class="step-image" onclick="openModal(this.src)">
-                            <p class="mt-4">Hata tutarını <b class="font-semibold">'Fiyat'</b> kısmına yazın.</p>
-                            <img src="https://i.hizliresim.com/pota95a.png" alt="Fiyat Girişi görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                    
-                    <div class="step-container search-item">
-                        <div class="step-header">
-                            <div class="step-number">4</div>
-                            <h3 class="step-title">Seri Numarası Girişi ve Kaydetme</h3>
-                        </div>
-                        <div class="step-content">
-                            <p>'Seri Numarası' kısmına olduğumuz tarihi <b class="font-semibold">'YYYY/AA/GG'</b> (tarihi ters) şeklinde yazın, ardından 'TİK'i seçin ve kaydedin.</p>
-                            <img src="https://i.hizliresim.com/lybakck.png" alt="Seri Numarası Girişi görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/43hl6dk.png" alt="Şimdi kaydedelim görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BÖLÜM: FATURA & PORTAL -->
-            <section id="fatura-portal" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="file-text" class="text-civil-red"></i> Online Alışveriş Faturası
-                </h2>
-
-                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden search-container">
-                    <div class="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
-                        <h3 class="font-bold text-slate-700">Portal Giriş Bilgileri</h3>
-                        <a href="https://onlinefatura.civil.com.tr" target="_blank" class="text-sm bg-civil-red text-white px-4 py-2 rounded-lg hover:bg-civil-dark transition-colors flex items-center gap-2">
-                            Aç <i data-lucide="external-link" class="w-4 h-4"></i>
-                        </a>
-                    </div> 
-                    <div class="p-6 space-y-6">
-                        <!-- E-Posta -->
-                        <div class="search-item">
-                            <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kullanıcı Adı / E-Posta</label>
-                            <div class="flex gap-2">
-                                <input type="text" value="magaza@civil.com.tr" readonly class="w-full bg-slate-100 border-none rounded-lg text-sm text-slate-600 px-4 py-3" id="emailInput">
-                                <button onclick="copyToClipboard('emailInput')" class="bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium text-sm">Kopyala</button>
-                            </div>
-                        </div>
-
-                  <!-- Şifre -->
-                  <div class="search-item">
-                      <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Şifre</label>
-                      <div class="flex gap-2">
-                          <input type="text" value="0oC,WS<b77e)|p+." readonly
-                                 class="w-full bg-slate-100 border-none rounded-lg text-sm text-slate-600 px-4 py-3"
-                                 id="passInput">
-                          <button onclick="copyToClipboard('passInput')" 
-                                  class="bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium text-sm">
-                              Kopyala
-                          </button>
-                      </div>
-                  </div>
-
-                        <!-- Fatura Bulma Adımları -->
-                        <div class="border-t border-slate-100 pt-6 space-y-4">
-                            <h4 class="font-bold text-slate-700">Fatura Bulma Adımları</h4>
-                            <p class="text-sm text-slate-600">Portalda ilgili sipariş veya fatura numarasını arama alanına girin ve sonuçları filtreleyin.</p>
-                            <img src="https://i.hizliresim.com/jsov0a3.png" alt="Portal arama ekranı görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/i49ap5s.png" alt="Fatura detay ekranı görseli" class="step-image" onclick="openModal(this.src)">
-                            <img src="https://i.hizliresim.com/5qg2r7m.png" alt="Fatura indirme ekranı görseli" class="step-image" onclick="openModal(this.src)">
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-             <!-- BÖLÜM: TAKSİTLER (Görsel Kartlarla Birlikte) -->
-             <section id="taksitler" class="content-section hidden fade-in">
-                <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-                    <i data-lucide="percent" class="text-civil-red"></i> Taksit Seçenekleri
-                </h2>
-
-                <div class="grid md:grid-cols-2 gap-6 search-container">
-                    <!-- 6 Taksit -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item md:col-span-2">
-                        <h3 class="text-green-600 font-bold text-xl mb-4 flex items-center gap-2">
-                            <i data-lucide="check-circle" class="w-5 h-5"></i> Vade Farksız 6 Taksit
-                        </h3>
-                        <p class="text-sm text-slate-600 mb-4"><b class="font-semibold">Yapı Kredi World, Vakıfbank World ve Albaraka World</b> kartlarına tüm kategorilerde vade farksız 6 taksit yapılmaktadır:</p>
-                        <div class="card-grid">
-                            <!-- Tüm Kart Listesi (Eksiksiz) -->
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_classic.png" alt="Yapı Kredi World Classic Kartı görseli">
-                                <span>YKB World Classic</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios.png" alt="Yapı Kredi World Adios Kartı görseli">
-                                <span>YKB World Adios</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios_premium.png" alt="Yapı Kredi World Adios Premium Kartı görseli">
-                                <span>YKB Adios Premium</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_cyrastal.png" alt="Yapı Kredi World Crystal Kartı görseli">
-                                <span>YKB World Crystal</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_hespiburada.png" alt="Yapı Kredi World Hepsiburada Kartı görseli">
-                                <span>YKB World Hepsiburada</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_play.png" alt="Yapı Kredi World Play Kartı görseli">
-                                <span>YKB World Play</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_opet.png" alt="Yapı Kredi World Opet Kartı görseli">
-                                <span>YKB World Opet</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_koc_ailem.png" alt="Yapı Kredi World Koç Ailem Kartı görseli">
-                                <span>World Koç Ailem</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_44677fa77d.png" alt="Albaraka World Kartı (Genel) görseli">
-                                <span>Albaraka World (Genel)</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_ccd845116d.png" alt="Albaraka World Kartı (Özel) görseli">
-                                <span>Albaraka World (Özel)</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_eflatun_bff07796e8.png" alt="Albaraka World Eflatun Kartı görseli">
-                                <span>Albaraka World Eflatun</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_c9d109452c.png" alt="Albaraka World Kartı (Farklı Dizayn) görseli">
-                                <span>Albaraka World (Farklı)</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_9f86e8800f.png" alt="Albaraka World Kartı (Başka Bir Dizayn) görseli">
-                                <span>Albaraka World (Dizayn)</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/click-kart.png" alt="Vakıfbank World Click Kartı görseli">
-                                <span>Vakıfbank World Click</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/emekli-kart.png" alt="Vakıfbank World Emekli Kartı görseli">
-                                <span>Vakıfbank World Emekli</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_eflatun-kredi-karti@1x.jpg" alt="Albaraka World Eflatun Kartı görseli">
-                                <span>Albaraka Eflatun</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_mester-card@1x.jpg" alt="Albaraka World Mastercard görseli">
-                                <span>Albaraka Mastercard</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_visa@1x%20(1).jpg" alt="Albaraka World Visa görseli">
-                                <span>Albaraka World Visa</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-metal-kart-256x208.png" alt="VakıfBank Platinum Plus Metal Kart görseli">
-                                <span>VakıfBank Platin. Metal</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-one-kart-desktop.png" alt="VakıfBank Platinum One Kart görseli">
-                                <span>VakıfBank Platinum One</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.worldcard.com.tr/getmedia/ed463df8-b61a-45e3-9cf0-99a808ee7997/world-new-platinum-card.png?width=560&height=356&ext=.png" alt="Yapı Kredi World Platinum Kartı görseli">
-                                <span>YKB World Platinum</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.worldcard.com.tr/getmedia/89e152a7-0cee-4d78-93c8-761ec56653de/world-new-gold-card.png?width=1012&height=639&ext=.png" alt="Yapı Kredi World Gold Kartı görseli">
-                                <span>YKB World Gold</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-klasik-256x208.png" alt="VakıfBank Fenerbahçe Klasik Kart görseli">
-                                <span>VakıfBank Fb Klasik</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.worldcard.com.tr/getmedia/7ea29937-0662-4c69-8f9e-54fae7892ac8/world-new-card.png?width=560&height=354&ext=.png" alt="Yapı Kredi World Kartı görseli">
-                                <span>YKB World</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.worldcard.com.tr/getmedia/478a56b9-6b20-4b36-acbf-72b849446dbb/world-new-fenerbahce-card.png?width=1012&height=639&ext=.png" alt="Yapı Kredi World Fenerbahçe Kartı görseli">
-                                <span>YKB World Fb</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/ogretmenim-kart-desktop.png" alt="VakıfBank Öğretmenim Kart görseli">
-                                <span>VakıfBank Öğretmenim</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/ases-kart-dekstop.png" alt="VakıfBank Ases Kart görseli">
-                                <span>VakıfBank Ases</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-gold-256x208.png" alt="VakıfBank Fenerbahçe Gold Kart görseli">
-                                <span>VakıfBank Fb Gold</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-galatasaray-desktop.png" alt="VakıfBank Galatasaray Taraftar Kartı görseli">
-                                <span>VakıfBank GS</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/express-card-dekstop.png" alt="VakıfBank Express Card görseli">
-                                <span>VakıfBank Express</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-platinum-256x208.png" alt="VakıfBank Fenerbahçe Platinum Kart görseli">
-                                <span>VakıfBank Fb Platinum</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/kamusen-kart-dekstop.png" alt="VakıfBank KamuSen Kart görseli">
-                                <span>VakıfBank KamuSen</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/like-card-256x208.png" alt="VakıfBank Like Card görseli">
-                                <span>VakıfBank Like Card</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-trabzonspor-desktop.png" alt="VakıfBank Trabzonspor Taraftar Kartı görseli">
-                                <span>VakıfBank TS</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/acecard-256x208.png" alt="VakıfBank Acecard görseli">
-                                <span>VakıfBank Acecard</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-fenerbahce-desktop.png" alt="VakıfBank Fenerbahçe Taraftar Kartı görseli">
-                                <span>VakıfBank Fb Kart</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-besiktas-dekstop.png" alt="VakıfBank Beşiktaş Taraftar Kartı görseli">
-                                <span>VakıfBank BJK</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/vakifbank-world-card-dekstop.png" alt="VakıfBank World Kart görseli">
-                                <span>VakıfBank World</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/gold-kart-dekstop.png" alt="VakıfBank Gold Kart görseli">
-                                <span>VakıfBank Gold</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-kart-desktop.png" alt="VakıfBank Platinum Kart görseli">
-                                <span>VakıfBank Platinum</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/rail-miles-desktop.png" alt="VakıfBank Rail&Miles Kart görseli">
-                                <span>VakıfBank Rail&Miles</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_8_trend.jpg" alt="Albaraka World Trend Kartı görseli">
-                                <span>Albaraka World Trend</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_ozel-bankacilik1x.jpg" alt="Albaraka World Özel Bankacılık Kartı görseli">
-                                <span>Albaraka Özel Bankacılık</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-kart-desktop.png" alt="VakıfBank Platinum Plus Kart görseli">
-                                <span>VakıfBank Platin. Plus</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://vbassets.vakifbank.com.tr/bireysel/recycle-kart-256x208.png" alt="VakıfBank Recycle Kart görseli">
-                                <span>VakıfBank Recycle</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_visa-gold@1x.jpg" alt="Albaraka World Visa Gold Kartı görseli">
-                                <span>Albaraka Visa Gold</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Taksit Yok -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item">
-                        <h3 class="text-red-600 font-bold text-xl mb-3 flex items-center gap-2">
-                            <i data-lucide="x-octagon" class="w-5 h-5"></i> Taksit Yapılmayan Kartlar
-                        </h3>
-                        <p class="text-sm text-slate-600 mb-4">Aşağıdaki kartlara <b class="font-semibold text-red-600">kesinlikle taksit yapılmamaktadır</b>:</p>
-                        <div class="card-grid">
-                            <div class="card-item">
-                                <img src="https://www.worldcard.com.tr/getmedia/f94b6712-8ed4-49e0-85c5-2e36c4d8275a/world-new-eko-card.png?width=1012&height=639&ext=.png" alt="Yapı Kredi World Eko Kartı görseli">
-                                <span>YKB World Eko</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.kuveytturk.com.tr/medium/SitemapNodePage-Landing-22010-2x.vsf" alt="Kuveyttürk Kartı görseli">
-                                <span>Kuveyttürk</span>
-                            </div>
-                            <div class="card-item">
-                                <img src="https://www.denizbank.com/medium/SitemapNodePage-Landing-16960-2x.vsf" alt="DenizBank Kartı görseli">
-                                <span>DenizBank</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Diğerleri -->
-                    <div class="guide-card bg-white rounded-xl p-5 search-item">
-                        <h3 class="text-slate-700 font-bold text-xl mb-3 flex items-center gap-2">
-                            <i data-lucide="info" class="w-5 h-5"></i> Diğer Taksit Kuralları
-                        </h3>
-                        <ul class="text-sm text-slate-600 space-y-2 list-disc pl-4">
-                            <li>Yukarıda belirtilenler dışındaki diğer tüm kartlara <b class="font-semibold">%10 vade farkı ile 4 taksit</b>.</li>
-                            <li><b class="font-semibold">Araç gereç ve Oyuncaklar</b> için her zaman <b class="font-semibold">vade farksız 4 taksit</b> imkanı sunulmaktadır.</li>
-                            <li>Bazı ayakkabılarda vade farksız taksit uygulanabilir (kampanyaya bağlıdır).</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-                <section id="sablon" class="content-section hidden fade-in">
-    <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <i data-lucide="file-spreadsheet" class="text-civil-red"></i> Şablon
-    </h2>
-
-    <div class="space-y-6">
-
-        <!-- 70. Adım -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">70</div>
-                <h3 class="step-title">Kur Formülleri ve Tarih</h3>
-            </div>
-            <div class="step-content">
-                <ul class="list-disc ml-5 mt-3 space-y-2">
-                    <li>Dolar kuru hücresinde formül: <code>=b3*c3</code></li>
-                    <li>Euro kuru hücresinde formül: <code>=b4*c4</code></li>
-                    <li>Tarih alanı için güncel tarih: <code>=TODAY()</code></li>
-                    <li>Otomatik Euro kuru formülü: <code>=GOOGLEFINANCE("CURRENCY:EURTRY")</code></li>
-                    <li>Otomatik Dolar kuru formülü: <code>=GOOGLEFINANCE("CURRENCY:USDTRY")</code></li>
-                    <li><b>Otomatik dolar ve euro kuru formülü yalnızca Google Spreadsheet'te kullanılır.</b></li>
-                </ul>
-            </div>
-        </div>
-
-                <!-- 71. Adım -->
-                <div class="step-container">
-                    <div class="step-header">
-                        <div class="step-number">71</div>
-                        <h3 class="step-title">Günsonu Şablonu</h3>
-                    </div>
-                    <div class="step-content">
-                        <p class="mb-4 font-semibold text-red-600">
-                            Şablonda fiyat hatası olan barkodun ve kasa açığı ya da fazla olan kişinin isminin yazılması zorunludur. <br> Şablonu kendi hesabınıza kopyalayıp daha kolay bir kullanım sunabilirsiniz.
-                        </p>
-        
-                        <div class="flex justify-center mb-4">
-                            <a href="https://docs.google.com/spreadsheets/d/1_toHuGzRYjxFKffmGf5r1JMNdIBSuGXqsC-SgSKxZDc/edit?gid=911808809#gid=911808809" 
-                               target="_blank" 
-                               class="template-button bg-civil-red text-white px-4 py-2 rounded-lg shadow hover:bg-civil-dark transition-all">
-                               Şablon Linki
-                            </a>
-                        </div>
-        
-                        <img src="https://i.hizliresim.com/b44opxq.png" 
-                             alt="Fiyat Hatası ve Kasa Açığı/Fazlası Şablonu" 
-                             class="step-image">
-                    </div>
-                </div>
-        
-            </div>
-        </section>
-
-                <section id="havale-eft" class="content-section hidden fade-in">
-    <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-        <i data-lucide="refresh-ccw" class="text-civil-red"></i> Havale / EFT İşlemleri
-    </h2>
-
-    <div class="space-y-6">
-
-        <!-- Adım 1 -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">1</div>
-                <h3 class="step-title">Havale/EFT Ekranı</h3>
-            </div>
-            <div class="step-content">
-                <p>İşlemlere başlamak için ilgili ekranı açıyoruz.</p>
-                <img src="https://i.hizliresim.com/p9b36ti.png" class="step-image" onclick="openModal(this.src)">
-            </div>
-        </div>
-
-        <!-- Adım 2 -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">2</div>
-                <h3 class="step-title">Bankanın Seçilmesi</h3>
-            </div>
-            <div class="step-content">
-                <img src="https://i.hizliresim.com/s2wroz8.png" class="step-image" onclick="openModal(this.src)">
-            </div>
-        </div>
-
-        <!-- Adım 3 -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">3</div>
-                <h3 class="step-title">Havale/EFT Tutarının Girilmesi</h3>
-            </div>
-            <div class="step-content">
-                <img src="https://i.hizliresim.com/cqy4bfh.png" class="step-image" onclick="openModal(this.src)">
-            </div>
-        </div>
-
-        <!-- Adım 4 -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">4</div>
-                <h3 class="step-title">Dekont veya Onay Kontrolü</h3>
-            </div>
-            <div class="step-content">
-                <img src="https://i.hizliresim.com/i8d290c.png" class="step-image" onclick="openModal(this.src)">
-            </div>
-        </div>
-
-        <!-- Adım 5 -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">5</div>
-                <h3 class="step-title">Gönderim İşleminin Tamamlanması</h3>
-            </div>
-            <div class="step-content">
-                <img src="https://i.hizliresim.com/9bvlc0o.png" class="step-image" onclick="openModal(this.src)">
-            </div>
-        </div>
-
-        <!-- Adım 6 -->
-        <div class="step-container">
-            <div class="step-header">
-                <div class="step-number">6</div>
-                <h3 class="step-title">Havale/EFT İşlem Özeti</h3>
-            </div>
-            <div class="step-content">
-                <img src="https://i.hizliresim.com/3ed44i4.png" class="step-image" onclick="openModal(this.src)">
-            </div>
-        </div>
-
-    </div>
-</section>
-
-
-            <!-- Footer Space -->
-            <div class="h-20"></div>
-        </div>
-    </main>
-
-    <!-- IMAGE MODAL -->
-    <div id="imageModal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 image-modal" onclick="closeModal()">
-        <img id="modalImage" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl transform transition-transform scale-95">
-        <button class="absolute top-5 right-5 text-white p-2 hover:bg-white/20 rounded-full transition-colors">
-            <i data-lucide="x" class="w-8 h-8"></i>
+      </div>
+    );
+
+    const Modal = () => (
+      <div id="imageModal" className="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center p-4" onClick={closeModal}>
+        <img id="modalImage" src="" className="max-w-full max-h-[90vh] rounded-lg shadow-2xl transform transition-transform scale-95" />
+        <button className="absolute top-5 right-5 text-white p-2 hover:bg-white/20 rounded-full transition-colors">
+          <i data-lucide="x" className="w-8 h-8"></i>
         </button>
-    </div>
+      </div>
+    );
 
-    <!-- CHAT WIDGET (Akıllı Asistan) -->
-    <div id="chatWidget" class="fixed bottom-4 right-4 w-full max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-200 transform translate-y-[120%] transition-transform z-40 flex flex-col" style="max-height: 600px; height: 70vh;">
-        <div class="bg-civil-red text-white p-4 rounded-t-2xl flex justify-between items-center cursor-pointer" onclick="closeChat()">
-            <div class="flex items-center gap-2">
-                <i data-lucide="bot" class="w-5 h-5"></i>
-                <span class="font-bold">Akıllı Asistan ✨</span>
+    const ChatWidget = ({ open, onClose, onOpen }) => (
+      <>
+        <button onClick={onOpen} id="floatingChatButton" className={`fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center lg:hidden ${open ? 'hidden' : ''}`}>
+          <i data-lucide="bot" className="w-6 h-6"></i>
+        </button>
+        <div className={`fixed bottom-4 right-4 w-full max-w-sm bg-white rounded-2xl border border-slate-200 transform transition-transform z-40 flex flex-col chat-widget ${open ? 'translate-y-0' : 'translate-y-[120%]'}`} style={{maxHeight: '620px', height: '70vh'}}>
+          <div className="bg-civil-red text-white p-4 rounded-t-2xl flex justify-between items-center cursor-pointer" onClick={onClose}>
+            <div className="flex items-center gap-2">
+              <i data-lucide="bot" className="w-5 h-5"></i>
+              <span className="font-bold">Akıllı Asistan</span>
             </div>
-            <button><i data-lucide="chevron-down" class="w-5 h-5"></i></button>
-        </div>
-        <div class="p-4 border-b border-slate-100 bg-white">
-            <h4 class="font-bold text-slate-800 mb-2">Nasıl Yardımcı Olabilirim?</h4>
-        </div>
-        
-        <div id="chatMessages" class="flex-1 p-4 overflow-y-auto bg-slate-50 space-y-3 text-sm">
-            <div class="bg-white p-3 rounded-tl-xl rounded-tr-xl rounded-br-xl shadow-sm border border-slate-100 text-slate-700 self-start w-[90%]">
-                Merhaba! Lütfen sorununuzla ilgili anahtar kelimeyi yazın. (Örn: setcard, kayma)
-            </div>
-            <div id="llmLoadingIndicator" class="hidden bg-yellow-50 text-yellow-800 p-3 rounded-lg text-center font-medium">
-                <i data-lucide="loader" class="w-4 h-4 inline-block animate-spin mr-2"></i> Yönlendiriliyor...
-            </div>
-            <div id="llmResponseArea" class="llm-response bg-white p-3 rounded-lg shadow-sm border border-slate-100 hidden"></div>
-        </div>
-        <div class="p-3 border-t border-slate-100 bg-white rounded-b-2xl">
-            <form onsubmit="handleChatRequest(event)" class="flex flex-col gap-2">
-                <textarea id="llmInput" placeholder="Sorunu buraya yazın veya özetlenmesini istediğiniz metni yapıştırın..." 
-                          class="chat-input-area w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-civil-red/20"></textarea>
-                <button type="submit" class="bg-civil-red text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-md shadow-red-200 hover:bg-civil-dark transition-colors flex items-center justify-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4"></i>
-                    Yönlendir
-                </button>
+            <i data-lucide="chevron-down" className="w-5 h-5"></i>
+          </div>
+          <div className="p-4 border-b border-slate-100">
+            <h4 className="font-bold text-slate-800">Nasıl yardımcı olabilirim?</h4>
+            <p className="text-sm text-slate-600">Setcard, nakit yatırma, taksit, iade gibi anahtar kelimelerle menüye yönlenebilirsiniz.</p>
+          </div>
+          <div className="p-4 space-y-2 overflow-y-auto text-sm bg-slate-50 flex-1">
+            <div className="bg-white p-3 rounded-lg border border-slate-100 shadow-sm text-slate-700">Anahtar kelime yazın; ilgili sayfa otomatik açılır.</div>
+          </div>
+          <div className="p-3 border-t border-slate-100">
+            <form onSubmit={(e)=>{e.preventDefault();}} className="flex gap-2">
+              <input disabled className="flex-1 bg-slate-100 border border-slate-200 rounded-lg px-3 py-2 text-sm" placeholder="Kullanım hazır" />
+              <button type="button" className="bg-slate-200 text-slate-500 px-3 py-2 rounded-lg text-sm" onClick={onClose}>Kapat</button>
             </form>
+          </div>
         </div>
-    </div>
+      </>
+    );
 
-    <script>
-        // İkonları Yükle
-        lucide.createIcons();
-        
-        // Bu fonksiyon, mevcut HTML kılavuz metnini LLM'e bağlam için çeker.
-        function getFullContextText() {
-            let context = "";
-            const sections = document.querySelectorAll('.content-section');
-            sections.forEach(section => {
-                const title = section.querySelector('h2');
-                if (title) {
-                    context += `\n--- BÖLÜM: ${title.textContent.trim()} ---\n`;
-                }
-                section.querySelectorAll('.step-container').forEach(step => {
-                    const stepTitle = step.querySelector('.step-title');
-                    const stepContent = step.querySelector('.step-content p');
-                    if (stepTitle && stepContent) {
-                        // Not: HTML içeriği textContent ile çektiğimiz için <b class="font-semibold"> etiketi düz metin olarak geliyor.
-                        // Bu düz metin formatı LLM'e yeterli bağlamı sağlar.
-                        context += `- ${stepTitle.textContent.trim()}: ${stepContent.textContent.trim()}\n`;
-                    }
-                });
-            });
-            // Taksit kurallarını ekle (kart görselleri hariç)
-            const taksitSection = document.getElementById('taksitler');
-            if (taksitSection) {
-                context += "\n--- EK KURALLAR: TAKSİT SEÇENEKLERİ ---\n";
-                taksitSection.querySelectorAll('ul.list-disc li').forEach(li => {
-                    context += `- ${li.textContent.trim()}\n`;
-                });
-                taksitSection.querySelectorAll('h3').forEach(h3 => {
-                    // Sadece başlığın metnini ekliyoruz
-                    context += `- Kural: ${h3.textContent.trim()}\n`;
-                });
+    function openModal(src) {
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImage');
+      img.src = src;
+      modal.classList.remove('hidden');
+      setTimeout(()=> img.classList.remove('scale-95'), 10);
+    }
+    function closeModal() {
+      const modal = document.getElementById('imageModal');
+      const img = document.getElementById('modalImage');
+      img.classList.add('scale-95');
+      setTimeout(()=> modal.classList.add('hidden'), 150);
+    }
+
+    const SectionHeading = ({ icon, title, subtitle }) => (
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <i data-lucide={icon} className="text-civil-red"></i>
+          <div>
+            <h2 className="text-2xl font-bold text-slate-800">{title}</h2>
+            {subtitle && <p className="text-sm text-slate-500">{subtitle}</p>}
+          </div>
+        </div>
+      </div>
+    );
+
+    const Dashboard = ({ onNavigate }) => (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800 mb-2">Hızlı Erişim Menüsü</h1>
+          <p className="text-slate-500">İhtiyacınız olan işlemi seçin.</p>
+        </div>
+        <div className="grid quick-grid gap-4">
+          {quickLinks.map((id) => {
+            const nav = navItems.find((n) => n.id === id);
+            return (
+              <button key={id} onClick={() => onNavigate(id)} className="bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all text-left group">
+                <div className="w-10 h-10 rounded-full bg-slate-100 text-civil-red flex items-center justify-center mb-3 group-hover:bg-civil-light transition-colors">
+                  <i data-lucide={nav?.icon || 'sparkles'} className="w-5 h-5"></i>
+                </div>
+                <h3 className="font-semibold text-slate-800">{nav?.title}</h3>
+              </button>
+            );
+          })}
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          {policyHighlights.map((item, idx) => {
+            const badgeClass = {
+              amber: 'bg-amber-100 text-amber-700',
+              rose: 'bg-rose-100 text-rose-700',
+              indigo: 'bg-indigo-100 text-indigo-700',
+              emerald: 'bg-emerald-100 text-emerald-700',
+              cyan: 'bg-cyan-100 text-cyan-700',
+              slate: 'bg-slate-100 text-slate-700'
+            }[item.color] || 'bg-slate-100 text-slate-700';
+
+            return (
+              <div key={idx} className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className={`inline-flex h-8 w-8 rounded-full items-center justify-center font-bold text-sm ${badgeClass}`}>{idx+1}</span>
+                  <h3 className="font-semibold text-slate-800">{item.title}</h3>
+                </div>
+                <ul className="text-sm text-slate-700 space-y-1 list-disc pl-5">
+                  {item.details.map((d,i)=>(<li key={i}>{d}</li>))}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+
+    const PosWarnings = () => (
+      <StepCard title="Kritik POS Uyarıları">
+        <ul className="list-disc pl-5 space-y-2">
+          <li>Müşteri QR ödemede hangi bankayı kullanacaksa POS cihazında o banka seçilmelidir. Anlaşma yoksa önce Yapı Kredi ile QR alın.</li>
+          <li>"POS iade limiti aşıldı" uyarısında mağaza limit açtırmaz. Fatura, slip ve uzun barkod bilgileriyle ztomruk@civil.com.tr, akurt@civil.com.tr, ksezgin@civil.com.tr adreslerine mail atın.</li>
+          <li>İade süresi bankayla müşteri arasındaki anlaşmaya bağlıdır; kesin gün verilmez.</li>
+          <li>Tüm bankalarda kısmi iade yapılabilir. Çapraz iade yapılamıyorsa POS terminal ve üye işyeri numarasını ilgili mail adreslerine gönderin.</li>
+        </ul>
+      </StepCard>
+    );
+
+    const sectionsContent = ({ activeSection, search, onNavigate }) => {
+      return (
+        <>
+          <SectionContainer id="dashboard" activeSection={activeSection}>
+            <Dashboard onNavigate={onNavigate} />
+          </SectionContainer>
+
+          <SectionContainer id="raporlar" activeSection={activeSection}>
+            <SectionHeading icon="bar-chart-2" title="Kasa Raporları" />
+            <StepCard number="1" title="Hareket Özeti Alma">
+              <p>Mağaza hareket özeti ekranından <b>Kasa-Kasiyer Raporu</b> seçin; yekünler kasiyer bazında listelenir.</p>
+              <Image src="https://i.hizliresim.com/mnf88h7.png" alt="Kasa-Kasiyer Raporu" />
+              <p><b>Kasiyer Bazında Listelensin</b> seçimini <b>Evet</b> yaparak kişi bazlı liste alın.</p>
+              <Image src="https://i.hizliresim.com/o0hi6mp.png" alt="Kasiyer bazında" />
+            </StepCard>
+          </SectionContainer>
+
+          <SectionContainer id="pos-islemleri" activeSection={activeSection}>
+            <SectionHeading icon="credit-card" title="POS İşlemleri" subtitle="Satış, iade ve raporlama adımları" />
+            <div className="space-y-5">
+              <StepCard number="1" title="Taksitli Satış">
+                <p>Taksitli satışlarda kart POS\'a takılmalı; çip yoksa yan taraftan çekme denenir.</p>
+                <Image src="https://i.hizliresim.com/izfkfvm.png" alt="Taksitli satış" />
+              </StepCard>
+              <StepCard number="2" title="POS'ta QR ile İşlem Alma">
+                <p>Tutarı girdikten sonra <b>0</b> tuşuna basıp Yapı Kredi\'yi seçin, QR ekranı açılır.</p>
+                <Image src="https://i.hizliresim.com/q6ulr01.png" alt="POS QR" />
+              </StepCard>
+              <StepCard number="3" title="Sliplerin Kullanımı">
+                <Image src="https://i.hizliresim.com/b9ehkip.png" alt="Slip" />
+              </StepCard>
+              <StepCard number="4" title="İşlem İptali ve İadesi">
+                <p>Gün sonu alınmadan aynı günse <b>İptal</b>; gün sonu sonrası <b>İade</b> yapılır.</p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-xs font-semibold mb-1">İptal Ekranı</p>
+                    <Image src="https://i.hizliresim.com/c87t4mo.png" alt="İptal" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold mb-1">İade Ekranı</p>
+                    <Image src="https://i.hizliresim.com/38lrif4.png" alt="İade" />
+                  </div>
+                </div>
+              </StepCard>
+              <StepCard number="5" title="Gün Sonu Alma ve Ek Nüsha">
+                <p>Gün sonlarında kontrol için <b>detay rapor</b> seçin. Slip çıkmazsa ek nüsha alın.</p>
+                <Image src="https://i.hizliresim.com/eu6nsil.png" alt="Detay rapor" />
+                <Image src="https://i.hizliresim.com/hirbfbh.png" alt="Ek nüsha" />
+              </StepCard>
+              <StepCard number="6" title="Ara Rapor Alma">
+                <ul className="list-disc ml-5 space-y-2">
+                  <li><b>Yapı Kredi:</b> <b>#</b> → YKB Ana > Liste İşlemleri > Toplamlar</li>
+                  <li><b>QNB, Ziraat, Halkbank:</b> <b>*</b> → Ara Rapor</li>
+                </ul>
+              </StepCard>
+              <PosWarnings />
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="ozel-odemeler" activeSection={activeSection}>
+            <SectionHeading icon="gift" title="Chippin & Hediye Kartları" subtitle="Tüm alternatif ödeme adımları" />
+            <div className="space-y-6">
+              <PaymentFlow
+                title="Chippin ile Ödeme"
+                color="blue"
+                steps={[
+                  { title: '1. Mobile Pay\'i seçin', image: 'https://i.hizliresim.com/tgpzdlu.jpg' },
+                  { title: '2. Kasada Chippin seçin', image: 'https://i.hizliresim.com/nzbgwjx.jpg' },
+                  { title: '3. Ödemeyi uygulamaya gönderin', image: 'https://i.hizliresim.com/cn4xn4c.jpg' },
+                  { title: '4. Müşteri bilgilerini kontrol edin', image: 'https://i.hizliresim.com/rqjv4cy.jpg' },
+                  { title: '5. Müşteri onayı', image: 'https://i.hizliresim.com/85fgb54.jpg' },
+                  { title: '6. İşlem tamam', image: 'https://i.hizliresim.com/mcmfgsz.jpg' },
+                ]}
+              />
+              <PaymentFlow
+                title="iWallet ile Ödeme"
+                color="green"
+                steps={[
+                  { title: '1. Başlangıç Ekranı', image: 'https://i.hizliresim.com/ahvb0na.jpg' },
+                  { title: '2. Kasada iWallet Seçimi', image: 'https://i.hizliresim.com/fnjkgpo.jpg' },
+                  { title: '3. iWallet Giriş', image: 'https://i.hizliresim.com/bl7t28d.jpg' },
+                  { title: '4. Satış İşlemini Başlatma', image: 'https://i.hizliresim.com/1jpga57.jpg' },
+                  { title: '5. Kart Bilgilerini Alma ve Onay', image: 'https://i.hizliresim.com/e9zf814.jpg' },
+                  { title: '6. Doğrulama', image: 'https://i.hizliresim.com/cnrof3m.jpg' },
+                  { title: '7. Başarılı İşlem', image: 'https://i.hizliresim.com/91jrum4.jpg' },
+                  { title: '8. İşlemi Bitirme', image: 'https://i.hizliresim.com/5ukfbj4.jpg' },
+                ]}
+              />
+              <PaymentFlow
+                title="Setcard ile Ödeme"
+                color="orange"
+                steps={[
+                  { title: '1. Başlangıç Ekranı', image: 'https://i.hizliresim.com/7i6ev8n.jpg' },
+                  { title: '2. Kasada Setcard Seçme', image: 'https://i.hizliresim.com/2mlz5mo.jpg' },
+                  { title: '3. Setcard Giriş', image: 'https://i.hizliresim.com/tbne02l.jpg' },
+                  { title: '4. Müşteri Bilgileri', image: 'https://i.hizliresim.com/jgc5vyp.jpg' },
+                  { title: '5. Uygulama Onayı', image: 'https://i.hizliresim.com/lpxzj6v.jpg' },
+                  { title: '6. Telefon No Doğrulama', image: 'https://i.hizliresim.com/ciyowa4.jpg' },
+                  { title: '7. SMS Doğrulama', image: 'https://i.hizliresim.com/4lmtdqm.jpg' },
+                  { title: '8. Başarılı İşlem', image: 'https://i.hizliresim.com/8bzyd2k.jpg' },
+                ]}
+              />
+              <PaymentFlow
+                title="Edenred ile Ödeme"
+                color="purple"
+                steps={[
+                  { title: '1. Başlangıç Ekranı', image: 'https://i.hizliresim.com/is4janf.jpg' },
+                  { title: '2. Kasada Ederned Seçme', image: 'https://i.hizliresim.com/ny1vhyj.jpg' },
+                  { title: '3. Satış Oluşturma', image: 'https://i.hizliresim.com/bawc1b6.jpg' },
+                  { title: '4. SMS Doğrulama', image: 'https://i.hizliresim.com/dy5qpst.jpg' },
+                  { title: '5. Doğrulama', image: 'https://i.hizliresim.com/nsrgb5e.jpg' },
+                  { title: '6. Başarılı İşlem', image: 'https://i.hizliresim.com/goy0aer.jpg' },
+                  { title: '7. Ödeme Tamamlama', image: 'https://i.hizliresim.com/awpxe3u.jpg' },
+                ]}
+              />
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="nakit-yatirma" activeSection={activeSection}>
+            <SectionHeading icon="wallet-2" title="Nakit Yatırma" />
+            <StepCard>
+              <p>Hareket özetini kontrol ettikten sonra <b>Kasa Hareketleri</b> ekranını açın, <b>Nakit Hesap Kodu</b> kısmından kendi şubenizi seçin.</p>
+              <Image src="https://i.hizliresim.com/hase4r9.png" alt="Kasa Hareketleri" />
+              <p><b>Cari Hesap Kodu</b> aramasına "Muhtelif" yazıp tedarikçiyi seçin.</p>
+              <Image src="https://i.hizliresim.com/1nxesxg.png" alt="Cari Hesap" />
+              <p><b>Maliyet Merkezi</b> kısmında mağaza kodunu onaylayın.</p>
+              <Image src="https://i.hizliresim.com/hsxa0mv.png" alt="Maliyet merkezi" />
+              <p><b>Alacak</b> kısmına günlük nakit yekününü yazıp kaydedin.</p>
+              <Image src="https://i.hizliresim.com/r9h71th.png" alt="Alacak" />
+              <p className="font-semibold text-red-600">Mağaza hareket özetinde <b>Nakit Kasa Yekünü</b> sıfır olmalıdır.</p>
+              <Image src="https://i.hizliresim.com/th2kl5w.png" alt="Kontrol" />
+              <div className="bg-civil-light border border-civil-red/30 text-sm p-3 rounded-lg">
+                Nakit çıkışı fiş tipi mutlaka <b>Tediye</b> olmalıdır; Tahsil seçilmemelidir.
+              </div>
+            </StepCard>
+          </SectionContainer>
+
+          <SectionContainer id="kasa-duzeltme" activeSection={activeSection}>
+            <SectionHeading icon="alert-triangle" title="İşlem Kayması Düzeltme" />
+            <div className="space-y-5">
+              <StepCard number="1" title="Alınan Ödemeler Listesi">
+                <p>Kayma tespiti için <b>Alınan Ödemeler Listesi</b> ekranını açın.</p>
+                <Image src="https://i.hizliresim.com/6i75o54.png" alt="Alınan Ödemeler" />
+              </StepCard>
+              <StepCard number="2" title="İşlem Tespiti ve Filtreleme">
+                <p>İşlem türünü seçip <b>Ödeme(D)</b> alanından filtreleyin.</p>
+                <Image src="https://i.hizliresim.com/6u77fsi.png" alt="İşlem Tespiti" />
+                <Image src="https://i.hizliresim.com/fo77a8x.png" alt="Ödeme Filtre" />
+              </StepCard>
+              <StepCard number="3" title="Fatura Referans Numarasını Kopyala">
+                <p>İlgili satırın fatura referans numarasını kopyalayın.</p>
+                <Image src="https://i.hizliresim.com/oumum0x.png" alt="Referans" />
+              </StepCard>
+              <StepCard number="4" title="Düzeltme Ekranına Git">
+                <p><b>Hatalı Girilmiş Ödeme Kayıtlarını Düzelt</b> ekranını açıp referansı <b>Fiş Numarası</b> alanına yapıştırın.</p>
+                <Image src="https://i.hizliresim.com/f20cm4g.png" alt="Düzeltme" />
+                <Image src="https://i.hizliresim.com/sug6i4p.png" alt="Kaydet" />
+              </StepCard>
+              <StepCard number="5" title="Bankayı Seç/Nakite Çevir">
+                <p>İşlemi doğru bankaya taşıyın veya nakite çevirin, ardından kaydedin.</p>
+                <Image src="https://i.hizliresim.com/elq0rok.png" alt="Çevirme" />
+                <Image src="https://i.hizliresim.com/5j7dwfq.png" alt="Kaydet" />
+              </StepCard>
+              <div className="bg-slate-100 border border-slate-200 text-sm text-slate-700 p-3 rounded-lg">Karşılığı olan işlemler düzeltilebilir; karşılığı olmayan işlemler düzeltilmemelidir.</div>
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="masraf-duzeltme" activeSection={activeSection}>
+            <SectionHeading icon="coins" title="Masraf Girişi" />
+            <div className="space-y-5">
+              <StepCard number="1" title="Masraf Girişi Ekranını Açma">
+                <p><b>Mağaza Masraf Girişi</b> ekranını açın, POS seçip onaylayın.</p>
+                <Image src="https://i.hizliresim.com/r7uywx2.png" alt="Masraf girişi" />
+              </StepCard>
+              <StepCard number="2" title="Tedarikçi ve Masraf Tipi">
+                <p>Tedarikçi: <b>Kasa Fazlası / Kasa Açığı</b>. Muhasebe Döküman Tipi: <b>Masraf Beyan</b>.</p>
+                <Image src="https://i.hizliresim.com/aaey7pv.png" alt="Tedarikçi" />
+                <Image src="https://i.hizliresim.com/ilrvgi7.png" alt="Masraf beyan" />
+                <p>Kasada <b>fazla</b> varsa <b>İade</b> kutusu işaretlenir.</p>
+                <Image src="https://i.hizliresim.com/dp9c75z.png" alt="İade" />
+              </StepCard>
+              <StepCard number="3" title="Madde Kodu ve Fiyat">
+                <p><b>Madde Kodu</b> olarak <b>Kasa Açığı</b> veya <b>Kasa Fazlası</b> seçin. Fiyat hatası için "Mağaza Fiyat Hatası" yazın.</p>
+                <Image src="https://i.hizliresim.com/g3y9bw2.png" alt="Madde kodu" />
+                <p>Hata tutarını <b>Fiyat</b> alanına girin.</p>
+                <Image src="https://i.hizliresim.com/pota95a.png" alt="Fiyat" />
+              </StepCard>
+              <StepCard number="4" title="Seri Numarası ve Kaydet">
+                <p><b>Seri Numarası</b> alanına tarihi <b>YYYY/AA/GG</b> yazın, onaylayıp kaydedin.</p>
+                <Image src="https://i.hizliresim.com/lybakck.png" alt="Seri" />
+                <Image src="https://i.hizliresim.com/43hl6dk.png" alt="Kaydet" />
+              </StepCard>
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="sablon" activeSection={activeSection}>
+            <SectionHeading icon="file-spreadsheet" title="Şablon" />
+            <div className="space-y-4">
+              <StepCard number="70" title="Kur Formülleri ve Tarih">
+                <ul className="list-disc ml-5 space-y-1">
+                  <li>Dolar kuru: <code>=b3*c3</code></li>
+                  <li>Euro kuru: <code>=b4*c4</code></li>
+                  <li>Güncel tarih: <code>=TODAY()</code></li>
+                  <li>Google Sheets Euro: <code>=GOOGLEFINANCE("CURRENCY:EURTRY")</code></li>
+                  <li>Google Sheets Dolar: <code>=GOOGLEFINANCE("CURRENCY:USDTRY")</code></li>
+                  <li><b>Otomatik kur formülleri yalnızca Google Spreadsheet'te çalışır.</b></li>
+                </ul>
+              </StepCard>
+              <StepCard number="71" title="Günsonu Şablonu">
+                <p className="font-semibold text-red-600">Fiyat hatası olan barkod ve kasa açığı/fazlası olan kişinin adı yazılmalıdır. Şablonu kendi hesabınıza kopyalayabilirsiniz.</p>
+                <div className="flex justify-center mb-3">
+                  <a href="https://docs.google.com/spreadsheets/d/1_toHuGzRYjxFKffmGf5r1JMNdIBSuGXqsC-SgSKxZDc/edit?gid=911808809#gid=911808809" target="_blank" className="bg-civil-red text-white px-4 py-2 rounded-lg shadow hover:bg-civil-dark transition">Şablon Linki</a>
+                </div>
+                <Image src="https://i.hizliresim.com/b44opxq.png" alt="Şablon" />
+              </StepCard>
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="fatura-portal" activeSection={activeSection}>
+            <SectionHeading icon="file-text" title="Online Alışveriş Faturası" />
+            <div className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+              <div className="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+                <h3 className="font-bold text-slate-700">Portal Giriş Bilgileri</h3>
+                <a href="https://onlinefatura.civil.com.tr" target="_blank" className="text-sm bg-civil-red text-white px-4 py-2 rounded-lg hover:bg-civil-dark flex items-center gap-2">Aç <i data-lucide="external-link" className="w-4 h-4"></i></a>
+              </div>
+              <div className="p-6 space-y-5 text-sm">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Kullanıcı Adı / E-Posta</label>
+                  <div className="flex gap-2">
+                    <input type="text" value="magaza@civil.com.tr" readOnly className="w-full bg-slate-100 border-none rounded-lg px-4 py-3" />
+                    <button className="bg-white border border-slate-200 px-4 py-3 rounded-lg text-slate-600" onClick={()=>navigator.clipboard?.writeText('magaza@civil.com.tr')}>Kopyala</button>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Şifre</label>
+                  <div className="flex gap-2">
+                    <input type="text" value="0oC,WS<b77e)|p+." readOnly className="w-full bg-slate-100 border-none rounded-lg px-4 py-3" />
+                    <button className="bg-white border border-slate-200 px-4 py-3 rounded-lg text-slate-600" onClick={()=>navigator.clipboard?.writeText('0oC,WS<b77e)|p+.')}>Kopyala</button>
+                  </div>
+                </div>
+                <div className="border-t border-slate-100 pt-4 space-y-3">
+                  <h4 className="font-bold text-slate-700">Fatura Bulma Adımları</h4>
+                  <p className="text-slate-600">Sipariş/fatura numarasıyla arama yapın, filtreleyin ve dosyayı indirin.</p>
+                  <Image src="https://i.hizliresim.com/jsov0a3.png" alt="Portal arama" />
+                  <Image src="https://i.hizliresim.com/i49ap5s.png" alt="Fatura detay" />
+                  <Image src="https://i.hizliresim.com/5qg2r7m.png" alt="Fatura indir" />
+                </div>
+              </div>
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="havale-eft" activeSection={activeSection}>
+            <SectionHeading icon="refresh-ccw" title="Havale / EFT İşlemleri" />
+            <div className="space-y-5">
+              <StepCard number="1" title="Havale/EFT Ekranı">
+                <p>İlgili banka ekranını açın.</p>
+                <Image src="https://i.hizliresim.com/p9b36ti.png" alt="Havale ekranı" />
+              </StepCard>
+              <StepCard number="2" title="Bankanın Seçilmesi">
+                <Image src="https://i.hizliresim.com/s2wroz8.png" alt="Banka seçimi" />
+              </StepCard>
+              <StepCard number="3" title="Tutarın Girilmesi">
+                <Image src="https://i.hizliresim.com/cqy4bfh.png" alt="Tutar" />
+              </StepCard>
+              <StepCard number="4" title="Dekont / Onay Kontrolü">
+                <Image src="https://i.hizliresim.com/i8d290c.png" alt="Dekont" />
+              </StepCard>
+              <StepCard number="5" title="Gönderim İşlemi">
+                <Image src="https://i.hizliresim.com/9bvlc0o.png" alt="Gönderim" />
+              </StepCard>
+              <StepCard number="6" title="İşlem Özeti">
+                <Image src="https://i.hizliresim.com/3ed44i4.png" alt="Özet" />
+              </StepCard>
+            </div>
+          </SectionContainer>
+
+          <SectionContainer id="taksitler" activeSection={activeSection}>
+            <SectionHeading icon="percent" title="Taksit Seçenekleri" />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="content-card bg-white rounded-xl p-5 md:col-span-2">
+                <h3 className="text-green-600 font-bold text-xl mb-4 flex items-center gap-2"><i data-lucide="check-circle" className="w-5 h-5"></i> Vade Farksız 6 Taksit</h3>
+                <p className="text-sm text-slate-600 mb-4"><b>Yapı Kredi World, Vakıfbank World ve Albaraka World</b> kartlarına tüm kategorilerde vade farksız 6 taksit uygulanır.</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {[
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_classic.png', label:'YKB World Classic'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios.png', label:'YKB World Adios'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios_premium.png', label:'YKB Adios Premium'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_cyrastal.png', label:'YKB World Crystal'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_hespiburada.png', label:'YKB World Hepsiburada'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_play.png', label:'YKB World Play'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_opet.png', label:'YKB World Opet'},
+                    {src:'https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_koc_ailem.png', label:'World Koç Ailem'},
+                    {src:'https://cdn2.enuygun.com/img/finance/uploads/311x196_44677fa77d.png', label:'Albaraka World (Genel)'},
+                    {src:'https://cdn2.enuygun.com/img/finance/uploads/311x196_ccd845116d.png', label:'Albaraka World (Özel)'},
+                    {src:'https://cdn2.enuygun.com/img/finance/uploads/311x196_eflatun_bff07796e8.png', label:'Albaraka World Eflatun'},
+                    {src:'https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/click-kart.png', label:'Vakıfbank World Click'},
+                    {src:'https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/emekli-kart.png', label:'Vakıfbank World Emekli'},
+                    {src:'https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-metal-kart-256x208.png', label:'VakıfBank Platinum Metal'},
+                    {src:'https://vbassets.vakifbank.com.tr/bireysel/platinum-one-kart-desktop.png', label:'VakıfBank Platinum One'},
+                    {src:'https://www.worldcard.com.tr/getmedia/ed463df8-b61a-45e3-9cf0-99a808ee7997/world-new-platinum-card.png?width=560&height=356&ext=.png', label:'YKB World Platinum'},
+                    {src:'https://www.worldcard.com.tr/getmedia/89e152a7-0cee-4d78-93c8-761ec56653de/world-new-gold-card.png?width=1012&height=639&ext=.png', label:'YKB World Gold'}
+                  ].map((card, idx)=> (
+                    <div key={idx} className="flex flex-col items-center bg-slate-50 rounded-lg p-2 shadow-sm border border-slate-100 text-center">
+                      <img src={card.src} alt={card.label} className="h-20 object-contain" />
+                      <span className="text-xs text-slate-700 mt-2">{card.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="content-card bg-white rounded-xl p-5">
+                <h3 className="text-red-600 font-bold text-xl mb-3 flex items-center gap-2"><i data-lucide="x-octagon" className="w-5 h-5"></i> Taksit Yapılmayan Kartlar</h3>
+                <p className="text-sm text-slate-600 mb-4">Bu kartlara taksit uygulanmaz:</p>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    {src:'https://www.worldcard.com.tr/getmedia/f94b6712-8ed4-49e0-85c5-2e36c4d8275a/world-new-eko-card.png?width=1012&height=639&ext=.png', label:'YKB World Eko'},
+                    {src:'https://www.kuveytturk.com.tr/medium/SitemapNodePage-Landing-22010-2x.vsf', label:'Kuveyttürk'},
+                    {src:'https://www.denizbank.com/medium/SitemapNodePage-Landing-16960-2x.vsf', label:'DenizBank'}
+                  ].map((card, idx)=> (
+                    <div key={idx} className="flex flex-col items-center bg-slate-50 rounded-lg p-2 shadow-sm border border-slate-100 text-center">
+                      <img src={card.src} alt={card.label} className="h-20 object-contain" />
+                      <span className="text-xs text-slate-700 mt-2">{card.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="content-card bg-white rounded-xl p-5">
+                <h3 className="text-slate-700 font-bold text-xl mb-3 flex items-center gap-2"><i data-lucide="info" className="w-5 h-5"></i> Diğer Taksit Kuralları</h3>
+                <ul className="text-sm text-slate-600 space-y-2 list-disc pl-4">
+                  <li>Diğer kartlara <b>%10 vade farkı ile 4 taksit</b>.</li>
+                  <li><b>Araç gereç ve oyuncaklar</b> için vade farksız 4 taksit.</li>
+                  <li>Kampanyalı ayakkabılarda vade farksız taksit uygulanabilir.</li>
+                </ul>
+              </div>
+            </div>
+          </SectionContainer>
+        </>
+      );
+    };
+
+    const App = () => {
+      const [activeSection, setActiveSection] = useState('dashboard');
+      const [search, setSearch] = useState('');
+      const [chatOpen, setChatOpen] = useState(false);
+      const [sidebarOpen, setSidebarOpen] = useState(false);
+
+      useEffect(() => { if (window.lucide) lucide.createIcons(); }, [activeSection, chatOpen, sidebarOpen, search]);
+      useEffect(() => { showSectionAfterNavigate(search); }, [search]);
+
+      const handleNavigate = (id) => {
+        setActiveSection(id);
+        setSidebarOpen(false);
+        if (window.innerWidth < 1024) window.scrollTo({top:0,behavior:'smooth'});
+      };
+
+      const showSectionAfterNavigate = (value) => {
+        if (value.length > 1) {
+          const keywordMap = {
+            'setcard':'ozel-odemeler', 'hediye kart':'ozel-odemeler', 'chippin':'ozel-odemeler', 'iwallet':'ozel-odemeler', 'ederned':'ozel-odemeler',
+            'taksit':'taksitler', 'vade':'taksitler', 'kasa kapanış':'nakit-yatirma', 'nakit':'nakit-yatirma', 'kayma':'kasa-duzeltme', 'masraf':'masraf-duzeltme', 'fiyat':'masraf-duzeltme',
+            'fatura':'fatura-portal', 'portal':'fatura-portal', 'iade':'pos-islemleri', 'iptal':'pos-islemleri', 'pos':'pos-islemleri', 'rapor':'raporlar', 'havale':'havale-eft'
+          };
+          for (const [k,v] of Object.entries(keywordMap)) {
+            if (value.toLowerCase().includes(k)) {
+              setActiveSection(v);
+              break;
             }
-
-            return context;
+          }
         }
+      };
 
-        // ===== Basit Anahtar Kelimeye Göre Yönlendirme Fonksiyonu =====
-        function navigateByKeyword(query) {
-            query = query.toLowerCase();
-            const keywordMap = {
-                'setcard': 'ozel-odemeler',
-                'hediye kartı': 'ozel-odemeler',
-                'chippin': 'ozel-odemeler',
-                'iwallet': 'ozel-odemeler',
-                'ederned': 'ozel-odemeler',
-                'taksit': 'taksitler',
-                'vade': 'taksitler',
-                'kasa kapanışı': 'nakit-yatirma',
-                'nakit yatırma': 'nakit-yatirma',
-                'kasa hatası': 'kasa-duzeltme',
-                'işlem kayması': 'kasa-duzeltme',
-                'masraf': 'masraf-duzeltme',
-                'fiyat hatası': 'masraf-duzeltme',
-                'fatura': 'fatura-portal',
-                'portal': 'fatura-portal',
-                'iade': 'pos-islemleri',
-                'iptal': 'pos-islemleri',
-                'pos': 'pos-islemleri',
-                'rapor': 'raporlar'
-            };
+      return (
+        <div className="flex h-screen overflow-hidden">
+          <aside className={`bg-white w-72 fixed inset-y-0 left-0 z-30 transform ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 lg:static border-r border-slate-200 flex flex-col shadow-2xl lg:shadow-none transition-transform`}>
+            <div className="h-16 flex items-center px-6 border-b border-slate-100 bg-civil-red text-white">
+              <div className="flex items-center gap-3">
+                <i data-lucide="shopping-bag" className="w-6 h-6"></i>
+                <span className="font-bold text-xl">Kasa Asistanı</span>
+              </div>
+              <button className="lg:hidden ml-auto" onClick={()=>setSidebarOpen(false)}><i data-lucide="x" className="w-6 h-6"></i></button>
+            </div>
+            <nav className="flex-1 overflow-y-auto p-4 space-y-1">
+              <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Menü</div>
+              {navItems.map((item)=> (
+                <button key={item.id} onClick={()=>handleNavigate(item.id)} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${activeSection===item.id ? 'bg-civil-light text-civil-red' : 'text-slate-600 hover:bg-civil-light hover:text-civil-red'}`}>
+                  <i data-lucide={item.icon} className="w-5 h-5"></i>{item.title}
+                </button>
+              ))}
+            </nav>
+            <div className="p-4 border-t border-slate-100 bg-slate-50">
+              <button onClick={()=>setChatOpen(true)} className="w-full bg-civil-red text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-md shadow-red-200 hover:bg-civil-dark transition-colors flex items-center justify-center gap-2">
+                <i data-lucide="bot" className="w-4 h-4"></i> Asistan
+              </button>
+              <div className="text-xs text-center text-slate-400 mt-3">v3.0 • React PWA</div>
+            </div>
+          </aside>
 
-            for (const [keyword, sectionId] of Object.entries(keywordMap)) {
-                if (query.includes(keyword)) {
-                    return sectionId;
-                }
-            }
-            return null;
-        }
+          <main className="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg">
+            <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8">
+              <div className="flex items-center gap-3 w-full">
+                <button onClick={()=>setSidebarOpen(!sidebarOpen)} className="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                  <i data-lucide="menu" className="w-6 h-6"></i>
+                </button>
+                <div className="flex-1">
+                  <h2 className="text-xl font-semibold text-slate-800 hidden lg:block">Kasa Yardımcım</h2>
+                  <h2 className="text-lg font-semibold text-slate-800 lg:hidden text-right">{navItems.find(n=>n.id===activeSection)?.title || 'Kasa Yardımcım'}</h2>
+                </div>
+              </div>
+            </header>
 
-        async function handleChatRequest(e) {
-            e.preventDefault();
-            const input = document.getElementById('llmInput');
-            const responseArea = document.getElementById('llmResponseArea');
-            const userText = input.value.trim();
+            <div className="flex-1 overflow-y-auto p-4 lg:p-8 space-y-6">
+              <SearchBar value={search} onChange={setSearch} />
+              {sectionsContent({activeSection, search, onNavigate: handleNavigate})}
+              <div className="h-10"></div>
+            </div>
+          </main>
+          <ChatWidget open={chatOpen} onOpen={()=>setChatOpen(true)} onClose={()=>setChatOpen(false)} />
+        </div>
+      );
+    };
 
-            if (!userText) {
-                responseArea.textContent = "Lütfen bir anahtar kelime veya soru girin.";
-                responseArea.classList.remove('hidden');
-                return;
-            }
-            
-            // Kullanıcı mesajını chat kutusuna ekle
-            addChatMessage(userText, 'user');
-            input.value = '';
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 
-            const targetSectionId = navigateByKeyword(userText);
+  <Modal />
 
-            if (targetSectionId) {
-                showSection(targetSectionId);
-                addChatMessage(
-                    `"${userText}" anahtar kelimesi ile ilgili olarak sizi "${document.getElementById('pageTitle').innerText}" bölümüne yönlendiriyorum.`,
-                    'bot'
-                );
-
-                // ✅ Yönlendirme başarılıysa chat kutusunu kapat
-                closeChat();
-            } else {
-                // ❌ Sayfa bulunamadığında chat açık kalmaya devam ediyor
-                addChatMessage(
-                    `"${userText}" için özel bir sayfa bulunamadı, ancak yardımcı olmaya hazırım.`,
-                    'bot'
-                );
-            }
-
-
-        }
-
-        function addChatMessage(text, sender) {
-            const messagesContainer = document.getElementById('chatMessages');
-            const messageDiv = document.createElement('div');
-            const messageSpan = document.createElement('span');
-            
-            messageDiv.className = `message mb-2 ${sender === 'user' ? 'text-right' : 'text-left'}`;
-            
-            messageSpan.className = `inline-block p-2 rounded-lg max-w-[85%] ${
-                sender === 'user' ? 'bg-civil-red text-white' : 'bg-slate-200 text-slate-800'
-            }`;
-            messageSpan.textContent = text;
-            
-            messageDiv.appendChild(messageSpan);
-            messagesContainer.appendChild(messageDiv);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight; // En alta kaydır
-        }
-        
-        // Formun gönderilme olayını yakalamak için
-        document.querySelector('#chatWidget form').onsubmit = handleChatRequest;
-
-        // ===== Navigasyon & Arayüz Fonksiyonları (Önceki Sürümden korunmuştur) =====
-
-        function showSection(sectionId) {
-            if (window.innerWidth < 1024) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-                document.getElementById('mobileOverlay').classList.add('hidden');
-            }
-            document.querySelectorAll('.content-section').forEach(el => {
-                el.classList.add('hidden');
-                el.classList.remove('block');
-            });
-            const target = document.getElementById(sectionId);
-            if (target) {
-                target.classList.remove('hidden');
-                target.classList.add('block');
-                
-                const titleMap = {
-                    'dashboard': 'Ana Sayfa',
-                    'raporlar': 'Kasa Raporları',
-                    'pos-islemleri': 'POS İşlemleri',
-                    'ozel-odemeler': 'Chippin & Hediye Kartları',
-                    'nakit-yatirma': 'Nakit Yatırma',
-                    'kasa-duzeltme': 'İşlem Kayması Düzeltme',
-                    'masraf-duzeltme': 'Masraf / Fiyat Düzeltme',
-                    'fatura-portal': 'E-Fatura & Portal',
-                    'taksitler': 'Taksit Seçenekleri',
-                    'sablon': 'Şablon',
-                    'havale-eft': 'Havale / EFT',
-                };
-                document.getElementById('pageTitle').innerText = titleMap[sectionId] || 'Kasa Asistanı';
-            }
-            document.querySelectorAll('.nav-item').forEach(btn => {
-                if(btn.dataset.target === sectionId) {
-                    btn.classList.add('bg-civil-light', 'text-civil-red');
-                    btn.classList.remove('text-slate-600');
-                } else {
-                    btn.classList.remove('bg-civil-light', 'text-civil-red');
-                    btn.classList.add('text-slate-600');
-                }
-            });
-            document.getElementById('contentArea').scrollTo(0,0);
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const overlay = document.getElementById('mobileOverlay');
-            
-            if (sidebar.classList.contains('-translate-x-full')) {
-                sidebar.classList.remove('-translate-x-full');
-                overlay.classList.remove('hidden');
-            } else {
-                sidebar.classList.add('-translate-x-full');
-                overlay.classList.add('hidden');
-            }
-        }
-
-        function handleSearch(query) {
-            query = query.toLowerCase();
-            const searchItems = document.querySelectorAll('.step-container'); // Sadece step-containerları arıyoruz
-            
-            if (query.length > 2) {
-                document.querySelectorAll('.content-section').forEach(sec => {
-                    sec.classList.add('hidden');
-                    sec.classList.remove('block');
-                });
-                document.getElementById('dashboard').classList.add('hidden');
-                document.getElementById('mobileTitle').innerText = "Arama Sonuçları";
-                document.getElementById('pageTitle').innerText = "Arama Sonuçları";
-
-                searchItems.forEach(item => {
-                    if (item.innerText.toLowerCase().includes(query)) {
-                        item.classList.remove('hidden');
-                        item.closest('.content-section').classList.remove('hidden');
-                        item.closest('.content-section').classList.add('block');
-                    } else {
-                        item.classList.add('hidden');
-                    }
-                });
-
-                document.querySelectorAll('.content-section').forEach(sec => {
-                    const visibleItems = sec.querySelectorAll('.step-container:not(.hidden)').length;
-                    if (visibleItems === 0) {
-                        sec.classList.add('hidden');
-                    }
-                });
-
-            } else if (query.length === 0) {
-                showSection('dashboard');
-                document.getElementById('mobileTitle').innerText = "Kasa Yardımcım";
-                searchItems.forEach(item => item.classList.remove('hidden'));
-            }
-        }
-
-        function copyToClipboard(elementId) {
-            const el = document.getElementById(elementId);
-            el.select();
-            document.execCommand('copy');
-            
-            const btn = el.nextElementSibling;
-            const originalText = btn.innerText;
-            btn.innerText = "Kopyalandı!";
-            btn.classList.add('text-green-600', 'bg-green-50');
-            
-            setTimeout(() => {
-                btn.innerText = originalText;
-                btn.classList.remove('text-green-600', 'bg-green-50');
-            }, 2000);
-        }
-
-        function togglePassword(inputId) {
-            const input = document.getElementById(inputId);
-            input.type = input.type === 'password' ? 'text' : 'password';
-        }
-
-        function openModal(src) {
-            const modal = document.getElementById('imageModal');
-            const img = document.getElementById('modalImage');
-            img.src = src;
-            modal.classList.remove('hidden');
-            setTimeout(() => img.classList.remove('scale-95'), 10);
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('imageModal');
-            const img = document.getElementById('modalImage');
-            img.classList.add('scale-95');
-            setTimeout(() => modal.classList.add('hidden'), 200);
-        }
-        
-        function openChat() {
-            document.getElementById('chatWidget').classList.remove('translate-y-[120%]');
-            document.getElementById('floatingChatButton').classList.add('hidden');
-            // Akıllı Asistan açıldığında içerik temizlenmeli ve sadece rehberlik modu aktif olmalı
-            document.getElementById('llmResponseArea').classList.add('hidden');
-            document.getElementById('llmInput').value = '';
-            
-            // Kullanıcıya rehberlik mesajı göster
-            const messagesContainer = document.getElementById('chatMessages');
-            messagesContainer.innerHTML = ''; // Önceki mesajları temizle
-            addChatMessage('Hangi işlemle ilgili yardıma ihtiyacınız var? (Örn: setcard, nakit yatırma, taksit..)', 'bot');
-
-            if (window.innerWidth < 1024) {
-                document.getElementById('sidebar').classList.add('-translate-x-full');
-                document.getElementById('mobileOverlay').classList.add('hidden');
-            }
-        }
-
-        function closeChat() {
-            document.getElementById('chatWidget').classList.add('translate-y-[120%]');
-            document.getElementById('floatingChatButton').classList.remove('hidden');
-        }
-
-        // Başlangıçta Ana Sayfayı Göster
-        window.onload = () => {
-            showSection('dashboard');
-        };
-      
-      document.getElementById("llmInput").addEventListener("keydown", function (e) {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            document.querySelector("#chatWidget form").dispatchEvent(new Event("submit"));
-        }
-    });
-
-
-    </script>
-
-
-    <script>
+  <script>
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log("Service worker başarıyla yüklendi"))
-        .catch(err => console.log("SW hatası:", err));
+      navigator.serviceWorker.register('/sw.js').then(() => console.log('Service Worker aktif.')).catch((err)=>console.log('SW hatası', err));
     }
-    </script>
-
-    <script>
-    if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("/sw.js")
-        .then(() => console.log("Service Worker aktif (offline mod hazır)."))
-        .catch(err => console.log("Service Worker hatası:", err));
-    }
-    </script>
-
-        
+  </script>
 </body>
 </html>
