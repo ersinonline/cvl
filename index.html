@@ -1487,27 +1487,31 @@
         // ===== Basit Anahtar Kelimeye Göre Yönlendirme Fonksiyonu =====
         function navigateByKeyword(query) {
             query = query.toLowerCase();
-            const keywordMap = {
-                'setcard': 'ozel-odemeler',
-                'hediye kartı': 'ozel-odemeler',
-                'chippin': 'ozel-odemeler',
-                'iwallet': 'ozel-odemeler',
-                'ederned': 'ozel-odemeler',
-                'taksit': 'taksitler',
-                'vade': 'taksitler',
-                'kasa kapanışı': 'nakit-yatirma',
-                'nakit yatırma': 'nakit-yatirma',
-                'kasa hatası': 'kasa-duzeltme',
-                'işlem kayması': 'kasa-duzeltme',
-                'masraf': 'masraf-duzeltme',
-                'fiyat hatası': 'masraf-duzeltme',
-                'fatura': 'fatura-portal',
-                'portal': 'fatura-portal',
-                'iade': 'pos-islemleri',
-                'iptal': 'pos-islemleri',
-                'pos': 'pos-islemleri',
-                'rapor': 'raporlar'
-            };
+                const keywordMap = {
+                    'pos': 'pos-islemleri',
+                    'iade': 'pos-islemleri',
+                    'iptal': 'pos-islemleri',
+                    'taksit': 'taksitler',
+                    'vade': 'taksitler',
+                    'chippin': 'chippin',
+                    'setcard': 'ozel-odemeler',
+                    'hediye': 'ozel-odemeler',
+                    'hediye kartı': 'ozel-odemeler',
+                    'iwallet': 'ozel-odemeler',
+                    'ederned': 'ozel-odemeler',
+                    'nakit': 'nakit-yatirma',
+                    'nakit yatırma': 'nakit-yatirma',
+                    'kasa hatası': 'kasa-duzeltme',
+                    'işlem kayması': 'kasa-duzeltme',
+                    'kayma': 'kasa-duzeltme',
+                    'masraf': 'masraf-duzeltme',
+                    'fiyat hatası': 'masraf-duzeltme',
+                    'fatura': 'fatura-portal',
+                    'portal': 'fatura-portal',
+                    'online': 'fatura-portal',
+                    'alışveriş': 'fatura-portal',
+                    'rapor': 'raporlar'
+                };
 
             for (const [keyword, sectionId] of Object.entries(keywordMap)) {
                 if (query.includes(keyword)) {
