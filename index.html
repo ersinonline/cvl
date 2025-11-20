@@ -1,27 +1,30 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-        
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-EPWVHCCP00"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-EPWVHCCP00');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-EPWVHCCP00');
     </script>
-    
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Civil Kasa Asistanı</title>
-    <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
-    <link rel="manifest" href="manifest.json">
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- Favicon -->
+    <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Config -->
     <script>
         tailwind.config = {
             theme: {
@@ -42,22 +45,25 @@
         }
     </script>
 
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-slate-800 h-screen flex overflow-hidden">
-    <script>
-        const API_KEY = ""; 
-        const API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=" + API_KEY;
-        const LLM_MODEL = "gemini-2.5-flash-preview-09-2025";
-    </script>
-  
-        <button 
-          onclick="openChat()" 
-          id="floatingChatButton"
-          class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center lg:hidden">
-          <i data-lucide="bot" class="w-6 h-6"></i>
-      </button>
 
-    
+    <!-- Floating Chat Button (Mobile) -->
+    <button 
+        onclick="openChat()" 
+        id="floatingChatButton"
+        class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center lg:hidden">
+        <i data-lucide="bot" class="w-6 h-6"></i>
+    </button>
+
     <!-- MOBİL OVERLAY (Sidebar açıkken arka planı karartır) -->
     <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
 
@@ -85,60 +91,60 @@
 
             <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-2 px-2">İşlemler</div>
 
-                <button onclick="showSection('raporlar')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-                    Kasa Raporları
-                </button>
-                
-                <button onclick="showSection('pos-islemleri')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="credit-card" class="w-5 h-5"></i>
-                    POS İşlemleri
-                </button>
-                
-                <button onclick="showSection('taksitler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="percent" class="w-5 h-5"></i>
-                    Taksit Seçenekleri
-                </button>
-                
-                <button onclick="showSection('chippin')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="star" class="w-5 h-5"></i>
-                    Chippin ile Ödeme
-                </button>
-                
-                <button onclick="showSection('ozel-odemeler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="gift" class="w-5 h-5"></i>
-                    Hediye Kartları
-                </button>
-                
-                <button onclick="showSection('havale-eft')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
-                    Havale / EFT
-                </button>
-                
-                <button onclick="showSection('fatura-portal')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="file-text" class="w-5 h-5"></i>
-                    Online Alışveriş
-                </button>
-                
-                <button onclick="showSection('nakit-yatirma')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="wallet-2" class="w-5 h-5"></i>
-                    Nakit Yatırma
-                </button>
-                
-                <button onclick="showSection('kasa-duzeltme')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-                    Hatalı İşlemler
-                </button>
-                
-                <button onclick="showSection('masraf-duzeltme')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="coins" class="w-5 h-5"></i>
-                    Masraf Girişi
-                </button>
-                
-                <button onclick="showSection('sablon')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
-                    <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-                    Şablon
-                </button>
+            <button onclick="showSection('raporlar')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="raporlar">
+                <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+                Kasa Raporları
+            </button>
+            
+            <button onclick="showSection('pos-islemleri')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="pos-islemleri">
+                <i data-lucide="credit-card" class="w-5 h-5"></i>
+                POS İşlemleri
+            </button>
+            
+            <button onclick="showSection('taksitler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="taksitler">
+                <i data-lucide="percent" class="w-5 h-5"></i>
+                Taksit Seçenekleri
+            </button>
+            
+            <button onclick="showSection('chippin')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="chippin">
+                <i data-lucide="star" class="w-5 h-5"></i>
+                Chippin ile Ödeme
+            </button>
+            
+            <button onclick="showSection('ozel-odemeler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="ozel-odemeler">
+                <i data-lucide="gift" class="w-5 h-5"></i>
+                Hediye Kartları
+            </button>
+            
+            <button onclick="showSection('havale-eft')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="havale-eft">
+                <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
+                Havale / EFT
+            </button>
+            
+            <button onclick="showSection('fatura-portal')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="fatura-portal">
+                <i data-lucide="file-text" class="w-5 h-5"></i>
+                Online Alışveriş
+            </button>
+            
+            <button onclick="showSection('nakit-yatirma')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="nakit-yatirma">
+                <i data-lucide="wallet-2" class="w-5 h-5"></i>
+                Nakit Yatırma
+            </button>
+            
+            <button onclick="showSection('kasa-duzeltme')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="kasa-duzeltme">
+                <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+                Hatalı İşlemler
+            </button>
+            
+            <button onclick="showSection('masraf-duzeltme')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="masraf-duzeltme">
+                <i data-lucide="coins" class="w-5 h-5"></i>
+                Masraf Girişi
+            </button>
+            
+            <button onclick="showSection('sablon')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="sablon">
+                <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+                Şablon
+            </button>
         </nav>
 
         <!-- Alt Bilgi -->
@@ -154,30 +160,29 @@
     <!-- ANA İÇERİK ALANI -->
     <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
         
-    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 z-10">
-        <div class="flex items-center gap-3 w-full">
+        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 z-10">
+            <div class="flex items-center gap-3 w-full">
 
-            <button onclick="toggleSidebar()" class="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg">
-                <i data-lucide="menu" class="w-6 h-6"></i>
-            </button>
+                <button onclick="toggleSidebar()" class="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+                    <i data-lucide="menu" class="w-6 h-6"></i>
+                </button>
 
-            <!-- Mobil başlık -->
-            <div class="mobile-title-container flex-1 text-right lg:hidden">
-                <h2 class="text-lg font-semibold text-slate-800" id="mobileTitle">Kasa Yardımcım</h2>
+                <!-- Mobil başlık -->
+                <div class="mobile-title-container flex-1 text-right lg:hidden">
+                    <h2 class="text-lg font-semibold text-slate-800" id="mobileTitle">Kasa Yardımcım</h2>
+                </div>
+
+                <!-- Masaüstü başlık -->
+                <h2 id="pageTitle" class="hidden lg:block text-xl font-semibold text-slate-800">
+                    Kasa Yardımcım
+                </h2>
+
             </div>
-
-            <!-- MASAÜSTÜ BAŞLIĞI EKLEDİK (pageTitle) -->
-            <h2 id="pageTitle" class="hidden lg:block text-xl font-semibold text-slate-800">
-                Kasa Yardımcım
-            </h2>
-
-        </div>
-    </header>
-
+        </header>
 
         <!-- Scroll Edilebilir İçerik -->
         <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
-            
+
             <!-- BÖLÜM: DASHBOARD (Ana Sayfa) -->
             <section id="dashboard" class="content-section fade-in block">
                 <div class="mb-8">
@@ -1228,18 +1233,20 @@
             <div id="llmResponseArea" class="llm-response bg-white p-3 rounded-lg shadow-sm border border-slate-100 hidden"></div>
         </div>
         <div class="p-3 border-t border-slate-100 bg-white rounded-b-2xl">
-            <form onsubmit="handleChatRequest(event)" class="flex flex-col gap-2">
-                <textarea id="llmInput" placeholder="Sorunu buraya yazın veya özetlenmesini istediğiniz metni yapıştırın..." 
-                          class="chat-input-area w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-civil-red/20"></textarea>
-                <button type="submit" class="bg-civil-red text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-md shadow-red-200 hover:bg-civil-dark transition-colors flex items-center justify-center gap-2">
-                    <i data-lucide="zap" class="w-4 h-4"></i>
-                    Yönlendir
-                </button>
+            <form id="chatForm">
+                <div class="flex flex-col gap-2">
+                    <textarea id="llmInput" placeholder="Sorunu buraya yazın veya özetlenmesini istediğiniz metni yapıştırın..." 
+                              class="chat-input-area w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-3 text-sm focus:ring-2 focus:ring-civil-red/20"></textarea>
+                    <button type="submit" class="bg-civil-red text-white py-2.5 px-4 rounded-lg font-medium text-sm shadow-md shadow-red-200 hover:bg-civil-dark transition-colors flex items-center justify-center gap-2">
+                        <i data-lucide="zap" class="w-4 h-4"></i>
+                        Yönlendir
+                    </button>
+                </div>
             </form>
         </div>
     </div>
 
+    <!-- Custom JS -->
     <script src="app.js"></script>
-        
 </body>
 </html>
