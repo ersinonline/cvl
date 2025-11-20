@@ -3,7 +3,6 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-/* Özel Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -19,19 +18,16 @@ body {
     background: #94a3b8; 
 }
 
-/* Sidebar Animasyonları */
 .sidebar-transition {
     transition: transform 0.3s ease-in-out;
 }
 
-/* Kart Stilleri */
 .guide-card {
     transition: all 0.2s ease;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     border: 1px solid #e2e8f0;
 }
 
-/* Step Stilleri */
 .step-container {
     background-color: white;
     padding: 20px;
@@ -85,12 +81,10 @@ body {
     opacity: 0.9;
 }
 
-/* Görüntü Modalı */
 .image-modal {
     backdrop-filter: blur(5px);
 }
 
-/* Yumuşak Geçiş */
 .fade-in {
     animation: fadeIn 0.3s ease-in;
 }
@@ -99,13 +93,14 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Kart Resmi Stilleri (Taksitler için) */
+/* Mobil ve tablet */
 .card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
     gap: 12px;
     margin-top: 20px;
 }
+
 .card-item {
     display: flex;
     flex-direction: column;
@@ -117,6 +112,7 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     border: 1px solid #f3f4f6;
 }
+
 .card-item img {
     max-width: 130px;
     height: auto;
@@ -124,7 +120,21 @@ body {
     margin-bottom: 8px;
 }
 
-/* Chat Widget Styles */
+@media (min-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 20px;
+    }
+
+    .card-item {
+        padding: 15px 10px;
+    }
+
+    .card-item img {
+        max-width: 150px;
+    }
+}
+
 .chat-widget {
     position: fixed;
     bottom: 4px;
@@ -162,7 +172,6 @@ body {
     max-height: 120px;
 }
 
-/* Hızlı Erişim Kartları Düzeni (3x3) */
 @media (min-width: 1024px) {
     .quick-access-grid {
         grid-template-columns: repeat(3, minmax(200px, 1fr)); 
@@ -175,51 +184,11 @@ body {
         display: none;
     }
 }
+
 @media (max-width: 1023px) {
     .quick-access-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .search-input-container {
-        display: none;
-    }
-    .mobile-title-container {
-        flex-grow: 1;
-        text-align: right;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 14px;
     }
 }
 
-@media (max-width: 768px) {
-    .chat-widget {
-        max-width: 95%;
-        bottom: 10px;
-        right: 10px;
-    }
-}
-
-@media (max-width: 768px) {
-    .chat-widget {
-        width: 85% !important;
-        right: 12px !important;
-        bottom: 12px !important;
-        border-radius: 16px !important;
-    }
-
-    #floatingChatButton {
-        right: 16px !important;
-        bottom: 16px !important;
-    }
-}
-
-@media (max-width: 768px) {
-    #chatWidget {
-        width: 85% !important;
-        max-width: 85% !important;
-        right: 12px !important;
-        bottom: 12px !important;
-    }
-
-    #floatingChatButton {
-        right: 16px !important;
-        bottom: 16px !important;
-    }
-}
