@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Görüş ve Öneri • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="gorus-oneri" class="content-section fade-in block">
+        <div class="max-w-2xl mx-auto">
+          <div class="mb-6">
+            <h1 class="text-2xl font-bold text-slate-800 mb-2">Görüş ve Öneri</h1>
+            <p class="text-slate-500">Görüşlerinizi bizimle paylaşabilirsiniz.</p>
+          </div>
+
+          <div class="bg-white rounded-xl shadow-md border border-slate-100 p-6">
+            <form id="feedbackForm" class="space-y-4" method="POST" action="https://formspree.io/f/xdkbjzyo">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label for="first_name" class="block text-sm font-medium text-slate-700 mb-1">İsim</label>
+                  <input id="first_name" name="first_name" type="text" required class="w-full rounded-lg border border-slate-200 p-2.5 focus:outline-none focus:ring-2 focus:ring-civil-red" placeholder="Adınız">
+                </div>
+                <div>
+                  <label for="last_name" class="block text-sm font-medium text-slate-700 mb-1">Soyisim</label>
+                  <input id="last_name" name="last_name" type="text" required class="w-full rounded-lg border border-slate-200 p-2.5 focus:outline-none focus:ring-2 focus:ring-civil-red" placeholder="Soyadınız">
+                </div>
+              </div>
+              <div>
+                <label for="email" class="block text-sm font-medium text-slate-700 mb-1">E-posta</label>
+                <input id="email" name="email" type="email" required class="w-full rounded-lg border border-slate-200 p-2.5 focus:outline-none focus:ring-2 focus:ring-civil-red" placeholder="ornek@eposta.com">
+              </div>
+              <div>
+                <label for="message" class="block text-sm font-medium text-slate-700 mb-1">Görüş/Öneri Mesajı</label>
+                <textarea id="message" name="message" rows="5" required class="w-full rounded-lg border border-slate-200 p-2.5 focus:outline-none focus:ring-2 focus:ring-civil-red" placeholder="Mesajınızı yazın..."></textarea>
+              </div>
+
+              <div class="flex items-center gap-3">
+                <button type="submit" class="bg-civil-red hover:bg-civil-dark text-white px-4 py-2.5 rounded-lg font-medium transition-colors flex items-center gap-2">
+                  <i data-lucide="send" class="w-5 h-5"></i>
+                  Gönder
+                </button>
+                <span id="formStatus" class="text-sm text-slate-500 hidden">Gönderiliyor...</span>
+              </div>
+            </form>
+
+            <div id="successBox" class="hidden mt-4 p-4 rounded-lg bg-green-50 border border-green-200 text-green-700">
+              <div class="flex items-start gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5 mt-0.5"></i>
+                <div>
+                  <p class="font-semibold">Teşekkürler! Formunuz başarıyla gönderildi.</p>
+                  <p class="text-sm">Kısa süre içinde teşekkür e-postası ile dönüş yapılacaktır.</p>
+                  
+                </div>
+              </div>
+            </div>
+
+            <div id="errorBox" class="hidden mt-4 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
+              <div class="flex items-start gap-2">
+                <i data-lucide="alert-circle" class="w-5 h-5 mt-0.5"></i>
+                <div>
+                  <p class="font-semibold">Bir sorun oluştu.</p>
+                  <p class="text-sm">Lütfen daha sonra tekrar deneyin.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script src="app.js"></script>
+  <script>
+    (function(){
+      const form = document.getElementById('feedbackForm');
+      const status = document.getElementById('formStatus');
+      const ok = document.getElementById('successBox');
+      const err = document.getElementById('errorBox');
+      if (!form) return;
+      form.addEventListener('submit', async function(e){
+        e.preventDefault();
+        err.classList.add('hidden');
+        ok.classList.add('hidden');
+        status.classList.remove('hidden');
+        const data = new FormData(form);
+        const payload = new URLSearchParams(data);
+        try {
+          const resp = await fetch(form.action, { method: 'POST', headers: { 'Accept': 'application/json' }, body: payload });
+          if (!resp.ok) throw new Error('formspree');
+          form.reset();
+          ok.classList.remove('hidden');
+        } catch(_) {
+          err.classList.remove('hidden');
+        } finally {
+          status.classList.add('hidden');
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -40,6 +40,7 @@ const SECTION_ROUTES = {
   sablon: 'sablon.html',
   'havale-eft': 'havale-eft.html',
   chippin: 'chippin.html',
+  'gorus-oneri': 'gorus-oneri.html',
 };
 
 // === Lucide ikonları yükle ===
