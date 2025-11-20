@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -810,8 +811,7 @@
                     <b>“Tahsil” seçilmemelidir.</b>
                 </p>
 
-        </div>
-</div>
+</div> <br>
 
                 <div class="space-y-6 search-container">
                     <!-- ADIM 1: Kasa Hareketleri Ekranı -->
@@ -841,6 +841,20 @@
                 <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
                     <i data-lucide="alert-triangle" class="text-civil-red"></i> İşlem Kayması Düzeltme
                 </h2>
+              
+                <div class="guide-card bg-white rounded-xl p-5 search-item shadow-md border border-purple-200 
+                            hover:shadow-lg transition-all duration-300">
+                    <h3 class="text-purple-700 font-bold text-lg mb-3 flex items-center gap-2">
+                        <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+                        Önemli Kontrol Uyarısı
+                    </h3>
+                
+                <p class="mb-3">
+                    <b class="font-semibold text-red-700"></b>
+                    Yalnızca karşılığı olan işlemler düzeltilmelidir. <b>Karşılığı olmayan işlemleri düzeltilmemelidir.</b>
+                </p>
+
+</div> <br>
 
                 <div class="space-y-6 search-container">
                     <div class="step-container search-item">
@@ -925,11 +939,28 @@
                             <div class="step-number">2</div>
                             <h3 class="step-title">Tedarikçi, Masraf Beyanı ve İade Seçimi</h3>
                         </div>
-                        <div class="step-content">
-                            <p>Tedarikçi: <b class="font-semibold">'Kasa Fazlası / Kasa Açığı'</b>. Muhasebe Döküman Tipi: <b class="font-semibold">'Masraf Beyan'</b> seçilir.</p>
+<div class="step-content">
+    <p>
+        <b class="font-semibold">Kasa Açığı giriliyorsa</b> tedarikçi olarak 
+        <b class="font-semibold text-red-700">"Kasa Açığı"</b> seçilmelidir.
+    </p>
+
+    <p class="mt-2">
+        <b class="font-semibold">Kasa Fazlası giriliyorsa</b> tedarikçi olarak 
+        <b class="font-semibold text-green-700">"Kasa Fazlası"</b> seçilmelidir.
+    </p>
+
+    <p class="mt-2">
+        <b class="font-semibold">Mağaza fiyat hatası giriliyorsa</b> tedarikçi olarak 
+        <b class="font-semibold text-blue-700">"Mağaza Fiyat Hatası"</b> seçilmelidir.
+    </p>
+</div>
+
                             <img src="https://i.hizliresim.com/aaey7pv.png" alt="Tedarikçi Seçimi görseli" class="step-image" onclick="openModal(this.src)">
+                            <img src="https://i.hizliresim.com/583d882.png" alt="Tedarikçi Seçimi görseli" class="step-image" onclick="openModal(this.src)">
+                            <img src="https://i.hizliresim.com/bcuji2t.png" alt="Tedarikçi Seçimi görseli" class="step-image" onclick="openModal(this.src)">
                             <img src="https://i.hizliresim.com/ilrvgi7.png" alt="Masraf Beyanı Seçme görseli" class="step-image" onclick="openModal(this.src)">
-                            <p class="mt-4">Kasamızda **FAZLA VARSA 'İade' TİK ATILIR**. Eksik varsa TİK boş bırakılır.</p>
+                            <p class="mt-4">Kasamızda FAZLA VARSA 'İade' TİK ATILIR. Eksik varsa TİK boş bırakılır.</p>
                             <img src="https://i.hizliresim.com/dp9c75z.png" alt="İade Kısmını İşaretleme görseli" class="step-image" onclick="openModal(this.src)">
                         </div>
                     </div>
@@ -942,8 +973,8 @@
                         <div class="step-content">
                             <p>'Madde Kodu'ndan <b class="font-semibold">'Kasa Açığı'</b> veya <b class="font-semibold">'Kasa Fazlası'</b> seçeneği seçilir. Mağaza fiyat hatası varsa <b class="font-semibold">"Mağaza Fiyat Hatası"</b> yazılır.</p>
                             <img src="https://i.hizliresim.com/g3y9bw2.png" alt="Kasa Açığı/Fazlası Seçimi görseli" class="step-image" onclick="openModal(this.src)">
-                            <p class="mt-4">Hata tutarını <b class="font-semibold">'Fiyat'</b> kısmına yazın.</p>
-                            <img src="https://i.hizliresim.com/pota95a.png" alt="Fiyat Girişi görseli" class="step-image" onclick="openModal(this.src)">
+                            <p class="mt-4">Hata tutarını <b class="font-semibold">'Fiyat VD'</b> kısmına yazın.</p>
+                            <img src="https://i.hizliresim.com/ojuvuvr.png" alt="Fiyat Girişi görseli" class="step-image" onclick="openModal(this.src)">
                         </div>
                     </div>
                     
@@ -954,8 +985,8 @@
                         </div>
                         <div class="step-content">
                             <p>'Seri Numarası' kısmına olduğumuz tarihi <b class="font-semibold">'YYYY/AA/GG'</b> (tarihi ters) şeklinde yazın, ardından 'TİK'i seçin ve kaydedin.</p>
-                            <img src="https://i.hizliresim.com/lybakck.png" alt="Seri Numarası Girişi görseli" class="step-image" onclick="openModal(this.src)">
                             <img src="https://i.hizliresim.com/43hl6dk.png" alt="Şimdi kaydedelim görseli" class="step-image" onclick="openModal(this.src)">
+                            <img src="https://i.hizliresim.com/lybakck.png" alt="Seri Numarası Girişi görseli" class="step-image" onclick="openModal(this.src)">
                         </div>
                     </div>
                 </div>
