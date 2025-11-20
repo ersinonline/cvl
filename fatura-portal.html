@@ -48,15 +48,33 @@
                 <button onclick="copyToClipboard('passInput')" class="bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium text-sm">Kopyala</button>
               </div>
             </div>
-            <div class="border-t border-slate-100 pt-6 space-y-4">
+            <div class="border-t border-slate-100 pt-6">
               <h4 class="font-bold text-slate-700">Fatura Bulma Adımları</h4>
-              <p class="text-sm text-slate-600">Portalda ilgili sipariş veya fatura numarasını arama alanına girin ve sonuçları filtreleyin.</p>
-              <img src="https://i.hizliresim.com/jsov0a3.png" alt="Portal arama ekranı görseli" class="step-image" onclick="openModal(this.src)">
-              <img src="https://i.hizliresim.com/i49ap5s.png" alt="Fatura detay ekranı görseli" class="step-image" onclick="openModal(this.src)">
-              <img src="https://i.hizliresim.com/5qg2r7m.png" alt="Fatura indirme ekranı görseli" class="step-image" onclick="openModal(this.src)">
+              <div class="grid md:grid-cols-2 gap-6">
+                <div class="step-container search-item">
+                  <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Fatura referans numarasını girin</h3>
+                  </div>
+                  <div class="step-content">
+                    <p>Portalda ilgili fatura referans numarasını arama alanına girin ve sonucu bulun.</p>
+                    <img src="https://i.hizliresim.com/i49ap5s.png" alt="Fatura referans arama" class="step-image" onclick="openModal(this.src)">
+                  </div>
+                </div>
+                <div class="step-container search-item">
+                  <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Sistemdeki fatura numarası ile iade alın</h3>
+                  </div>
+                  <div class="step-content">
+                    <p>Sistemde görünen fatura numarasıyla iade işlemini gerçekleştirebilirsiniz.</p>
+                    <img src="https://i.hizliresim.com/5qg2r7m.png" alt="Fatura numarası ile iade" class="step-image" onclick="openModal(this.src)">
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        </div> 
       </section>
       <div class="h-20"></div>
     </div>
