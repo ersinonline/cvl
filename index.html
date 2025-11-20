@@ -359,6 +359,11 @@
                 Online Alışveriş
             </button>
 
+                <button onclick="showSection('havale-eft')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="havale-eft">
+                    <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
+                    Havale / EFT
+                </button>
+
              <button onclick="showSection('taksitler')" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="taksitler">
                 <i data-lucide="percent" class="w-5 h-5"></i>
                 Taksit Seçenekleri
@@ -469,6 +474,13 @@
                         </div>
                         <h3 class="font-semibold text-slate-800">Online Alışveriş</h3>
                     </div>
+
+                        <div onclick="showSection('havale-eft')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
+                            <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3 group-hover:bg-cyan-200 transition-colors">
+                                <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
+                            </div>
+                            <h3 class="font-semibold text-slate-800">Havale / EFT</h3>
+                        </div>
 
                     <div onclick="showSection('taksitler')" class="cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
                         <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mb-3 group-hover:bg-pink-200 transition-colors">
@@ -1226,6 +1238,84 @@
             </div>
         </section>
 
+                <section id="havale-eft" class="content-section hidden fade-in">
+    <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+        <i data-lucide="refresh-ccw" class="text-civil-red"></i> Havale / EFT İşlemleri
+    </h2>
+
+    <div class="space-y-6">
+
+        <!-- Adım 1 -->
+        <div class="step-container">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Havale/EFT Ekranı</h3>
+            </div>
+            <div class="step-content">
+                <p>İşlemlere başlamak için ilgili ekranı açıyoruz.</p>
+                <img src="https://i.hizliresim.com/p9b36ti.png" class="step-image" onclick="openModal(this.src)">
+            </div>
+        </div>
+
+        <!-- Adım 2 -->
+        <div class="step-container">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Gönderilecek Bankanın Seçilmesi</h3>
+            </div>
+            <div class="step-content">
+                <img src="https://i.hizliresim.com/s2wroz8.png" class="step-image" onclick="openModal(this.src)">
+            </div>
+        </div>
+
+        <!-- Adım 3 -->
+        <div class="step-container">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Havale/EFT Tutarının Girilmesi</h3>
+            </div>
+            <div class="step-content">
+                <img src="https://i.hizliresim.com/cqy4bfh.png" class="step-image" onclick="openModal(this.src)">
+            </div>
+        </div>
+
+        <!-- Adım 4 -->
+        <div class="step-container">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Dekont veya Onay Kontrolü</h3>
+            </div>
+            <div class="step-content">
+                <img src="https://i.hizliresim.com/i8d290c.png" class="step-image" onclick="openModal(this.src)">
+            </div>
+        </div>
+
+        <!-- Adım 5 -->
+        <div class="step-container">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h3 class="step-title">Gönderim İşleminin Tamamlanması</h3>
+            </div>
+            <div class="step-content">
+                <img src="https://i.hizliresim.com/9bvlc0o.png" class="step-image" onclick="openModal(this.src)">
+            </div>
+        </div>
+
+        <!-- Adım 6 -->
+        <div class="step-container">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h3 class="step-title">Havale/EFT İşlem Özeti</h3>
+            </div>
+            <div class="step-content">
+                <img src="https://i.hizliresim.com/3ed44i4.png" class="step-image" onclick="openModal(this.src)">
+            </div>
+        </div>
+
+    </div>
+</section>
+
+
             <!-- Footer Space -->
             <div class="h-20"></div>
         </div>
@@ -1430,6 +1520,7 @@
                     'fatura-portal': 'E-Fatura & Portal',
                     'taksitler': 'Taksit Seçenekleri',
                     'sablon': 'Şablon'
+                    'havale-eft': 'Havale / EFT',
                 };
                 document.getElementById('pageTitle').innerText = titleMap[sectionId] || 'Kasa Asistanı';
             }
