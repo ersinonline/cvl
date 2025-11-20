@@ -537,8 +537,11 @@
                             <h3 class="step-title">POS'ta QR ile İşlem Alma</h3>
                         </div>
                         <div class="step-content">
-                            <p>Satış tutarını POS'a girdikten sonra <b class="font-semibold">0'a basın</b> ve Yapı Kredi bankasını seçin; ardından QR ekranı açılacaktır.</p>
-                            <img src="https://i.hizliresim.com/q6ulr01.png" alt="POS QR işlem alma" class="step-image" onclick="openModal(this.src)">
+                                <p>
+                                    Satış tutarını POS'a girdikten sonra <b class="font-semibold">0'a basın</b> ve müşterinin ödeme yapacağı bankayı seçin; ardından QR ekranı açılacaktır. 
+                                    Eğer müşterinin QR ile ödeme yapmak istediği banka ile <b>anlaşmamız yoksa</b>, işlem <b>öncelikli bankamız olan Yapı Kredi</b> seçilerek devam ettirilmelidir.
+                                </p>
+                        <img src="https://i.hizliresim.com/q6ulr01.png" alt="POS QR işlem alma" class="step-image" onclick="openModal(this.src)">
                         </div>
                     </div>
 
@@ -560,8 +563,41 @@
                             <h3 class="step-title">İşlem İptali ve İadesi</h3>
                         </div>
                         <div class="step-content">
-                            <p>İşlem aynı gün içinde ve <b class="font-semibold text-civil-dark">gün sonu alınmadan önce yapıldıysa İPTAL</b> yapılır. Gün sonu alındıysa İADE edilebilir. İptal anlık yansır.</p>
-                            <div class="grid md:grid-cols-2 gap-4 mt-4">
+                                <p>
+                                    İşlem aynı gün içinde ve <b class="font-semibold text-civil-dark">gün sonu alınmadan önce yapıldıysa İPTAL</b> yapılır. 
+                                    Gün sonu alındıysa işlem <b>İADE</b> olarak gerçekleştirilir. İptal işlemleri POS üzerinde anında yansır.
+                                </p>
+                                
+                                <p>
+                                    <b class="font-semibold text-red-600">POS “İade Limiti Aşıldı” uyarısı</b> alındığında mağaza tarafından limit artırma işlemi yapılamaz. 
+                                    Bu durumda iade <b>Merkez Muhasebe</b> tarafından gerçekleştirilmelidir.
+                                </p>
+                                
+                                <p>
+                                    Mağaza; müşterinin <b>faturasını, slipini, iade edilen ürün/ürünlerin uzun barkodlarını</b> ve 
+                                    <b>iade edilecek tutarı</b> belirterek aşağıdaki adreslere mail göndermelidir:
+                                    <br>
+                                    <b>ztomruk@civil.com.tr, akurt@civil.com.tr, ksezgin@civil.com.tr</b>
+                                </p>
+                                
+                                <p>
+                                    <b class="font-semibold">Mağaza ürünleri sistemden iade almamalıdır.</b>  
+                                    İade talimatı merkez tarafından oluşturulduktan sonra ürünler mağaza envanterine 
+                                    <b>Abdullah Kurt</b> tarafından eklenmektedir.
+                                </p>
+                                
+                                <p>
+                                    POS cihazı üzerinden yapılan veya merkez tarafından oluşturulan iadelerin bankaya yansıma süresi 
+                                    banka–müşteri anlaşmasına göre değişir. Bu nedenle müşteriye <b>kesin bir gün veya süre bilgisi verilmemelidir.</b>
+                                </p>
+                                
+                                <p>
+                                    Tüm bankalarda <b class="font-semibold">kısmi iade</b> yapılabilir.  
+                                    Eğer mağaza kısmi iade veya çapraz iade yapamıyorsa; 
+                                    <b>POS terminal numarası</b> ve <b>banka üye iş yeri numarası</b> belirtilerek 
+                                    <b>ztomruk@civil.com.tr, akurt@civil.com.tr, ksezgin@civil.com.tr</b> adreslerine mail gönderilip açtırılabilir.
+                                </p>
+                                <div class="grid md:grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <p class="text-xs font-semibold mb-1">İptal Ekranı</p>
                                     <img src="https://i.hizliresim.com/c87t4mo.png" alt="İşlem iptali" class="step-image" onclick="openModal(this.src)">
@@ -741,6 +777,36 @@
                             </div>
                         </div>
                     </div>
+
+                        <div class="guide-card bg-white rounded-xl p-5 search-item shadow-md border border-purple-200 
+                                    hover:shadow-lg transition-all duration-300">
+                            <h3 class="text-purple-700 font-bold text-lg mb-3 flex items-center gap-2">
+                                <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+                                Önemli Kontrol Uyarısı
+                            </h3>
+                        
+                            <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 leading-relaxed text-sm 
+                                        text-slate-700 shadow-sm">
+                                <p class="mb-3">
+                                    <b class="font-semibold">Edenred, Setcard ve iWallet</b> ödeme araçlarının 
+                                    <b>sistem üzerindeki tutarları</b> ile 
+                                    <b>portal tutarları</b> her akşam kasa kapanışında mutlaka 
+                                    <span class="text-purple-700 font-semibold">karşılaştırılmalı ve kontrol edilmelidir.</span>
+                                </p>
+                        
+                                <p class="mb-3">
+                                    Eğer tutarsızlık veya hatalı gönderilen ödeme aracı varsa, işlem 
+                                    <b class="font-semibold">“Hatalı Girilmiş Ödeme Kayıtlarını Yeniden Düzenle”</b> 
+                                    ekranından düzeltilmelidir.
+                                </p>
+                        
+                                <p class="font-semibold text-purple-800">
+                                    Portal verileri ile sistem verilerinin  
+                                    <span class="underline decoration-purple-400">tam olarak uyuşması zorunludur.</span>
+                                </p>
+                            </div>
+                        </div>
+                        
                 </div>
             </section>
 
