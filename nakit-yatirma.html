@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Nakit Yatırma • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="nakit-yatirma" class="content-section fade-in block">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+          <i data-lucide="wallet-2" class="text-civil-red"></i>Nakit Yatırma
+        </h2>
+        <div class="guide-card bg-white rounded-xl p-5 search-item shadow-md border border-purple-200 hover:shadow-lg transition-all duration-300">
+          <h3 class="text-purple-700 font-bold text-lg mb-3 flex items-center gap-2">
+            <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+            Önemli Kontrol Uyarısı
+          </h3>
+          <p class="mb-3">
+            <b class="font-semibold text-red-700"></b>
+            Sistemden nakit çıkışı yapılırken <b>kasa fiş tipi kesinlikle “Tediye”</b> seçilmeli,
+            <b>“Tahsil” seçilmemelidir.</b>
+          </p>
+        </div> <br>
+        <div class="grid md:grid-cols-2 gap-6 search-container">
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">1</div>
+              <h3 class="step-title">Kasa Hareketleri Ekranı</h3>
+            </div>
+            <div class="step-content">
+              <p>'Ara...' kısmına <b class="font-semibold">'Kasa Hareketleri'</b> yazıp açın. <b class="font-semibold">'Nakit Hesap Kodu'</b> için kendi şubenizi seçin.</p>
+              <img src="https://i.hizliresim.com/hase4r9.png" alt="Kasa Hareketleri Ekranı" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">2</div>
+              <h3 class="step-title">Cari Hesap Kodu</h3>
+            </div>
+            <div class="step-content">
+              <p>Üç noktaya tıklayıp arama alanına <b class="font-semibold">"Muhtelif"</b> yazın ve çıkan tedarikçiyi seçin.</p>
+              <img src="https://i.hizliresim.com/1nxesxg.png" alt="Cari Hesap Kodu Seçimi" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">3</div>
+              <h3 class="step-title">Maliyet Merkezi</h3>
+            </div>
+            <div class="step-content">
+              <p>Ekranı sağa çekerek <b class="font-semibold">'Maliyet Merkezi'</b> kısmında mağaza kodunuzu doğrulayın.</p>
+              <img src="https://i.hizliresim.com/hsxa0mv.png" alt="Maliyet Merkezi Seçimi" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">4</div>
+              <h3 class="step-title">Alacak Girişi ve Kaydetme</h3>
+            </div>
+            <div class="step-content">
+              <p><b class="font-semibold">Alacak</b> kısmına günlük nakit kasa yekününü yazıp <b class="font-semibold">Kaydet</b> butonuna basın.</p>
+              <img src="https://i.hizliresim.com/r9h71th.png" alt="Alacak Girişi ve Kaydetme" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item md:col-span-2">
+            <div class="step-header">
+              <div class="step-number">5</div>
+              <h3 class="step-title">Son Kontrol</h3>
+            </div>
+            <div class="step-content">
+              <p class="font-bold text-red-600">'Mağaza Hareket Özeti' kısmında <b class="font-semibold text-civil-dark">'Nakit Kasa Yekünü' 0</b> olmak zorundadır.</p>
+              <img src="https://i.hizliresim.com/th2kl5w.png" alt="Son Kontrol: Nakit Kasa Yekünü" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="h-20"></div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

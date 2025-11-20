@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Taksit Seçenekleri • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-4 lg:px-8 z-10">
+      <div class="flex items-center gap-3 w-full">
+        <button onclick="toggleSidebar()" class="lg:hidden p-2 -ml-2 text-slate-600 hover:bg-slate-100 rounded-lg">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+        <h2 id="pageTitle" class="ml-auto text-right text-xl font-semibold text-slate-800">Kasa Asistanım</h2>
+      </div>
+    </header>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="taksitler" class="content-section fade-in block">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+          <i data-lucide="percent" class="text-civil-red"></i> Taksit Seçenekleri
+        </h2>
+
+        <div class="grid md:grid-cols-2 gap-6 search-container">
+          <div class="guide-card bg-white rounded-xl p-5 search-item md:col-span-2">
+            <h3 class="text-green-600 font-bold text-xl mb-4 flex items-center gap-2">
+              <i data-lucide="check-circle" class="w-5 h-5"></i> Vade Farksız 6 Taksit
+            </h3>
+            <p class="text-sm text-slate-600 mb-4"><b class="font-semibold">Yapı Kredi World, Vakıfbank World ve Albaraka World</b> kartlarına tüm kategorilerde vade farksız 6 taksit yapılmaktadır:</p>
+            <div class="card-grid">
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios.png">
+                <span>World Adios</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_adios_premium.png">
+                <span>World Adios Premium</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_classic.png">
+                <span>World Classic</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_cyrastal.png">
+                <span>World Crystal</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_hespiburada.png">
+                <span>World Hepsiburada</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.worldcard.com.tr/getmedia/89e152a7-0cee-4d78-93c8-761ec56653de/world-new-gold-card.png">
+                <span>World Gold</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.worldcard.com.tr/getmedia/478a56b9-6b20-4b36-acbf-72b849446dbb/world-new-fenerbahce-card.png">
+                <span>World FB</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_play.png">
+                <span>World Play</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_koc_ailem.png">
+                <span>Koç Ailem</span>
+              </div>
+              <div class="card-item">
+                <img src="https://assets.yapikredi.com.tr/WebSite/_assets/img/cards/world_opet.png">
+                <span>World Opet</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.worldcard.com.tr/getmedia/ed463df8-b61a-45e3-9cf0-99a808ee7997/world-new-platinum-card.png">
+                <span>World Platinum</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.worldcard.com.tr/getmedia/7ea29937-0662-4c69-8f9e-54fae7892ac8/world-new-card.png">
+                <span>YKB World</span>
+              </div>
+              <div class="card-item">
+                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_44677fa77d.png">
+                <span>Albaraka World</span>
+              </div>
+              <div class="card-item">
+                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_ccd845116d.png">
+                <span>Albaraka World Özel</span>
+              </div>
+              <div class="card-item">
+                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_eflatun_bff07796e8.png">
+                <span>Albaraka World Eflatun</span>
+              </div>
+              <div class="card-item">
+                <img src="https://cdn2.enuygun.com/img/finance/uploads/311x196_c9d109452c.png">
+                <span>Albaraka World</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_eflatun-kredi-karti@1x.jpg">
+                <span>Albaraka Eflatun</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_mester-card@1x.jpg">
+                <span>Albaraka Mastercard</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_visa@1x%20(1).jpg">
+                <span>Albaraka Visa</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_8_trend.jpg">
+                <span>Albaraka World Trend</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_ozel-bankacilik1x.jpg">
+                <span>Albaraka Özel Bankacılık</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.albarakaworldcard.com/Documents/Photo/img_0_visa-gold@1x.jpg">
+                <span>Albaraka Visa Gold</span>
+              </div>
+              <div class="card-item">
+                <img src="https://kampanyaimages.vakifbank.com.tr/WebImages/Assets/Uploads/CardImages/click-kart.png">
+                <span>World Click</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-klasik-256x208.png">
+                <span>FB Klasik</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-gold-256x208.png">
+                <span>FB Gold</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/fenerbahce-platinum-256x208.png">
+                <span>FB Platinum</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-fenerbahce-desktop.png">
+                <span>FB Taraftar</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-galatasaray-desktop.png">
+                <span>GS Taraftar</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-besiktas-dekstop.png">
+                <span>BJK Taraftar</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/taraftar-kredi-karti-trabzonspor-desktop.png">
+                <span>TS Taraftar</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/ases-kart-dekstop.png">
+                <span>Ases</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/express-card-dekstop.png">
+                <span>Express Card</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/gold-kart-dekstop.png">
+                <span>Gold</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/like-card-256x208.png">
+                <span>Like Card</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/ogretmenim-kart-desktop.png">
+                <span>Öğretmenim</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/kamusen-kart-dekstop.png">
+                <span>KamuSen</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-kart-desktop.png">
+                <span>Platinum</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-one-kart-desktop.png">
+                <span>Platinum One</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-metal-kart-256x208.png">
+                <span>Platinum Plus Metal</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/platinum-plus-kart-desktop.png">
+                <span>Platinum Plus</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/rail-miles-desktop.png">
+                <span>Rail&Miles</span>
+              </div>
+              <div class="card-item">
+                <img src="https://vbassets.vakifbank.com.tr/bireysel/vakifbank-world-card-dekstop.png">
+                <span>VakıfBank World</span>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="guide-card bg-white rounded-xl p-5 search-item">
+            <h3 class="text-red-600 font-bold text-xl mb-3 flex items-center gap-2">
+              <i data-lucide="x-octagon" class="w-5 h-5"></i> Taksit Yapılmayan Kartlar
+            </h3>
+            <p class="text-sm text-slate-600 mb-4">Aşağıdaki kartlara <b class="font-semibold text-red-600">kesinlikle taksit yapılmamaktadır</b>:</p>
+            <div class="card-grid">
+              <div class="card-item">
+                <img src="https://www.worldcard.com.tr/getmedia/f94b6712-8ed4-49e0-85c5-2e36c4d8275a/world-new-eko-card.png?width=1012&height=639&ext=.png" alt="Yapı Kredi World Eko Kartı görseli">
+                <span>YKB World Eko</span>
+              </div>
+              <div class="card-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtTvOviD63JZ-lRiBHU4kQSuXbbsrgzY7NExkcJV5GypREBzQx5sBexRFFooOw6SHh09A&usqp=CAU" alt="Kuveyttürk Kartı görseli">
+                <span>YKB Business</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.kuveytturk.com.tr/medium/SitemapNodePage-Landing-22010-2x.vsf" alt="Kuveyttürk Kartı görseli">
+                <span>Kuveyttürk</span>
+              </div>
+              <div class="card-item">
+                <img src="https://www.denizbank.com/medium/SitemapNodePage-Landing-16960-2x.vsf" alt="DenizBank Kartı görseli">
+                <span>DenizBank</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="guide-card bg-white rounded-xl p-5 search-item">
+            <h3 class="text-slate-700 font-bold text-xl mb-3 flex items-center gap-2">
+              <i data-lucide="info" class="w-5 h-5"></i> Diğer Taksit Kuralları
+            </h3>
+            <ul class="text-sm text-slate-600 space-y-2 list-disc pl-4">
+              <li>Yukarıda belirtilenler dışındaki diğer tüm kartlara <b class="font-semibold">%10 vade farkı ile 4 taksit</b>.</li>
+              <li><b class="font-semibold">Araç gereç ve Oyuncaklar</b> için her zaman <b class="font-semibold">vade farksız 4 taksit</b> imkanı sunulmaktadır.</li>
+              <li>Bazı ayakkabılarda vade farksız taksit uygulanabilir (kampanyaya bağlıdır).</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+      <div class="h-20"></div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

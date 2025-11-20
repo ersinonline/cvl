@@ -1,0 +1,73 @@
+<aside id="sidebar" class="bg-white w-72 fixed inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto lg:h-screen border-r border-slate-200 flex flex-col sidebar-transition shadow-2xl lg:shadow-none">
+  <div class="h-16 flex items-center px-6 border-b border-slate-100 bg-civil-red">
+    <div class="flex items-center gap-3 text-white">
+      <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+      <span class="font-bold text-xl tracking-wide">Kasa Asistanı</span>
+    </div>
+    <button class="lg:hidden ml-auto text-white" onclick="toggleSidebar()">
+      <i data-lucide="x" class="w-6 h-6"></i>
+    </button>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Genel</div>
+    <a href="dashboard.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="dashboard">
+      <i data-lucide="layout-grid" class="w-5 h-5"></i>
+      Ana Sayfa
+    </a>
+
+    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-2 px-2">İşlemler</div>
+
+    <a href="raporlar.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="raporlar">
+      <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+      Kasa Raporları
+    </a>
+    <a href="pos-islemleri.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="pos-islemleri">
+      <i data-lucide="credit-card" class="w-5 h-5"></i>
+      POS İşlemleri
+    </a>
+    <a href="taksitler.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="taksitler">
+      <i data-lucide="percent" class="w-5 h-5"></i>
+      Taksit Seçenekleri
+    </a>
+    <a href="chippin.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="chippin">
+      <i data-lucide="star" class="w-5 h-5"></i>
+      Chippin ile Ödeme
+    </a>
+    <a href="ozel-odemeler.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="ozel-odemeler">
+      <i data-lucide="gift" class="w-5 h-5"></i>
+      Hediye Kartları
+    </a>
+    <a href="havale-eft.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="havale-eft">
+      <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
+      Havale / EFT
+    </a>
+    <a href="fatura-portal.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="fatura-portal">
+      <i data-lucide="file-text" class="w-5 h-5"></i>
+      Online Alışveriş
+    </a>
+    <a href="nakit-yatirma.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="nakit-yatirma">
+      <i data-lucide="wallet-2" class="w-5 h-5"></i>
+      Nakit Yatırma
+    </a>
+    <a href="kasa-duzeltme.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="kasa-duzeltme">
+      <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+      Hatalı İşlemler
+    </a>
+    <a href="masraf-duzeltme.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="masraf-duzeltme">
+      <i data-lucide="coins" class="w-5 h-5"></i>
+      Masraf Girişi
+    </a>
+    <a href="sablon.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="sablon">
+      <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
+      Şablon
+    </a>
+  </nav>
+
+  <div class="p-4 border-t border-slate-100 bg-slate-50">
+    <div class="text-xs text-center text-slate-400">v2.4 • Mall of Istanbul Ekibi</div>
+    <div class="text-[11px] text-center mt-1">
+      <a href="https://teknotech.online" target="_blank" class="text-slate-400 hover:text-civil-red transition">by Teknotech</a>
+    </div>
+  </div>
+</aside>

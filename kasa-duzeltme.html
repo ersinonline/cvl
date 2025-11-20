@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>İşlem Kayması Düzeltme • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="kasa-duzeltme" class="content-section fade-in block">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="text-civil-red"></i> İşlem Kayması Düzeltme
+        </h2>
+        <div class="guide-card bg-white rounded-xl p-5 search-item shadow-md border border-purple-200 hover:shadow-lg transition-all duration-300">
+          <h3 class="text-purple-700 font-bold text-lg mb-3 flex items-center gap-2">
+            <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+            Önemli Kontrol Uyarısı
+          </h3>
+          <p class="mb-3">
+            <b class="font-semibold text-red-700"></b>
+            Yalnızca karşılığı olan işlemler düzeltilmelidir. <b>Karşılığı olmayan işlemleri düzeltilmemelidir.</b>
+          </p>
+        </div> <br>
+        <div class="grid md:grid-cols-2 gap-6 search-container">
+          
+            <div class="step-container search-item">
+              <div class="step-header">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Alınan Ödemeler Listesi</h3>
+              </div>
+              <div class="step-content">
+                <p>Ara kısmına <b class="font-semibold">'Alınan Ödemeler Listesi'</b> yazıp çalıştırın.</p>
+                <img src="https://i.hizliresim.com/6i75o54.png" alt="Alınan Ödemeler Listesi görseli" class="step-image" onclick="openModal(this.src)">
+              </div>
+            </div>
+            <div class="step-container search-item">
+              <div class="step-header">
+                <div class="step-number">2</div>
+                <h3 class="step-title">İşlem Tespiti</h3>
+              </div>
+              <div class="step-content">
+                <p>Tespit edilen işlem türünü seçin (Kredi Kartı/Nakit). </p>
+                <img src="https://i.hizliresim.com/6u77fsi.png" alt="İşlem Tespiti görseli" class="step-image" onclick="openModal(this.src)">
+              </div>
+            </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">3</div>
+                <h3 class="step-title">İşlem Filtreleme</h3>
+            </div>
+            <div class="step-content">
+                <p>Kaymaya neden olan tutarı bulmak için <b class="font-semibold">'Ödeme(D)'</b> kısmından filtreleme yapın.</p>
+              <img src="https://i.hizliresim.com/fo77a8x.png" alt="Fatura Referans Kopyalama görseli" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">4</div>
+              <h3 class="step-title">Fatura Referans Numarasını Kopyala</h3>
+            </div>
+            <div class="step-content">
+              <p>Tespit ettiğiniz işlemin 'Fatura Referans Numarasını' kopyalayın.</p>
+              <img src="https://i.hizliresim.com/oumum0x.png" alt="Hatalı Ödeme Düzeltme görseli" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">5</div>
+              <h3 class="step-title">Düzeltme Ekranı</h3>
+            </div>
+            <div class="step-content">
+              <p>Arama yerine kredi yazıp hatalı girilmiş yazan seçeneği seçin.</p>
+              <img src="https://i.hizliresim.com/f20cm4g.png" alt="Düzeltme Ekranı" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">6</div>
+              <h3 class="step-title">Fiş Numarası</h3>
+            </div>
+            <div class="step-content">
+              <p>Fiş numaranızı yazın.</p>
+              <img src="https://i.hizliresim.com/sug6i4p.png" alt="Fiş Numarası Kaydet" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">7</div>
+              <h3 class="step-title">Bankayı Seç/Nakit'e Çevir ve Kaydet</h3>
+            </div>
+            <div class="step-content">
+              <p>Açılan ekranda düzeltmek istediğiniz bankayı seçebilir veya işlemi nakite çevirebilirsiniz.</p>
+              <img src="https://i.hizliresim.com/elq0rok.png" alt="Kredi Kartı İşlemini Nakit/Bankalar Arası Çevirme Seçeneği" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">8</div>
+              <h3 class="step-title">Değişiklikleri Kaydet</h3>
+            </div>
+            <div class="step-content">
+              <p>Yaptığınız değişiklikleri onaylayıp kaydedin.</p>
+              <img src="https://i.hizliresim.com/5j7dwfq.png" alt="Değişiklikleri Kaydet" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="h-20"></div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

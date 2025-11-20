@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Hediye Kartları • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="ozel-odemeler" class="content-section fade-in block">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+          <i data-lucide="gift" class="text-civil-red"></i> Hediye Kartları
+        </h2>
+        <div class="guide-card bg-white rounded-xl p-5 search-item shadow-md border border-purple-200 hover:shadow-lg transition-all duration-300">
+          <h3 class="text-purple-700 font-bold text-lg mb-3 flex items-center gap-2">
+            <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+            Önemli Kontrol Uyarısı
+          </h3>
+          <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 leading-relaxed text-sm text-slate-700 shadow-sm">
+            <p class="mb-3">
+              <b class="font-semibold">Edenred, Setcard ve iWallet</b> ödeme araçlarının 
+              <b>sistem üzerindeki tutarları</b> ile 
+              <b>portal tutarları</b> her akşam kasa kapanışında mutlaka 
+              <span class="text-purple-700 font-semibold">karşılaştırılmalı ve kontrol edilmelidir.</span>
+            </p>
+            <p class="mb-3">
+              Eğer tutarsızlık veya hatalı gönderilen ödeme aracı varsa, işlem 
+              <b class="font-semibold">“Hatalı Girilmiş Ödeme Kayıtlarını Yeniden Düzenle”</b> 
+              ekranından düzeltilmelidir.
+            </p>
+            <p class="font-semibold text-purple-800">
+              Portal verileri ile sistem verilerinin  
+              <span class="underline decoration-purple-400">tam olarak uyuşması zorunludur.</span>
+            </p> <br>
+            <p class="mb-3">
+              <b class="font-semibold">Edenred, Setcard ve iWallet</b> ödeme araçlarının 
+              <b>iadeleri yalnızca aynı gün yapılır.</b> Gün sonu tamamlandıktan sonra iadeler 
+              <span class="text-purple-700 font-semibold">yalnızca hediye kartına yapılmaktadır.</span>
+            </p>
+          </div>
+        </div> <br>
+
+        <div class="guide-card bg-white rounded-xl p-5 search-item">
+          <h3 class="text-xl font-bold text-green-700 mb-4 flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6"></i> iWallet ile Ödeme</h3>
+          <p class="text-sm text-slate-600 mb-4 font-semibold">İPUCU: Tutar kesinse, kart numarası yerine <b class="font-semibold">7 haneli QR kod</b> kullanmak daha pratiktir.</p>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-3">
+              <p><b class="font-semibold">1. Başlangıç Ekranı</b></p>
+              <img src="https://i.hizliresim.com/ahvb0na.jpg" alt="iWallet başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">2. Kasada iWallet Seçimi</b></p>
+              <img src="https://i.hizliresim.com/fnjkgpo.jpg" alt="Kasada iWallet seçimi" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">3. iWallet Giriş</b></p>
+              <img src="https://i.hizliresim.com/bl7t28d.jpg" alt="Ödeme oluşturma ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">4. Satış İşlemini Başlatma</b></p>
+              <img src="https://i.hizliresim.com/1jpga57.jpg" alt="Müşteri bilgileri ekranı" class="step-image" onclick="openModal(this.src)">
+            </div>
+            <div class="space-y-3">
+              <p><b class="font-semibold">5. Kart Bilgilerini Alma ve Onay</b></p>
+              <img src="https://i.hizliresim.com/e9zf814.jpg" alt="Uygulama onayı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">6. Doğrulama</b></p>
+              <img src="https://i.hizliresim.com/cnrof3m.jpg" alt="Doğrulama ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">7. Başarılı İşlem</b></p>
+              <img src="https://i.hizliresim.com/91jrum4.jpg" alt="Başarılı işlem ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">8. İşlemi Bitirme</b></p>
+              <img src="https://i.hizliresim.com/5ukfbj4.jpg" alt="Makbuz / Fiş" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div> <br>
+
+        <div class="guide-card bg-white rounded-xl p-5 search-item">
+          <h3 class="text-xl font-bold text-orange-700 mb-4 flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6"></i> Setcard ile Ödeme</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-3">
+              <p><b class="font-semibold">1. Başlangıç Ekranı</b></p>
+              <img src="https://i.hizliresim.com/7i6ev8n.jpg" alt="Setcard başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">2. Kasada Setcard Seçme</b></p>
+              <img src="https://i.hizliresim.com/2mlz5mo.jpg" alt="Kasada Setcard seçimi" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">3. Setcard Giriş</b></p>
+              <img src="https://i.hizliresim.com/tbne02l.jpg" alt="Ödeme oluşturma ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">4. Müşteri Bilgileri</b></p>
+              <img src="https://i.hizliresim.com/jgc5vyp.jpg" alt="Müşteri bilgileri ekranı" class="step-image" onclick="openModal(this.src)">
+            </div>
+            <div class="space-y-3">
+              <p><b class="font-semibold">5. Uygulama Onayı</b></p>
+              <img src="https://i.hizliresim.com/lpxzj6v.jpg" alt="Uygulama onayı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">6. Müşteri Telefon No Doğrulama</b></p>
+              <img src="https://i.hizliresim.com/ciyowa4.jpg" alt="Müşteri Telefon No Doğrulama" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">7. SMS Doğrulama</b></p>
+              <img src="https://i.hizliresim.com/4lmtdqm.jpg" alt="SMS Doğrulama" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">8. Başarılı İşlem</b></p>
+              <img src="https://i.hizliresim.com/8bzyd2k.jpg" alt="Özet / Kayıt" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div> <br>
+
+        <div class="guide-card bg-white rounded-xl p-5 search-item">
+          <h3 class="text-xl font-bold text-purple-700 mb-4 flex items-center gap-2"><i data-lucide="credit-card" class="w-6 h-6"></i> Ederned ile Ödeme</h3>
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="space-y-3">
+              <p><b class="font-semibold">1. Başlangıç Ekranı</b></p>
+              <img src="https://i.hizliresim.com/is4janf.jpg" alt="Ederned başlangıç ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">2. Kasada Ederned Seçme</b></p>
+              <img src="https://i.hizliresim.com/ny1vhyj.jpg" alt="Kasada Ederned seçimi" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">3. Satış Oluşturma İşlemi</b></p>
+              <img src="https://i.hizliresim.com/bawc1b6.jpg" alt="Ödeme oluşturma ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">4. SMS Doğrulama İşlemi</b></p>
+              <img src="https://i.hizliresim.com/dy5qpst.jpg" alt="Müşteri bilgileri ekranı" class="step-image" onclick="openModal(this.src)">
+            </div>
+            <div class="space-y-3">
+              <p><b class="font-semibold">5. Doğrulama</b></p>
+              <img src="https://i.hizliresim.com/nsrgb5e.jpg" alt="Doğrulama ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">6. Başarılı İşlem</b></p>
+              <img src="https://i.hizliresim.com/goy0aer.jpg" alt="Başarılı işlem ekranı" class="step-image" onclick="openModal(this.src)">
+              <p><b class="font-semibold">7. Ödeme Tamamlama</b></p>
+              <img src="https://i.hizliresim.com/awpxe3u.jpg" alt="Makbuz / Fiş" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="h-20"></div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

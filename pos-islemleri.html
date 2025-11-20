@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>POS İşlemleri • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+    
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="pos-islemleri" class="content-section fade-in block">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+          <i data-lucide="credit-card" class="text-civil-red"></i> POS İşlemleri
+        </h2>
+        <div class="grid md:grid-cols-2 gap-6 search-container">
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">1</div>
+              <h3 class="step-title">Taksitli Satış Nasıl Yapılır</h3>
+            </div>
+            <div class="step-content">
+              <p>Taksitli satışlarda kart her zaman POS'a takılır. Kartta çip yoksa yan taraftan çekme (swipe) denenir.</p>
+              <img src="https://i.hizliresim.com/izfkfvm.png" alt="Taksitli satış POS kullanımı" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">2</div>
+              <h3 class="step-title">POS'ta QR ile İşlem Alma</h3>
+            </div>
+            <div class="step-content">
+              <p>
+                Satış tutarını POS'a girdikten sonra <b class="font-semibold">0'a basın</b> ve müşterinin ödeme yapacağı bankayı seçin; ardından QR ekranı açılacaktır. 
+                Eğer müşterinin QR ile ödeme yapmak istediği banka ile <b>anlaşmamız yoksa</b>, işlem <b>öncelikli bankamız olan Yapı Kredi</b> seçilerek devam ettirilmelidir.
+              </p>
+              <img src="https://i.hizliresim.com/q6ulr01.png" alt="POS QR işlem alma" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">3</div>
+              <h3 class="step-title">Ek Nüsha Alma</h3>
+            </div>
+            <div class="step-content">
+              <p>Slip çıkmazsa POS üzerinden ek nüsha alın.</p>
+              <img src="https://i.hizliresim.com/hirbfbh.png" alt="Ek nüsha alma" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">4</div>
+              <h3 class="step-title">Gün Sonu Alma</h3>
+            </div>
+            <div class="step-content">
+              <p>Gün sonlarında işlem kontrolü için mutlaka <b class="font-semibold text-civil-dark">detay rapor</b> seçilmelidir.</p>
+              <img src="https://i.hizliresim.com/eu6nsil.png" alt="Gün sonu detay raporu" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div>
+
+        <div class="space-y-6 search-container">
+          <div class="guide-card bg-white rounded-xl p-5 search-item shadow-md border border-red-200">
+            <h3 class="text-red-600 font-bold text-lg mb-3 flex items-center gap-2">
+              <i data-lucide="alert-octagon" class="w-5 h-5"></i>
+              Önemli Bilgilendirme
+            </h3>
+            <div class="bg-red-50 border border-red-200 rounded-lg p-4 leading-relaxed text-sm text-slate-700">
+              <p>POS “İade Limiti Aşıldı” uyarısı alındığında mağaza tarafından limit artırma işlemi yapılamaz. Bu durumda iade Merkez Muhasebe tarafından gerçekleştirilmelidir.</p>
+              <p class="mt-3">Mağaza; müşterinin faturasını, slipini, iade edilen ürün/ürünlerin uzun barkodlarını ve iade edilecek tutarı belirterek aşağıdaki adreslere mail göndermelidir: <b>ztomruk@civil.com.tr, akurt@civil.com.tr, ksezgin@civil.com.tr</b></p>
+              <p class="mt-3">Mağaza ürünleri sistemden iade almamalıdır. İade talimatı merkez tarafından oluşturulduktan sonra ürünler mağaza envanterine <b>Abdullah Kurt</b> tarafından eklenmektedir.</p>
+              <p class="mt-3">POS cihazı üzerinden yapılan veya merkez tarafından oluşturulan iadelerin bankaya yansıma süresi banka–müşteri anlaşmasına göre değişir. Bu nedenle müşteriye <b>kesin bir gün veya süre bilgisi verilmemelidir</b>.</p>
+              <p class="mt-3">Tüm bankalarda kısmi iade yapılabilir. Eğer mağaza kısmi iade veya çapraz iade yapamıyorsa; POS terminal numarası ve banka üye iş yeri numarası belirtilerek <b>ztomruk@civil.com.tr, akurt@civil.com.tr, ksezgin@civil.com.tr</b> adreslerine mail gönderilip açtırılabilir.</p>
+            </div>
+          </div>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="step-container search-item">
+              <div class="step-header">
+                <div class="step-number">5</div>
+                <h3 class="step-title">İptal</h3>
+              </div>
+              <div class="step-content">
+                <p>İşlem aynı gün içinde ve <b class="font-semibold text-civil-dark">gün sonu alınmadan önce</b> yapıldıysa <b class="font-semibold">İPTAL</b> yapılır.</p>
+                <p class="text-xs font-semibold mb-1 mt-3">İptal Ekranı</p>
+                <img src="https://i.hizliresim.com/c87t4mo.png" alt="İşlem iptali" class="step-image" onclick="openModal(this.src)">
+              </div>
+            </div>
+            <div class="step-container search-item">
+              <div class="step-header">
+                <div class="step-number">6</div>
+                <h3 class="step-title">İade</h3>
+              </div>
+              <div class="step-content">
+                <p>Gün sonu alındıysa işlem <b class="font-semibold">İADE</b> olarak gerçekleştirilir. İptal işlemleri POS üzerinde anında yansır.</p>
+                <p class="text-xs font-semibold mb-1 mt-3">İade Ekranı</p>
+                <img src="https://i.hizliresim.com/38lrif4.png" alt="İşlem iadesi" class="step-image" onclick="openModal(this.src)">
+              </div>
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">7</div>
+              <h3 class="step-title">Sliplerin Kullanımı</h3>
+            </div>
+            <div class="step-content">
+              <img src="https://i.hizliresim.com/b9ehkip.png" alt="Slip kullanımı" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">8</div>
+              <h3 class="step-title">Ara Rapor Alma</h3>
+            </div>
+            <div class="step-content">
+              <ul class="list-disc ml-5 space-y-2">
+                <li><b class="font-semibold">Yapı Kredi:</b> POS cihazında <b class="font-semibold">#</b> tuşuna basın. Ardından sırasıyla <b class="font-semibold">YKB Ana > Liste İşlemleri > Toplamlar</b> menülerini takip edin.</li>
+                <li><b class="font-semibold">QNB, Ziraat, Halkbankası:</b> POS cihazında <b class="font-semibold">*</b> tuşuna basın ve <b class="font-semibold">Ara Rapor</b> seçeneğini seçin.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="h-20"></div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

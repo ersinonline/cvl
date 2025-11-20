@@ -1,0 +1,17 @@
+<div id="chatWidget" class="fixed bottom-4 right-4 w-80 max-w-[90vw] bg-white rounded-2xl shadow-2xl border border-slate-200 transform translate-y-[120%] transition-transform z-40 flex flex-col">
+  <div class="bg-civil-red text-white p-3 rounded-t-2xl flex justify-between items-center cursor-pointer" onclick="closeChat()">
+    <div class="flex items-center gap-2">
+      <i data-lucide="bot" class="w-5 h-5"></i>
+      <span class="font-bold">Akıllı Asistan ✨</span>
+    </div>
+    <button><i data-lucide="chevron-down" class="w-5 h-5"></i></button>
+  </div>
+  <div class="p-3 border-t border-slate-100 bg-white rounded-b-2xl">
+    <form id="chatForm">
+      <div class="flex items-center gap-2">
+        <input id="llmInput" type="text" placeholder="Anahtar kelime yazın..." class="flex-1 bg-slate-100 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-civil-red/20" />
+        <button type="submit" class="bg-civil-red text-white px-3 py-2 rounded-lg text-sm">Git</button>
+      </div>
+    </form>
+  </div>
+</div>

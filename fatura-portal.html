@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Online Alışveriş Faturası • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <section id="fatura-portal" class="content-section fade-in block">
+        <h2 class="text-2xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+          <i data-lucide="file-text" class="text-civil-red"></i> Online Alışveriş Faturası
+        </h2>
+        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden search-container">
+          <div class="p-6 bg-slate-50 border-b border-slate-200 flex justify-between items-center">
+            <h3 class="font-bold text-slate-700">Portal Giriş Bilgileri</h3>
+            <a href="https://onlinefatura.civil.com.tr" target="_blank" class="text-sm bg-civil-red text-white px-4 py-2 rounded-lg hover:bg-civil-dark transition-colors flex items-center gap-2">
+              Aç <i data-lucide="external-link" class="w-4 h-4"></i>
+            </a>
+          </div> 
+          <div class="p-6 space-y-6">
+            <div class="search-item">
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Kullanıcı Adı / E-Posta</label>
+              <div class="flex gap-2">
+                <input type="text" value="magaza@civil.com.tr" readonly class="w-full bg-slate-100 border-none rounded-lg text-sm text-slate-600 px-4 py-3" id="emailInput">
+                <button onclick="copyToClipboard('emailInput')" class="bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium text-sm">Kopyala</button>
+              </div>
+            </div>
+            <div class="search-item">
+              <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Şifre</label>
+              <div class="flex gap-2">
+                <input type="text" value="0oC,WS&lt;b77e)|p+." readonly class="w-full bg-slate-100 border-none rounded-lg text-sm text-slate-600 px-4 py-3" id="passInput">
+                <button onclick="copyToClipboard('passInput')" class="bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-lg hover:bg-slate-50 transition-colors font-medium text-sm">Kopyala</button>
+              </div>
+            </div>
+            <div class="border-t border-slate-100 pt-6 space-y-4">
+              <h4 class="font-bold text-slate-700">Fatura Bulma Adımları</h4>
+              <p class="text-sm text-slate-600">Portalda ilgili sipariş veya fatura numarasını arama alanına girin ve sonuçları filtreleyin.</p>
+              <img src="https://i.hizliresim.com/jsov0a3.png" alt="Portal arama ekranı görseli" class="step-image" onclick="openModal(this.src)">
+              <img src="https://i.hizliresim.com/i49ap5s.png" alt="Fatura detay ekranı görseli" class="step-image" onclick="openModal(this.src)">
+              <img src="https://i.hizliresim.com/5qg2r7m.png" alt="Fatura indirme ekranı görseli" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="h-20"></div>
+    </div>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>

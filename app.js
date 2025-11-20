@@ -7,14 +7,151 @@ const API_URL =
   ":generateContent?key=" +
   API_KEY;
 
+// Tailwind config (Play CDN) – merkezi ayar
+try {
+  const cfg = {
+    theme: {
+      extend: {
+        colors: {
+          civil: { red: '#dd3612', dark: '#c22f0f', light: '#fff1f0', bg: '#f8fafc' }
+        },
+        fontFamily: { sans: ['Inter', 'sans-serif'] }
+      }
+    }
+  };
+  if (typeof tailwind !== 'undefined') {
+    tailwind.config = cfg;
+  } else {
+    window.tailwind = { config: cfg };
+  }
+} catch (_) {}
+
+// Global sayfa yönlendirme haritası
+const SECTION_ROUTES = {
+  dashboard: 'dashboard.html',
+  raporlar: 'raporlar.html',
+  'pos-islemleri': 'pos-islemleri.html',
+  'ozel-odemeler': 'ozel-odemeler.html',
+  'nakit-yatirma': 'nakit-yatirma.html',
+  'kasa-duzeltme': 'kasa-duzeltme.html',
+  'masraf-duzeltme': 'masraf-duzeltme.html',
+  'fatura-portal': 'fatura-portal.html',
+  taksitler: 'taksitler.html',
+  sablon: 'sablon.html',
+  'havale-eft': 'havale-eft.html',
+  chippin: 'chippin.html',
+};
+
 // === Lucide ikonları yükle ===
 document.addEventListener("DOMContentLoaded", () => {
+  try {
+    const currentPage = (location.pathname.split('/').pop() || '').toLowerCase();
+    if (currentPage === '' || currentPage === 'index.html') {
+      window.location.href = 'dashboard.html';
+      return;
+    }
+  } catch (_) {}
+
   if (window.lucide) {
     lucide.createIcons();
   }
 
-  // Başlangıçta Ana Sayfayı Göster
-  showSection("dashboard");
+  const existingChatWidget = document.getElementById('chatWidget');
+  if (!existingChatWidget) {
+    fetch('chat.html')
+      .then(r => r.text())
+      .then(html => {
+        document.body.insertAdjacentHTML('beforeend', html);
+        if (window.lucide) lucide.createIcons();
+        const form = document.getElementById('chatForm');
+        if (form) form.addEventListener('submit', handleChatRequest);
+        const input = document.getElementById('llmInput');
+        if (input) {
+          input.addEventListener('keydown', function(e){
+            if (e.key === 'Enter' && !e.shiftKey) {
+              e.preventDefault();
+              if (form) form.dispatchEvent(new Event('submit', { cancelable: true }));
+            }
+          });
+        }
+      })
+      .catch(() => {});
+  }
+
+  const existingImageModal = document.getElementById('imageModal');
+  if (!existingImageModal) {
+    document.body.insertAdjacentHTML('beforeend', `
+      <div id="imageModal" class="fixed inset-0 bg-black/90 z-50 hidden flex items-center justify-center p-4 image-modal" onclick="closeModal()">
+        <img id="modalImage" src="" class="max-w-full max-h-[90vh] rounded-lg shadow-2xl transform transition-transform scale-95">
+        <button class="absolute top-5 right-5 text-white p-2 hover:bg-white/20 rounded-full transition-colors">
+          <i data-lucide="x" class="w-8 h-8"></i>
+        </button>
+      </div>
+    `);
+    if (window.lucide) lucide.createIcons();
+  }
+
+  const mount = document.getElementById('sidebarMount');
+  if (mount) {
+    fetch('sidebar.html')
+      .then(r => r.text())
+      .then(html => {
+        mount.innerHTML = html;
+        if (window.lucide) lucide.createIcons();
+        const current = (location.pathname.split('/').pop() || '').toLowerCase();
+        document.querySelectorAll('#sidebar .nav-item').forEach(a => {
+          const href = (a.getAttribute('href') || '').toLowerCase();
+          if (href && current && href.endsWith(current)) {
+            a.classList.add('bg-civil-light','text-civil-red');
+            a.classList.remove('text-slate-600');
+          } else {
+            a.classList.remove('bg-civil-light','text-civil-red');
+            a.classList.add('text-slate-600');
+          }
+        });
+      })
+      .catch(() => {});
+  }
+
+  // Analytics yükleme
+  (function loadAnalytics(){
+    try {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){window.dataLayer.push(arguments);} 
+      gtag('js', new Date());
+      gtag('config', 'G-EPWVHCCP00');
+      const s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-EPWVHCCP00';
+      document.head.appendChild(s);
+    } catch(_) {}
+  })();
+
+  const headerMount = document.getElementById('headerMount');
+  if (headerMount) {
+    fetch('header.html')
+      .then(r => r.text())
+      .then(html => {
+        headerMount.innerHTML = html;
+        if (window.lucide) lucide.createIcons();
+      })
+      .catch(() => {});
+  }
+
+  // SECTION_ROUTES global tanımlı
+
+  const hash = window.location.hash.replace('#', '');
+  const targetEl = hash ? document.getElementById(hash) : null;
+  if (hash && !targetEl) {
+    const url = SECTION_ROUTES[hash];
+    if (url) {
+      window.location.href = url;
+      return;
+    }
+  }
+
+  const defaultSection = (targetEl?.id) || (document.getElementById('dashboard') ? 'dashboard' : (document.querySelector('.content-section')?.id || null));
+  if (defaultSection) showSection(defaultSection);
 
   // Chat form submit
   const chatForm = document.getElementById("chatForm");
@@ -36,8 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Service Worker kaydı
-  registerServiceWorker();
+  // Service Worker kaydı dev ortamda devre dışı
 });
 
 // === Service Worker ===
@@ -110,7 +246,12 @@ function navigateByKeyword(query) {
     portal: "fatura-portal",
     online: "fatura-portal",
     alışveriş: "fatura-portal",
+    eticaret: "fatura-portal",
+    "e-ticaret": "fatura-portal",
     rapor: "raporlar",
+    qr: "pos-islemleri",
+    "gün sonu": "pos-islemleri",
+    slip: "pos-islemleri",
   };
 
   for (const [keyword, sectionId] of Object.entries(keywordMap)) {
@@ -125,36 +266,23 @@ function navigateByKeyword(query) {
 function handleChatRequest(e) {
   e.preventDefault();
   const input = document.getElementById("llmInput");
-  const responseArea = document.getElementById("llmResponseArea");
-  const userText = input.value.trim();
-
-  if (!userText) {
-    responseArea.textContent = "Lütfen bir anahtar kelime veya soru girin.";
-    responseArea.classList.remove("hidden");
-    return;
-  }
-
-  addChatMessage(userText, "user");
-  input.value = "";
+  const userText = input ? input.value.trim() : "";
+  if (!userText) { return; }
+  if (input) input.value = "";
 
   const targetSectionId = navigateByKeyword(userText);
 
   if (targetSectionId) {
-    showSection(targetSectionId);
-    const pageTitleEl = document.getElementById("pageTitle");
-    const currentTitle = pageTitleEl ? pageTitleEl.innerText : "";
-    addChatMessage(
-      `"${userText}" anahtar kelimesi ile ilgili olarak sizi "${currentTitle}" bölümüne yönlendiriyorum.`,
-      "bot"
-    );
-
-    // Yönlendirme başarılıysa chat'i kapat
-    closeChat();
+    const exists = document.getElementById(targetSectionId);
+    if (exists) {
+      showSection(targetSectionId);
+      closeChat();
+    } else {
+      const url = SECTION_ROUTES[targetSectionId] || `index.html#${targetSectionId}`;
+      window.location.href = url;
+    }
   } else {
-    addChatMessage(
-      `"${userText}" için özel bir sayfa bulunamadı, ancak yardımcı olmaya hazırım.`,
-      "bot"
-    );
+    closeChat();
   }
 }
 
@@ -201,24 +329,13 @@ function showSection(sectionId) {
     target.classList.remove("hidden");
     target.classList.add("block");
 
-    const titleMap = {
-      dashboard: "Ana Sayfa",
-      raporlar: "Kasa Raporları",
-      "pos-islemleri": "POS İşlemleri",
-      "ozel-odemeler": "Hediye Kartları",
-      "nakit-yatirma": "Nakit Yatırma",
-      "kasa-duzeltme": "İşlem Kayması Düzeltme",
-      "masraf-duzeltme": "Masraf / Fiyat Düzeltme",
-      "fatura-portal": "E-Fatura & Portal",
-      taksitler: "Taksit Seçenekleri",
-      sablon: "Şablon",
-      "havale-eft": "Havale / EFT",
-      chippin: "Chippin ile Ödeme",
-    };
-
     const pageTitleEl = document.getElementById("pageTitle");
     if (pageTitleEl) {
-      pageTitleEl.innerText = titleMap[sectionId] || "Kasa Asistanı";
+      pageTitleEl.innerText = "Kasa Asistanım";
+    }
+    const mobileTitleEl = document.getElementById("mobileTitle");
+    if (mobileTitleEl) {
+      mobileTitleEl.innerText = "Kasa Asistanım";
     }
   }
 
@@ -351,22 +468,10 @@ function closeModal() {
 function openChat() {
   const chatWidget = document.getElementById("chatWidget");
   const floatingBtn = document.getElementById("floatingChatButton");
-  const responseArea = document.getElementById("llmResponseArea");
   const input = document.getElementById("llmInput");
-  const messagesContainer = document.getElementById("chatMessages");
-
   if (chatWidget) chatWidget.classList.remove("translate-y-[120%]");
   if (floatingBtn) floatingBtn.classList.add("hidden");
-  if (responseArea) responseArea.classList.add("hidden");
   if (input) input.value = "";
-  if (messagesContainer) {
-    messagesContainer.innerHTML = "";
-    addChatMessage(
-      "Hangi işlemle ilgili yardıma ihtiyacınız var? (Örn: setcard, nakit yatırma, taksit..)",
-      "bot"
-    );
-  }
-
   if (window.innerWidth < 1024) {
     const sidebar = document.getElementById("sidebar");
     const overlay = document.getElementById("mobileOverlay");
