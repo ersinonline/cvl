@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Kasa Eğitimi • Civil Kasa Asistanı</title>
+  <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="text-slate-800 h-screen flex overflow-hidden">
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center hover:scale-110 transition-transform">
+    <i data-lucide="bot" class="w-6 h-6"></i>
+  </button>
+
+  <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
+  <div id="sidebarMount"></div>
+
+  <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
+    <div id="headerMount"></div>
+
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+      <!-- Hero Section -->
+      <div class="training-hero mb-8">
+        <div class="relative z-10">
+          <div class="flex items-center gap-4 mb-4">
+            <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+              <i data-lucide="graduation-cap" class="w-10 h-10"></i>
+            </div>
+            <div>
+              <h1 class="text-3xl lg:text-4xl font-bold mb-1">Kasa Eğitim Modülü</h1>
+              <p class="text-white/90">İnteraktif ve kolay öğrenilebilir kasa eğitimi</p>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="mt-6">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm text-white/90">İlerleme Durumu</span>
+              <span class="text-sm font-semibold" id="progressText">0/6 Modül</span>
+            </div>
+            <div class="progress-bar bg-white/20">
+              <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-xl p-4 shadow-md border-2 border-blue-100">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+              <i data-lucide="book-open" class="w-6 h-6 text-blue-600"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Toplam Modül</p>
+              <p class="text-2xl font-bold text-slate-800">6</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-md border-2 border-green-100">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
+              <i data-lucide="clock" class="w-6 h-6 text-green-600"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Tahmini Süre</p>
+              <p class="text-2xl font-bold text-slate-800">30dk</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-md border-2 border-purple-100">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center">
+              <i data-lucide="target" class="w-6 h-6 text-purple-600"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Zorluk</p>
+              <p class="text-2xl font-bold text-slate-800">Kolay</p>
+            </div>
+          </div>
+        </div>
+        <div class="bg-white rounded-xl p-4 shadow-md border-2 border-amber-100">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center">
+              <i data-lucide="award" class="w-6 h-6 text-amber-600"></i>
+            </div>
+            <div>
+              <p class="text-xs text-slate-500 font-medium">Sertifika</p>
+              <p class="text-2xl font-bold text-slate-800">✓</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Training Modules -->
+      <div class="space-y-6">
+        <!-- Module 1: Kasa Açılışı -->
+        <div class="training-category" data-module="1">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <i data-lucide="power" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-xl font-bold text-slate-800">Modül 1: Kasa Açılışı</h3>
+                  <span class="training-badge bg-blue-500">
+                    <i data-lucide="play-circle" class="w-3.5 h-3.5"></i>
+                    Başla
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm">Kasanın nasıl açılacağını ve günlük işlemlere nasıl başlanacağını öğrenin</p>
+              </div>
+            </div>
+            <button onclick="toggleModule(1)" class="text-slate-400 hover:text-civil-red transition-colors">
+              <i data-lucide="chevron-down" class="w-6 h-6 module-icon" id="icon-1"></i>
+            </button>
+          </div>
+
+          <div class="module-content hidden" id="content-1">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100/50 rounded-xl p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kasaya Giriş Yapın</h4>
+                  <p class="text-slate-600 text-sm mb-3">Kullanıcı adı ve şifrenizle sisteme giriş yapın. İlk girişte sistem tarafından verilen geçici şifrenizi değiştirmeyi unutmayın.</p>
+                  <div class="bg-white rounded-lg p-3 border border-blue-200">
+                    <p class="text-xs text-slate-500 mb-1"><b class="text-civil-red">Önemli:</b> Şifrenizi kimseyle paylaşmayın ve güvenli bir şekilde saklayın.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kasa Açılış İşlemi</h4>
+                  <p class="text-slate-600 text-sm mb-3">Ana ekranda "Kasa Aç" butonuna tıklayın ve açılış miktarını girin.</p>
+                  <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 ml-2">
+                    <li>Başlangıç nakdini sayın</li>
+                    <li>Sisteme doğru miktarı girin</li>
+                    <li>Açılış işlemini onaylayın</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-blue-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">POS Cihazlarını Kontrol Edin</h4>
+                  <p class="text-slate-600 text-sm">Tüm POS cihazlarının çalıştığından ve kağıt rulolarının dolu olduğundan emin olun.</p>
+                </div>
+              </div>
+
+              <button onclick="completeModule(1)" class="w-full mt-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Modülü Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 2: POS İşlemleri -->
+        <div class="training-category opacity-60" data-module="2">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center shadow-lg">
+                <i data-lucide="credit-card" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-xl font-bold text-slate-800">Modül 2: POS İşlemleri</h3>
+                  <span class="bg-slate-300 text-slate-600 text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3"></i>
+                    Kilitli
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm">Kredi kartı ödemeleri, iade ve iptal işlemlerini öğrenin</p>
+              </div>
+            </div>
+            <button onclick="toggleModule(2)" class="text-slate-400 hover:text-civil-red transition-colors">
+              <i data-lucide="chevron-down" class="w-6 h-6 module-icon" id="icon-2"></i>
+            </button>
+          </div>
+
+          <div class="module-content hidden" id="content-2">
+            <div class="bg-gradient-to-br from-green-50 to-green-100/50 rounded-xl p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-green-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kredi Kartı ile Ödeme</h4>
+                  <p class="text-slate-600 text-sm mb-3">Müşterinin kartını POS cihazına okutun ve tutarı girin.</p>
+                  <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 ml-2">
+                    <li>Ödeme tutarını kontrol edin</li>
+                    <li>Taksit seçeneklerini gösterin</li>
+                    <li>İşlem onayını bekleyin</li>
+                    <li>Müşteriye slipini verin</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-green-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">İade İşlemi</h4>
+                  <p class="text-slate-600 text-sm mb-3">Fatura ve ödeme slipini kontrol edin, ardından iade işlemini başlatın.</p>
+                  <div class="bg-white rounded-lg p-3 border border-green-200">
+                    <p class="text-xs text-slate-500"><b class="text-civil-red">Dikkat:</b> İade işlemleri için mutlaka fatura ve slip gereklidir.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-green-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">İptal İşlemi</h4>
+                  <p class="text-slate-600 text-sm">Aynı gün içindeki işlemler için iptal prosedürünü uygulayın.</p>
+                </div>
+              </div>
+
+              <button onclick="completeModule(2)" class="w-full mt-4 bg-gradient-to-r from-green-500 to-green-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Modülü Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 3: Nakit İşlemler -->
+        <div class="training-category opacity-60" data-module="3">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-amber-500 to-amber-600 rounded-xl flex items-center justify-center shadow-lg">
+                <i data-lucide="banknote" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-xl font-bold text-slate-800">Modül 3: Nakit İşlemler</h3>
+                  <span class="bg-slate-300 text-slate-600 text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3"></i>
+                    Kilitli
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm">Nakit tahsilat, yatırma ve para üstü verme işlemlerini öğrenin</p>
+              </div>
+            </div>
+            <button onclick="toggleModule(3)" class="text-slate-400 hover:text-civil-red transition-colors">
+              <i data-lucide="chevron-down" class="w-6 h-6 module-icon" id="icon-3"></i>
+            </button>
+          </div>
+
+          <div class="module-content hidden" id="content-3">
+            <div class="bg-gradient-to-br from-amber-50 to-amber-100/50 rounded-xl p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-amber-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Nakit Tahsilat</h4>
+                  <p class="text-slate-600 text-sm mb-3">Müşteriden aldığınız nakit parayı sayın ve kontrol edin.</p>
+                  <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 ml-2">
+                    <li>Sahte para kontrolü yapın</li>
+                    <li>Parayı iki kez sayın</li>
+                    <li>Para üstünü doğru hesaplayın</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-amber-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kasa Sayımı</h4>
+                  <p class="text-slate-600 text-sm">Belirli aralıklarla kasa sayımı yapın ve sisteme kaydedin.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-amber-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Nakit Yatırma</h4>
+                  <p class="text-slate-600 text-sm">Kasa limitini aşan nakdi güvenli şekilde kasaya yatırın.</p>
+                </div>
+              </div>
+
+              <button onclick="completeModule(3)" class="w-full mt-4 bg-gradient-to-r from-amber-500 to-amber-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Modülü Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 4: Özel Ödeme Yöntemleri -->
+        <div class="training-category opacity-60" data-module="4">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <i data-lucide="gift" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-xl font-bold text-slate-800">Modül 4: Özel Ödeme Yöntemleri</h3>
+                  <span class="bg-slate-300 text-slate-600 text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3"></i>
+                    Kilitli
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm">Hediye kartları, Chippin, Setcard ve diğer ödeme yöntemlerini öğrenin</p>
+              </div>
+            </div>
+            <button onclick="toggleModule(4)" class="text-slate-400 hover:text-civil-red transition-colors">
+              <i data-lucide="chevron-down" class="w-6 h-6 module-icon" id="icon-4"></i>
+            </button>
+          </div>
+
+          <div class="module-content hidden" id="content-4">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100/50 rounded-xl p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-purple-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Hediye Kartı (Setcard, Multinet)</h4>
+                  <p class="text-slate-600 text-sm mb-3">Hediye kartı ile yapılan ödemelerin nasıl alınacağını öğrenin.</p>
+                  <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 ml-2">
+                    <li>Kartı POS'a okutun</li>
+                    <li>Bakiye kontrolü yapın</li>
+                    <li>İşlemi tamamlayın</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-purple-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Chippin ile Ödeme</h4>
+                  <p class="text-slate-600 text-sm">QR kod okutma ve Chippin puan kullanımı.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-purple-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kombine Ödemeler</h4>
+                  <p class="text-slate-600 text-sm">Nakit, kredi kartı ve hediye kartı kombinasyonlarını işleme alın.</p>
+                </div>
+              </div>
+
+              <button onclick="completeModule(4)" class="w-full mt-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Modülü Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 5: Hata Düzeltme -->
+        <div class="training-category opacity-60" data-module="5">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-red-500 to-red-600 rounded-xl flex items-center justify-center shadow-lg">
+                <i data-lucide="alert-circle" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-xl font-bold text-slate-800">Modül 5: Hata Düzeltme</h3>
+                  <span class="bg-slate-300 text-slate-600 text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3"></i>
+                    Kilitli
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm">Kasa kayması, hatalı işlemler ve düzeltme prosedürlerini öğrenin</p>
+              </div>
+            </div>
+            <button onclick="toggleModule(5)" class="text-slate-400 hover:text-civil-red transition-colors">
+              <i data-lucide="chevron-down" class="w-6 h-6 module-icon" id="icon-5"></i>
+            </button>
+          </div>
+
+          <div class="module-content hidden" id="content-5">
+            <div class="bg-gradient-to-br from-red-50 to-red-100/50 rounded-xl p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">İşlem Kayması Tespiti</h4>
+                  <p class="text-slate-600 text-sm mb-3">Alınan Ödemeler Listesi'nden hatalı işlemleri tespit edin.</p>
+                  <div class="bg-white rounded-lg p-3 border border-red-200">
+                    <p class="text-xs text-slate-500"><b class="text-civil-red">Önemli:</b> Yalnızca karşılığı olan işlemleri düzeltin.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Düzeltme İşlemi</h4>
+                  <p class="text-slate-600 text-sm">Fatura referans numarasını kullanarak işlemi düzeltin.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-red-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kontrol ve Onay</h4>
+                  <p class="text-slate-600 text-sm">Düzeltme sonrası kasanızı kontrol edin ve yöneticiye bilgi verin.</p>
+                </div>
+              </div>
+
+              <button onclick="completeModule(5)" class="w-full mt-4 bg-gradient-to-r from-red-500 to-red-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Modülü Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Module 6: Kasa Kapanışı -->
+        <div class="training-category opacity-60" data-module="6">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <div class="w-14 h-14 bg-gradient-to-br from-cyan-500 to-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
+                <i data-lucide="log-out" class="w-7 h-7 text-white"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="text-xl font-bold text-slate-800">Modül 6: Kasa Kapanışı</h3>
+                  <span class="bg-slate-300 text-slate-600 text-xs px-2 py-1 rounded-full font-semibold flex items-center gap-1">
+                    <i data-lucide="lock" class="w-3 h-3"></i>
+                    Kilitli
+                  </span>
+                </div>
+                <p class="text-slate-600 text-sm">Gün sonu işlemleri, raporlama ve kasa teslimi prosedürlerini öğrenin</p>
+              </div>
+            </div>
+            <button onclick="toggleModule(6)" class="text-slate-400 hover:text-civil-red transition-colors">
+              <i data-lucide="chevron-down" class="w-6 h-6 module-icon" id="icon-6"></i>
+            </button>
+          </div>
+
+          <div class="module-content hidden" id="content-6">
+            <div class="bg-gradient-to-br from-cyan-50 to-cyan-100/50 rounded-xl p-6 space-y-4">
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-cyan-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">1</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">POS Gün Sonu</h4>
+                  <p class="text-slate-600 text-sm mb-3">Tüm POS cihazlarında gün sonu işlemini yapın ve slip'leri saklayın.</p>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-cyan-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">2</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kasa Sayımı ve Rapor</h4>
+                  <p class="text-slate-600 text-sm mb-3">Kasadaki tüm parayı sayın, rapor oluşturun ve sisteme girin.</p>
+                  <ul class="list-disc list-inside text-sm text-slate-600 space-y-1 ml-2">
+                    <li>Nakit sayımı yapın</li>
+                    <li>Kredi kartı toplamlarını kontrol edin</li>
+                    <li>Fark varsa sebeplerini belirtin</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 bg-cyan-500 text-white rounded-lg flex items-center justify-center font-bold flex-shrink-0">3</div>
+                <div class="flex-1">
+                  <h4 class="font-semibold text-slate-800 mb-2">Kasa Teslimi</h4>
+                  <p class="text-slate-600 text-sm">Kasayı yöneticinize teslim edin ve vardiya değişimi formunu doldurun.</p>
+                </div>
+              </div>
+
+              <button onclick="completeModule(6)" class="w-full mt-4 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white py-3 rounded-xl font-semibold hover:shadow-lg transition-all flex items-center justify-center gap-2">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
+                Modülü Tamamla
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completion Certificate -->
+      <div id="completionCertificate" class="hidden mt-8 mb-8">
+        <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-8 border-2 border-amber-300 shadow-xl text-center">
+          <div class="w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+            <i data-lucide="award" class="w-12 h-12 text-white"></i>
+          </div>
+          <h3 class="text-2xl font-bold text-slate-800 mb-2">Tebrikler! Eğitimi Tamamladınız! 🎉</h3>
+          <p class="text-slate-600 mb-6">Tüm modülleri başarıyla tamamladınız. Artık kasa işlemlerini profesyonelce yönetebilirsiniz.</p>
+          <button onclick="window.print()" class="bg-gradient-to-r from-civil-red to-civil-dark text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all inline-flex items-center gap-2">
+            <i data-lucide="download" class="w-5 h-5"></i>
+            Sertifikayı İndir
+          </button>
+        </div>
+      </div>
+
+      <div class="h-20"></div>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+  <script>
+    let completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]');
+    let currentUnlockedModule = Math.min(...completedModules.map(m => parseInt(m))) || 1;
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', () => {
+      updateProgress();
+      unlockCompletedModules();
+    });
+
+    function toggleModule(moduleNum) {
+      const content = document.getElementById(`content-${moduleNum}`);
+      const icon = document.getElementById(`icon-${moduleNum}`);
+
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        content.classList.add('scale-in');
+        icon.style.transform = 'rotate(180deg)';
+      } else {
+        content.classList.add('hidden');
+        icon.style.transform = 'rotate(0deg)';
+      }
+    }
+
+    function completeModule(moduleNum) {
+      if (!completedModules.includes(moduleNum)) {
+        completedModules.push(moduleNum);
+        localStorage.setItem('completedModules', JSON.stringify(completedModules));
+
+        // Show success message
+        const module = document.querySelector(`[data-module="${moduleNum}"]`);
+        const button = module.querySelector('button[onclick^="completeModule"]');
+        button.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> Tamamlandı ✓';
+        button.classList.remove('from-blue-500', 'to-blue-600', 'from-green-500', 'to-green-600', 'from-amber-500', 'to-amber-600', 'from-purple-500', 'to-purple-600', 'from-red-500', 'to-red-600', 'from-cyan-500', 'to-cyan-600');
+        button.classList.add('from-green-500', 'to-green-600');
+
+        // Unlock next module
+        if (moduleNum < 6) {
+          unlockModule(moduleNum + 1);
+        }
+
+        updateProgress();
+
+        // Check if all modules completed
+        if (completedModules.length === 6) {
+          document.getElementById('completionCertificate').classList.remove('hidden');
+          document.getElementById('completionCertificate').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        lucide.createIcons();
+      }
+    }
+
+    function unlockModule(moduleNum) {
+      const module = document.querySelector(`[data-module="${moduleNum}"]`);
+      if (module) {
+        module.classList.remove('opacity-60');
+        const badge = module.querySelector('.training-badge');
+        if (badge) {
+          badge.innerHTML = '<i data-lucide="play-circle" class="w-3.5 h-3.5"></i> Başla';
+          badge.classList.remove('bg-slate-300', 'text-slate-600');
+          badge.classList.add('bg-green-500');
+        }
+        lucide.createIcons();
+      }
+    }
+
+    function unlockCompletedModules() {
+      completedModules.forEach(moduleNum => {
+        const module = document.querySelector(`[data-module="${moduleNum}"]`);
+        if (module) {
+          const button = module.querySelector('button[onclick^="completeModule"]');
+          if (button) {
+            button.innerHTML = '<i data-lucide="check-circle" class="w-5 h-5"></i> Tamamlandı ✓';
+            button.classList.add('from-green-500', 'to-green-600');
+          }
+        }
+        if (moduleNum < 6) {
+          unlockModule(moduleNum + 1);
+        }
+      });
+
+      if (completedModules.length === 6) {
+        document.getElementById('completionCertificate').classList.remove('hidden');
+      }
+
+      lucide.createIcons();
+    }
+
+    function updateProgress() {
+      const completed = completedModules.length;
+      const total = 6;
+      const percentage = (completed / total) * 100;
+
+      document.getElementById('progressFill').style.width = `${percentage}%`;
+      document.getElementById('progressText').textContent = `${completed}/${total} Modül`;
+    }
+  </script>
+</body>
+</html>
