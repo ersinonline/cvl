@@ -1,77 +1,149 @@
-<aside id="sidebar" class="bg-white w-72 fixed inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto lg:h-screen border-r border-slate-200 flex flex-col sidebar-transition shadow-2xl lg:shadow-none">
-  <div class="h-16 flex items-center px-6 border-b border-slate-100 bg-civil-red">
-    <div class="flex items-center gap-3 text-white">
-      <i data-lucide="shopping-bag" class="w-6 h-6"></i>
-      <span class="font-bold text-xl tracking-wide">Kasa Asistanı</span>
+<aside id="sidebar" class="bg-white w-80 fixed inset-y-0 left-0 z-30 transform -translate-x-full lg:translate-x-0 lg:static lg:inset-auto lg:h-screen border-r border-slate-200 flex flex-col sidebar-transition shadow-2xl lg:shadow-none">
+  <!-- Header -->
+  <div class="h-20 flex items-center justify-between px-6 border-b border-slate-100 bg-gradient-to-r from-civil-red to-civil-dark relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
+    <div class="flex items-center gap-3 text-white relative z-10">
+      <div class="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+        <i data-lucide="shopping-bag" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <span class="font-bold text-xl tracking-tight block">Kasa Asistanı</span>
+        <span class="text-xs text-white/80">Civil Mall of İstanbul</span>
+      </div>
     </div>
-    <button class="lg:hidden ml-auto text-white" onclick="toggleSidebar()">
+    <button class="lg:hidden text-white hover:bg-white/20 p-2 rounded-lg transition-colors relative z-10" onclick="toggleSidebar()">
       <i data-lucide="x" class="w-6 h-6"></i>
     </button>
   </div>
 
-  <nav class="flex-1 overflow-y-auto p-4 space-y-1">
-    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-2">Genel</div>
-    <a href="dashboard.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="dashboard">
-      <i data-lucide="layout-grid" class="w-5 h-5"></i>
-      Ana Sayfa
+  <!-- Navigation -->
+  <nav class="flex-1 overflow-y-auto p-4 space-y-1 scroll-smooth">
+    <!-- Genel Section -->
+    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2 flex items-center gap-2">
+      <i data-lucide="home" class="w-3.5 h-3.5"></i>
+      Genel
+    </div>
+    <a href="dashboard.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="dashboard">
+      <div class="w-9 h-9 rounded-lg bg-slate-100 flex items-center justify-center group-hover:bg-white group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="layout-grid" class="w-5 h-5"></i>
+      </div>
+      <span>Ana Sayfa</span>
     </a>
 
-    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-2 px-2">İşlemler</div>
+    <!-- Eğitim Section -->
+    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-3 px-2 flex items-center gap-2">
+      <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i>
+      Eğitim
+    </div>
+    <a href="kasa-egitim.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group relative" data-target="kasa-egitim">
+      <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center group-hover:bg-gradient-to-br group-hover:from-amber-200 group-hover:to-orange-200 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="book-open" class="w-5 h-5 text-orange-600"></i>
+      </div>
+      <span class="flex-1">Kasa Eğitimi</span>
+      <span class="text-[10px] bg-gradient-to-r from-civil-red to-civil-dark text-white px-2 py-0.5 rounded-full font-semibold">YENİ</span>
+    </a>
 
-    <a href="raporlar.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="raporlar">
-      <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-      Kasa Raporları
+    <!-- İşlemler Section -->
+    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-6 mb-3 px-2 flex items-center gap-2">
+      <i data-lucide="briefcase" class="w-3.5 h-3.5"></i>
+      İşlemler
+    </div>
+
+    <a href="raporlar.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="raporlar">
+      <div class="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="bar-chart-2" class="w-5 h-5 text-indigo-600"></i>
+      </div>
+      <span>Kasa Raporları</span>
     </a>
-    <a href="pos-islemleri.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="pos-islemleri">
-      <i data-lucide="credit-card" class="w-5 h-5"></i>
-      POS İşlemleri
+
+    <a href="pos-islemleri.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="pos-islemleri">
+      <div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="credit-card" class="w-5 h-5 text-blue-600"></i>
+      </div>
+      <span>POS İşlemleri</span>
     </a>
-    <a href="taksitler.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="taksitler">
-      <i data-lucide="percent" class="w-5 h-5"></i>
-      Taksit Seçenekleri
+
+    <a href="taksitler.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="taksitler">
+      <div class="w-9 h-9 rounded-lg bg-pink-50 flex items-center justify-center group-hover:bg-pink-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="percent" class="w-5 h-5 text-pink-600"></i>
+      </div>
+      <span>Taksit Seçenekleri</span>
     </a>
-    <a href="chippin.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="chippin">
-      <i data-lucide="star" class="w-5 h-5"></i>
-      Chippin ile Ödeme
+
+    <a href="chippin.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="chippin">
+      <div class="w-9 h-9 rounded-lg bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="star" class="w-5 h-5 text-purple-600"></i>
+      </div>
+      <span>Chippin ile Ödeme</span>
     </a>
-    <a href="ozel-odemeler.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="ozel-odemeler">
-      <i data-lucide="gift" class="w-5 h-5"></i>
-      Hediye Kartları
+
+    <a href="ozel-odemeler.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="ozel-odemeler">
+      <div class="w-9 h-9 rounded-lg bg-green-50 flex items-center justify-center group-hover:bg-green-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="gift" class="w-5 h-5 text-green-600"></i>
+      </div>
+      <span>Hediye Kartları</span>
     </a>
-    <a href="havale-eft.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="havale-eft">
-      <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
-      Havale / EFT
+
+    <a href="havale-eft.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="havale-eft">
+      <div class="w-9 h-9 rounded-lg bg-cyan-50 flex items-center justify-center group-hover:bg-cyan-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="refresh-ccw" class="w-5 h-5 text-cyan-600"></i>
+      </div>
+      <span>Havale / EFT</span>
     </a>
-    <a href="fatura-portal.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="fatura-portal">
-      <i data-lucide="file-text" class="w-5 h-5"></i>
-      Online Alışveriş
+
+    <a href="fatura-portal.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="fatura-portal">
+      <div class="w-9 h-9 rounded-lg bg-violet-50 flex items-center justify-center group-hover:bg-violet-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="file-text" class="w-5 h-5 text-violet-600"></i>
+      </div>
+      <span>Online Alışveriş</span>
     </a>
-    <a href="nakit-yatirma.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="nakit-yatirma">
-      <i data-lucide="wallet-2" class="w-5 h-5"></i>
-      Nakit Yatırma
+
+    <a href="nakit-yatirma.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="nakit-yatirma">
+      <div class="w-9 h-9 rounded-lg bg-yellow-50 flex items-center justify-center group-hover:bg-yellow-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="wallet-2" class="w-5 h-5 text-yellow-600"></i>
+      </div>
+      <span>Nakit Yatırma</span>
     </a>
-    <a href="kasa-duzeltme.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="kasa-duzeltme">
-      <i data-lucide="alert-triangle" class="w-5 h-5"></i>
-      Hatalı İşlemler
+
+    <a href="kasa-duzeltme.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="kasa-duzeltme">
+      <div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center group-hover:bg-red-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="alert-triangle" class="w-5 h-5 text-red-600"></i>
+      </div>
+      <span>Hatalı İşlemler</span>
     </a>
-    <a href="masraf-duzeltme.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="masraf-duzeltme">
-      <i data-lucide="coins" class="w-5 h-5"></i>
-      Masraf Girişi
+
+    <a href="masraf-duzeltme.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="masraf-duzeltme">
+      <div class="w-9 h-9 rounded-lg bg-orange-50 flex items-center justify-center group-hover:bg-orange-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="coins" class="w-5 h-5 text-orange-600"></i>
+      </div>
+      <span>Masraf Girişi</span>
     </a>
-    <a href="sablon.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="sablon">
-      <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
-      Şablon
+
+    <a href="sablon.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="sablon">
+      <div class="w-9 h-9 rounded-lg bg-teal-50 flex items-center justify-center group-hover:bg-teal-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="file-spreadsheet" class="w-5 h-5 text-teal-600"></i>
+      </div>
+      <span>Şablon</span>
     </a>
-    <a href="gorus-oneri.html" class="nav-item w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors" data-target="gorus-oneri">
-      <i data-lucide="message-square" class="w-5 h-5"></i>
-      Görüş & Öneri
+
+    <a href="gorus-oneri.html" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-gradient-to-r hover:from-civil-light hover:to-red-50 hover:text-civil-red transition-all duration-200 group" data-target="gorus-oneri">
+      <div class="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 group-hover:shadow-md transition-all duration-200">
+        <i data-lucide="message-square" class="w-5 h-5 text-indigo-600"></i>
+      </div>
+      <span>Görüş & Öneri</span>
     </a>
   </nav>
 
-  <div class="p-4 border-t border-slate-100 bg-slate-50">
-    <div class="text-xs text-center text-slate-400">v2.4 • Mall of Istanbul Ekibi</div>
-    <div class="text-[11px] text-center mt-1">
-      <a href="https://teknotech.online" target="_blank" class="text-slate-400 hover:text-civil-red transition">by Teknotech</a>
+  <!-- Footer -->
+  <div class="p-5 border-t border-slate-100 bg-gradient-to-br from-slate-50 to-slate-100">
+    <div class="bg-white rounded-lg p-3 shadow-sm border border-slate-200">
+      <div class="text-xs text-center font-semibold text-slate-600 mb-1">v2.5 • Mall of İstanbul</div>
+      <div class="text-[11px] text-center">
+        <a href="https://teknotech.online" target="_blank" class="text-civil-red hover:text-civil-dark transition-colors font-medium flex items-center justify-center gap-1">
+          <i data-lucide="code" class="w-3 h-3"></i>
+          by Teknotech
+        </a>
+      </div>
     </div>
   </div>
 </aside>

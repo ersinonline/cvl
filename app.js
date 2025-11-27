@@ -29,6 +29,7 @@ try {
 // Global sayfa yönlendirme haritası
 const SECTION_ROUTES = {
   dashboard: 'dashboard.html',
+  'kasa-egitim': 'kasa-egitim.html',
   raporlar: 'raporlar.html',
   'pos-islemleri': 'pos-islemleri.html',
   'ozel-odemeler': 'ozel-odemeler.html',
@@ -224,6 +225,12 @@ function navigateByKeyword(query) {
   query = query.toLowerCase();
 
   const keywordMap = {
+    eğitim: "kasa-egitim",
+    egitim: "kasa-egitim",
+    öğren: "kasa-egitim",
+    ogren: "kasa-egitim",
+    "kasa eğitimi": "kasa-egitim",
+    "nasıl": "kasa-egitim",
     pos: "pos-islemleri",
     iade: "pos-islemleri",
     iptal: "pos-islemleri",

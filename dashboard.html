@@ -22,10 +22,104 @@
     <div id="headerMount"></div>
     <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
       <section id="dashboard" class="content-section fade-in block">
-        <div class="mb-8">
-          <h1 class="text-2xl font-bold text-slate-800 mb-2">Hızlı Erişim Menüsü</h1>
-          <p class="text-slate-500">Öğrenmek istediğiniz işlemi seçin.</p>
+        <!-- Welcome Banner -->
+        <div class="mb-8 bg-gradient-to-r from-civil-red to-civil-dark rounded-2xl p-6 lg:p-8 text-white shadow-xl relative overflow-hidden">
+          <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+          <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full"></div>
+          <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/5 rounded-full"></div>
+          <div class="relative z-10">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+                <i data-lucide="sparkles" class="w-7 h-7"></i>
+              </div>
+              <div>
+                <h1 class="text-2xl lg:text-3xl font-bold">Hoş Geldiniz!</h1>
+                <p class="text-white/90 text-sm lg:text-base">Civil Kasa Yönetim Sistemi</p>
+              </div>
+            </div>
+            <p class="text-white/80 text-sm lg:text-base mt-4 max-w-2xl">
+              Kasa işlemlerinizi kolayca öğrenin ve yönetin. Aşağıdaki menüden öğrenmek istediğiniz konuyu seçin veya yeni eğitim modülümüze göz atın.
+            </p>
+          </div>
         </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                <i data-lucide="book-open" class="w-5 h-5 text-blue-600"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Toplam Konu</p>
+                <p class="text-xl font-bold text-slate-800">12</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Aktif Modül</p>
+                <p class="text-xl font-bold text-slate-800">8</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                <i data-lucide="users" class="w-5 h-5 text-purple-600"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Kullanıcı</p>
+                <p class="text-xl font-bold text-slate-800">150+</p>
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
+                <i data-lucide="star" class="w-5 h-5 text-amber-600"></i>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500">Güncel</p>
+                <p class="text-xl font-bold text-slate-800">v2.5</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Training Highlight -->
+        <a href="kasa-egitim.html" class="block mb-8 group">
+          <div class="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border-2 border-amber-200 hover:border-civil-red transition-all duration-300 shadow-md hover:shadow-xl">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <div class="w-14 h-14 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+                  <i data-lucide="graduation-cap" class="w-8 h-8 text-white"></i>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2 mb-1">
+                    <h3 class="text-xl font-bold text-slate-800">Kasa Eğitim Modülü</h3>
+                    <span class="bg-gradient-to-r from-civil-red to-civil-dark text-white text-xs px-2 py-1 rounded-full font-semibold">YENİ</span>
+                  </div>
+                  <p class="text-slate-600 text-sm">İnteraktif ve kolay öğrenilebilir kasa eğitimi - Adım adım rehberle öğrenin!</p>
+                </div>
+              </div>
+              <i data-lucide="arrow-right" class="w-6 h-6 text-civil-red group-hover:translate-x-2 transition-transform hidden lg:block"></i>
+            </div>
+          </div>
+        </a>
+
+        <div class="mb-6">
+          <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+            <i data-lucide="grid-3x3" class="w-5 h-5 text-civil-red"></i>
+            Hızlı Erişim Menüsü
+          </h2>
+          <p class="text-slate-500 text-sm">İşlem kategorilerinden birine dokunarak başlayın</p>
+        </div>
+
         <div class="grid quick-access-grid gap-4 mb-8">
           <a href="raporlar.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
             <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3 group-hover:bg-indigo-200 transition-colors">
