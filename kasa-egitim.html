@@ -12,8 +12,248 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
   <style>
-    .module-content { display: none; }
-    .module-content.active { display: block; }
+    /* Module animations */
+    .module-content {
+      display: none;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    .module-content.active {
+      display: block;
+    }
+
+    /* Smooth animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-20px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes checkmark {
+      0% { transform: scale(0) rotate(45deg); }
+      50% { transform: scale(1.2) rotate(45deg); }
+      100% { transform: scale(1) rotate(45deg); }
+    }
+
+    /* Training category hover effects */
+    .training-category {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .training-category:not(.opacity-60):hover {
+      transform: translateY(-2px);
+    }
+
+    /* Button animations */
+    .complete-btn {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .complete-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.3);
+    }
+
+    .complete-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .complete-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .complete-btn:hover:not(:disabled)::before {
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Progress bar animation */
+    .progress-fill {
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Icon animations */
+    [data-lucide] {
+      transition: all 0.3s ease;
+    }
+
+    .training-category:hover [data-lucide] {
+      transform: scale(1.1);
+    }
+
+    /* Locked module subtle pulse */
+    .opacity-60 {
+      animation: subtlePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes subtlePulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 0.7; }
+    }
+
+    /* Success animation for completed modules */
+    .module-completed {
+      animation: successFlash 0.6s ease-in-out;
+    }
+
+    @keyframes successFlash {
+      0%, 100% { background-color: transparent; }
+      50% { background-color: rgba(34, 197, 94, 0.1); }
+    }
+
+    /* Quick stats animation on load */
+    .bg-white {
+      animation: slideIn 0.5s ease-out backwards;
+    }
+
+    .bg-white:nth-child(1) { animation-delay: 0.1s; }
+    .bg-white:nth-child(2) { animation-delay: 0.2s; }
+    .bg-white:nth-child(3) { animation-delay: 0.3s; }
+    .bg-white:nth-child(4) { animation-delay: 0.4s; }
+
+    /* Tooltip styles */
+    [data-tooltip] {
+      position: relative;
+      cursor: help;
+    }
+
+    [data-tooltip]:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 0.5rem 1rem;
+      background: rgba(0, 0, 0, 0.9);
+      color: white;
+      font-size: 0.75rem;
+      white-space: nowrap;
+      border-radius: 0.5rem;
+      margin-bottom: 0.5rem;
+      z-index: 100;
+      animation: fadeIn 0.2s ease-in-out;
+    }
+
+    /* Smooth scrolling for content area */
+    #contentArea {
+      scroll-behavior: smooth;
+    }
+
+    /* Enhanced focus states for accessibility */
+    button:focus-visible,
+    .training-category:focus-visible {
+      outline: 3px solid #3b82f6;
+      outline-offset: 2px;
+    }
+
+    /* Loading shimmer effect for future use */
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    /* Notification animations */
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(20px); }
+    }
+
+    /* Module unlock animation */
+    @keyframes unlockPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .unlocking {
+      animation: unlockPulse 0.5s ease-in-out;
+    }
+
+    /* Quick stats hover effects */
+    .bg-white.rounded-lg,
+    .bg-white.rounded-xl {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .bg-white.rounded-lg:hover,
+    .bg-white.rounded-xl:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Enhanced progress bar */
+    .progress-bar {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    /* Improved training hero */
+    .training-hero {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .training-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+      animation: float 8s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0); }
+      50% { transform: translate(-20px, 20px); }
+    }
+
+    /* Certificate animation */
+    #completionCertificate:not(.hidden) {
+      animation: slideIn 0.6s ease-out, pulse 1s ease-in-out 0.6s;
+    }
+
+    /* Accessibility: Reduce motion for users who prefer it */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body class="text-slate-800 h-screen flex overflow-hidden">
@@ -496,7 +736,6 @@
                     <span class="bg-slate-100 px-2 py-1 rounded">4. Onay Al</span>
                   </div>
                 </div>
-                </div>
 
                 <button onclick="completeModule(7)" class="complete-btn w-full bg-amber-500 hover:bg-amber-600 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 text-sm lg:text-base">
                   <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
@@ -505,6 +744,7 @@
               </div>
             </div>
           </div>
+        </div>
 
 
         <!-- MODÜL 8: YEM EK KARTLARI (SETCARD, EDENRED) -->
@@ -573,8 +813,8 @@
               </div>
             </div>
 
-            <button onclick="completeModule(4)" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
-              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+            <button onclick="completeModule(8)" class="complete-btn w-full bg-teal-600 hover:bg-teal-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20 text-sm lg:text-base">
+              <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
               Modülü Tamamla
             </button>
           </div>
@@ -828,41 +1068,85 @@
         completedModules.push(moduleNum);
         localStorage.setItem('completedModules', JSON.stringify(completedModules));
 
-        // Show success message
         const module = document.querySelector(`[data-module="${moduleNum}"]`);
         const button = module.querySelector('.complete-btn');
-        button.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i> Tamamlandı ✓';
-        button.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'bg-purple-600', 'hover:bg-purple-700', 'bg-civil-red', 'hover:bg-red-700', 'bg-amber-500', 'hover:bg-amber-600', 'bg-cyan-600', 'hover:bg-cyan-700', 'bg-green-600', 'hover:bg-green-700');
-        button.classList.add('bg-green-600', 'hover:bg-green-700');
-        button.disabled = true;
 
-        // Unlock next module
+        // Add success animation to module
+        module.classList.add('module-completed');
+        setTimeout(() => module.classList.remove('module-completed'), 600);
+
+        // Animate button change
+        button.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          button.innerHTML = '<i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i> Tamamlandı ✓';
+          button.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'bg-indigo-600', 'hover:bg-indigo-700', 'bg-purple-600', 'hover:bg-purple-700', 'bg-pink-600', 'hover:bg-pink-700', 'bg-orange-600', 'hover:bg-orange-700', 'bg-civil-red', 'hover:bg-red-700', 'bg-amber-500', 'hover:bg-amber-600', 'bg-teal-600', 'hover:bg-teal-700', 'bg-cyan-600', 'hover:bg-cyan-700', 'bg-slate-600', 'hover:bg-slate-700');
+          button.classList.add('bg-green-600', 'hover:bg-green-700');
+          button.disabled = true;
+          button.style.transform = 'scale(1)';
+
+          if (window.lucide) lucide.createIcons();
+
+          // Show success notification
+          showSuccessNotification(`Modül ${moduleNum} tamamlandı! 🎉`);
+        }, 150);
+
+        // Unlock next module with animation
         if (moduleNum < 11) {
-          unlockModule(moduleNum + 1);
+          setTimeout(() => unlockModule(moduleNum + 1), 300);
         }
 
         updateProgress();
 
         // Check if all modules completed
         if (completedModules.length === 11) {
-          document.getElementById('completionCertificate').classList.remove('hidden');
           setTimeout(() => {
+            document.getElementById('completionCertificate').classList.remove('hidden');
             document.getElementById('completionCertificate').scrollIntoView({ behavior: 'smooth' });
-          }, 300);
+            showSuccessNotification('Tebrikler! Tüm eğitimi tamamladınız! 🎊🎉', 5000);
+          }, 500);
         }
-
-        if (window.lucide) lucide.createIcons();
       }
+    }
+
+    // Success notification function
+    function showSuccessNotification(message, duration = 3000) {
+      const notification = document.createElement('div');
+      notification.innerHTML = `
+        <div class="flex items-center gap-3 bg-green-600 text-white px-6 py-4 rounded-xl shadow-2xl">
+          <i data-lucide="check-circle" class="w-6 h-6"></i>
+          <span class="font-semibold">${message}</span>
+        </div>
+      `;
+      notification.style.cssText = 'position: fixed; top: 20px; right: 20px; z-index: 9999; animation: slideIn 0.5s ease-out;';
+
+      document.body.appendChild(notification);
+      if (window.lucide) lucide.createIcons();
+
+      setTimeout(() => {
+        notification.style.animation = 'fadeOut 0.5s ease-out';
+        setTimeout(() => notification.remove(), 500);
+      }, duration);
     }
 
     function unlockModule(moduleNum) {
       const module = document.querySelector(`[data-module="${moduleNum}"]`);
       if (module) {
+        // Add unlock animation
+        module.classList.add('unlocking');
+        setTimeout(() => module.classList.remove('unlocking'), 500);
+
+        // Remove opacity and change badge
         module.classList.remove('opacity-60');
         const badge = module.querySelector('.lock-badge');
         if (badge) {
-          badge.outerHTML = '<span class="status-badge bg-green-100 text-green-700 text-[10px] lg:text-xs px-2 py-0.5 rounded-full font-semibold whitespace-nowrap">Hazır</span>';
+          badge.outerHTML = '<span class="status-badge bg-green-100 text-green-700 text-[10px] lg:text-xs px-2 py-0.5 rounded-full font-semibold whitespace-nowrap flex items-center gap-1"><i data-lucide="unlock" class="w-3 h-3"></i> Hazır</span>';
         }
+
+        // Scroll to unlocked module
+        setTimeout(() => {
+          module.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 200);
+
         if (window.lucide) lucide.createIcons();
       }
     }
@@ -896,8 +1180,26 @@
       const total = 11;
       const percentage = (completed / total) * 100;
 
-      document.getElementById('progressFill').style.width = `${percentage}%`;
-      document.getElementById('progressText').textContent = `${completed}/${total} Modül`;
+      const progressFill = document.getElementById('progressFill');
+      const progressText = document.getElementById('progressText');
+
+      progressFill.style.width = `${percentage}%`;
+      progressText.textContent = `${completed}/${total} Modül`;
+
+      // Add pulse animation on progress update
+      progressFill.style.animation = 'pulse 0.5s ease-in-out';
+      setTimeout(() => {
+        progressFill.style.animation = '';
+      }, 500);
+
+      // Update progress bar color based on completion
+      if (percentage === 100) {
+        progressFill.style.background = 'linear-gradient(90deg, #10b981, #059669)';
+      } else if (percentage >= 75) {
+        progressFill.style.background = 'linear-gradient(90deg, #3b82f6, #2563eb)';
+      } else if (percentage >= 50) {
+        progressFill.style.background = 'linear-gradient(90deg, #8b5cf6, #7c3aed)';
+      }
     }
   </script>
 </body>
