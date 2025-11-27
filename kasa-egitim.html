@@ -605,55 +605,19 @@
             <div class="module-content border-t border-slate-100" id="content-9">
               <div class="p-4 lg:p-6 space-y-4 lg:space-y-6 bg-slate-50/50">
 
-                <!-- Nakit Yatırma -->
-                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
-                  <div class="absolute top-0 right-0 bg-red-100 text-red-600 text-[8px] lg:text-[10px] font-bold px-1.5 lg:px-2 py-0.5 lg:py-1 rounded-bl">KRİTİK</div>
-                  <h4 class="font-bold text-slate-800 mb-2 text-sm lg:text-base pr-16">Nakit Yatırma</h4>
-                  <p class="text-xs lg:text-sm text-red-600 font-medium mb-2">⚠️ Kasa fiş tipi kesinlikle "Tediye" seçilmeli, "Tahsil" seçilmemelidir.</p>
-                  <ol class="list-decimal list-inside text-xs lg:text-sm text-slate-600 space-y-1">
-                    <li>"Kasa Hareketleri" ekranını açın.</li>
-                    <li>Cari Hesap Kodu için "Muhtelif" seçin.</li>
-                    <li>Maliyet Merkezi'nde mağaza kodunuzu doğrulayın.</li>
-                    <li><strong>Alacak</strong> kısmına nakit yekününü yazıp kaydedin.</li>
-                    <li>Kontrol: Mağaza Hareket Özeti'nde 'Nakit Kasa Yekünü' 0 olmalıdır.</li>
-                  </ol>
-                </div>
-
-                <!-- İşlem Kayması Düzeltme -->
-                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
-                  <h4 class="font-bold text-slate-800 mb-2 text-sm lg:text-base">İşlem Kayması Düzeltme</h4>
-                  <p class="text-[10px] lg:text-xs text-slate-500 mb-2">Yalnızca karşılığı olan işlemler düzeltilmelidir.</p>
-                  <ul class="text-xs lg:text-sm text-slate-600 space-y-1.5 lg:space-y-2">
-                    <li>1. "Alınan Ödemeler Listesi"nden hatalı işlemi bulun.</li>
-                    <li>2. "Fatura Referans Numarası"nı kopyalayın.</li>
-                    <li>3. Düzeltme ekranına gidin, fiş numarasını yazın.</li>
-                    <li>4. Doğru bankayı seçin veya Nakit'e çevirin ve kaydedin.</li>
-                  </ul>
-                </div>
-
-                 <!-- Masraf Girişi -->
-                 <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
-                  <h4 class="font-bold text-slate-800 mb-2 text-sm lg:text-base">Mağaza Masraf Girişi</h4>
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4 text-xs lg:text-sm">
-                    <div>
-                      <span class="block font-semibold text-slate-700 mb-1">Tedarikçi Seçimi:</span>
-                      <ul class="list-disc list-inside text-slate-600 text-[10px] lg:text-xs space-y-0.5">
-                        <li>Kasa Fazlası (Sistemde iade kutusunu tikleyin)</li>
-                        <li>Kasa Açığı</li>
-                        <li>Mağaza Fiyat Hatası</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <span class="block font-semibold text-slate-700 mb-1">İşlem Adımları:</span>
-                      <ul class="list-decimal list-inside text-slate-600 text-[10px] lg:text-xs space-y-0.5">
-                        <li>Madde kodu seçimi yapın.</li>
-                        <li>Eksik/Fazla tutarı 'Fiyat VD' kısmına yazın.</li>
-                        <li>Seri No: Tarihi tersten yazın (YYYY/AA/GG).</li>
-                        <li>Masraf beyanını onaylayın.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+            <!-- Nakit Yatırma -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm relative overflow-hidden">
+              <div class="absolute top-0 right-0 bg-red-100 text-red-600 text-[10px] font-bold px-2 py-1 rounded-bl">KRİTİK</div>
+              <h4 class="font-bold text-slate-800 mb-2">Nakit Yatırma</h4>
+              <p class="text-sm text-red-600 font-medium mb-2">⚠️ Nakit çıkışı için fiş tipi kesinlikle "Tediye" seçilmeli, "Tahsil" seçilmemelidir.</p>
+              <ol class="list-decimal list-inside text-sm text-slate-600 space-y-1">
+                <li>"Kasa Hareketleri" ekranını açın.</li>
+                <li>Cari Hesap Kodu için "Muhtelif" seçin.</li>
+                <li>Maliyet Merkezi'nde mağaza kodunuzu doğrulayın.</li>
+                <li><strong>Alacak</strong> kısmına nakit yekününü yazıp kaydedin.</li>
+                <li>Kontrol: Mağaza Hareket Özeti'nde 'Nakit Kasa Yekünü' 0 olmalıdır.</li>
+              </ol>
+            </div>
 
                 <button onclick="completeModule(9)" class="complete-btn w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-cyan-600/20 text-sm lg:text-base">
                   <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
@@ -689,26 +653,41 @@
             <div class="module-content border-t border-slate-100" id="content-10">
               <div class="p-4 lg:p-6 space-y-4 lg:space-y-6 bg-slate-50/50">
 
-                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
-                  <h4 class="font-bold text-slate-800 mb-2 text-sm lg:text-base">İşlem Kayması Düzeltme</h4>
-                  <p class="text-[10px] lg:text-xs text-slate-500 mb-2">Yalnızca karşılığı olan işlemler düzeltilmelidir.</p>
-                  <ol class="text-xs lg:text-sm text-slate-600 list-decimal list-inside space-y-1">
-                    <li>"Alınan Ödemeler Listesi"nden hatalı işlemi bulun</li>
-                    <li>"Fatura Referans Numarası"nı kopyalayın</li>
-                    <li>Düzeltme ekranına gidin</li>
-                    <li>Doğru bankayı seçin veya Nakit'e çevirin</li>
-                  </ol>
-                </div>
+            <!-- İşlem Kayması Düzeltme -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <h4 class="font-bold text-slate-800 mb-2">İşlem Kayması Düzeltme</h4>
+              <p class="text-xs text-slate-500 mb-2">Yalnızca karşılığı olan işlemler düzeltilmelidir.</p>
+              <ul class="text-sm text-slate-600 space-y-2">
+                <li>1. "Alınan Ödemeler Listesi"nden hatalı işlemi bulun.</li>
+                <li>2. "Fatura Referans Numarası"nı kopyalayın.</li>
+                <li>3. Düzeltme ekranına gidin, fiş numarasını yazın.</li>
+                <li>4. Doğru bankayı seçin veya Nakit'e çevirin ve kaydedin.</li>
+              </ul>
+            </div>
 
-                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
-                  <h4 class="font-bold text-slate-800 mb-2 text-sm lg:text-base">Mağaza Masraf Girişi</h4>
-                  <p class="text-xs lg:text-sm text-slate-600 mb-2">Kasa fazlası, kasa açığı veya fiyat hatası girişleri:</p>
-                  <ul class="text-[10px] lg:text-xs text-slate-600 list-disc list-inside space-y-1">
-                    <li>Madde kodu seçimi yapın</li>
-                    <li>Tutarı 'Fiyat VD' kısmına yazın</li>
-                    <li>Seri No: Tarihi tersten yazın (YYYY/AA/GG)</li>
+             <!-- Masraf Girişi -->
+             <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+              <h4 class="font-bold text-slate-800 mb-2">Mağaza Masraf Girişi</h4>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                <div>
+                  <span class="block font-semibold text-slate-700">Tedarikçi Seçimi:</span>
+                  <ul class="list-disc list-inside text-slate-600 text-xs mt-1">
+                    <li>Kasa Fazlası (Sistemde iade kutusunu tikleyin)</li>
+                    <li>Kasa Açığı</li>
+                    <li>Mağaza Fiyat Hatası</li>
                   </ul>
                 </div>
+                <div>
+                  <span class="block font-semibold text-slate-700">İşlem Adımları:</span>
+                  <ul class="list-decimal list-inside text-slate-600 text-xs mt-1">
+                    <li>Madde kodu seçimi yapın.</li>
+                    <li>Eksik/Fazla tutarı 'Fiyat VD' kısmına yazın.</li>
+                    <li>Seri No: Tarihi tersten yazın (YYYY/AA/GG).</li>
+                    <li>Masraf beyanını onaylayın.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
                 <button onclick="completeModule(10)" class="complete-btn w-full bg-slate-600 hover:bg-slate-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-slate-600/20 text-sm lg:text-base">
                   <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
