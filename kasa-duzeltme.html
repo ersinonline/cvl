@@ -1,3 +1,10 @@
+Harika, istediğin yeni adımı 4. ve 5. adımın arasına yerleştirdim. Bu sayede akış; referans numarasını aldıktan sonra hangi menüye gidileceği, ardından işlem ekranı ve sonrasında düzeltme şeklinde mantıklı bir sıraya oturdu.
+
+Diğer adımların numaralarını da buna göre güncelledim (Toplam 9 adım oldu).
+
+İşte güncellenmiş kodun tamamı:
+
+```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
@@ -78,9 +85,20 @@
               <img src="https://i.hizliresim.com/oumum0x.png" alt="Hatalı Ödeme Düzeltme görseli" class="step-image" onclick="openModal(this.src)">
             </div>
           </div>
+
           <div class="step-container search-item">
             <div class="step-header">
               <div class="step-number">5</div>
+              <h3 class="step-title">Kredi Kartı Düzeltme Yöntemi</h3>
+            </div>
+            <div class="step-content">
+              <p>Kredi kartı ile olan ödemeler, <b>'Hatalı Girilmiş Kredi Kartı Ödemeleri'</b> adımından değişiklik yapılır (tıpkı nakitteki gibi).</p>
+              <img src="https://i.hizliresim.com/c151ct7.png" alt="Kredi Kartı Düzeltme Menüsü" class="step-image" onclick="openModal(this.src)">
+            </div>
+          </div>
+          <div class="step-container search-item">
+            <div class="step-header">
+              <div class="step-number">6</div>
               <h3 class="step-title">Düzeltme Ekranı</h3>
             </div>
             <div class="step-content">
@@ -90,7 +108,7 @@
           </div>
           <div class="step-container search-item">
             <div class="step-header">
-              <div class="step-number">6</div>
+              <div class="step-number">7</div>
               <h3 class="step-title">Fiş Numarası</h3>
             </div>
             <div class="step-content">
@@ -100,7 +118,7 @@
           </div>
           <div class="step-container search-item">
             <div class="step-header">
-              <div class="step-number">7</div>
+              <div class="step-number">8</div>
               <h3 class="step-title">Bankayı Seç/Nakit'e Çevir ve Kaydet</h3>
             </div>
             <div class="step-content">
@@ -110,7 +128,7 @@
           </div>
           <div class="step-container search-item">
             <div class="step-header">
-              <div class="step-number">8</div>
+              <div class="step-number">9</div>
               <h3 class="step-title">Değişiklikleri Kaydet</h3>
             </div>
             <div class="step-content">
@@ -126,3 +144,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+```
