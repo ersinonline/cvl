@@ -312,6 +312,119 @@
       border-radius: 1rem;
       box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     }
+
+    /* Exam modal styles */
+    .exam-modal-content {
+      background: white;
+      max-width: 700px;
+      width: 95%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      margin: auto;
+    }
+
+    .question-card {
+      background: #f8fafc;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 1.25rem;
+      margin-bottom: 1.25rem;
+      transition: all 0.3s ease;
+    }
+
+    .question-card.answered {
+      border-color: #3b82f6;
+      background: #eff6ff;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 0.875rem 1rem;
+      margin-bottom: 0.625rem;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .option-btn:hover:not(.selected):not(.correct):not(.incorrect) {
+      border-color: #3b82f6;
+      background: #f0f9ff;
+      transform: translateX(4px);
+    }
+
+    .option-btn.selected {
+      border-color: #3b82f6;
+      background: #3b82f6;
+      color: white;
+      font-weight: 600;
+    }
+
+    .option-btn.correct {
+      border-color: #10b981;
+      background: #10b981;
+      color: white;
+    }
+
+    .option-btn.incorrect {
+      border-color: #ef4444;
+      background: #ef4444;
+      color: white;
+    }
+
+    .progress-indicator {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 1.25rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .progress-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #64748b;
+      transition: all 0.3s ease;
+    }
+
+    .progress-dot.answered {
+      background: #3b82f6;
+      color: white;
+    }
+
+    .progress-dot.current {
+      background: #f59e0b;
+      color: white;
+      transform: scale(1.15);
+    }
+
+    @media (max-width: 640px) {
+      .exam-modal-content {
+        padding: 1rem;
+      }
+
+      .question-card {
+        padding: 1rem;
+      }
+
+      .option-btn {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+      }
+    }
   </style>
 </head>
 <body class="text-slate-800 h-screen flex overflow-hidden">
@@ -1067,10 +1180,10 @@
             <i data-lucide="award" class="w-10 h-10 lg:w-12 lg:h-12 text-white"></i>
           </div>
           <h3 class="text-xl lg:text-2xl font-bold text-slate-800 mb-2">Tebrikler! Eğitimi Tamamladınız! 🎉</h3>
-          <p class="text-slate-600 text-sm lg:text-base mb-4 lg:mb-6">Tüm modülleri başarıyla tamamladınız. Artık kasa işlemlerini profesyonelce yönetebilirsiniz.</p>
-          <button onclick="showNameModal()" class="bg-gradient-to-r from-civil-red to-civil-dark text-white px-4 lg:px-6 py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold hover:shadow-lg transition-all inline-flex items-center gap-2 text-sm lg:text-base">
-            <i data-lucide="download" class="w-4 h-4 lg:w-5 lg:h-5"></i>
-            Sertifikayı Yazdır
+          <p class="text-slate-600 text-sm lg:text-base mb-4 lg:mb-6">Tüm modülleri başarıyla tamamladınız. Sertifikanızı almak için sınavı geçmelisiniz.</p>
+          <button onclick="showExamModal()" class="bg-gradient-to-r from-civil-red to-civil-dark text-white px-4 lg:px-6 py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold hover:shadow-lg transition-all inline-flex items-center gap-2 text-sm lg:text-base">
+            <i data-lucide="file-check" class="w-4 h-4 lg:w-5 lg:h-5"></i>
+            Sınava Başla
           </button>
         </div>
       </div>
@@ -1149,6 +1262,54 @@
     </div>
   </main>
 
+  <!-- Exam Modal -->
+  <div id="examModal" class="certificate-modal">
+    <div class="exam-modal-content">
+      <div class="mb-6 text-center">
+        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+          <i data-lucide="clipboard-check" class="w-8 h-8 text-white"></i>
+        </div>
+        <h2 class="text-2xl lg:text-3xl font-bold text-slate-800 mb-2">Kasa Eğitim Sınavı</h2>
+        <p class="text-slate-600 text-sm">10 soruyu cevaplayın. En az 8 doğru cevap gereklidir.</p>
+      </div>
+
+      <!-- Progress Indicator -->
+      <div class="progress-indicator" id="progressIndicator"></div>
+
+      <!-- Questions Container -->
+      <div id="questionsContainer"></div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-3 mt-6">
+        <button
+          onclick="closeExamModal()"
+          class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors"
+        >
+          İptal
+        </button>
+        <button
+          id="submitExamBtn"
+          onclick="submitExam()"
+          class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled
+        >
+          Sınavı Bitir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Exam Result Modal -->
+  <div id="examResultModal" class="certificate-modal">
+    <div class="certificate-content text-center">
+      <div id="resultIcon" class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg"></div>
+      <h3 id="resultTitle" class="text-2xl font-bold mb-2"></h3>
+      <p id="resultMessage" class="text-slate-600 mb-4"></p>
+      <div id="resultScore" class="text-4xl font-bold mb-6"></div>
+      <div id="resultActions" class="flex gap-3"></div>
+    </div>
+  </div>
+
   <!-- Name Input Modal -->
   <div id="nameModal" class="certificate-modal">
     <div class="certificate-content">
@@ -1180,6 +1341,63 @@
   <script src="app.js"></script>
   <script>
     let completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]');
+
+    // Exam questions
+    const examQuestions = [
+      {
+        question: "Hareket özeti alırken hangi rapor seçilmelidir?",
+        options: ["Kasa-Kasiyer Raporu 2 Yeni", "Günlük Satış Raporu", "Stok Raporu"],
+        correct: 0
+      },
+      {
+        question: "Z raporu ne için kullanılır?",
+        options: ["Gün sonu kapatışı", "Stok sayımı", "Personel devam kontrol"],
+        correct: 0
+      },
+      {
+        question: "QR ödeme alınırken anlaşmamız olmayan banka için hangi banka seçilmeli?",
+        options: ["Yapı Kredi", "QNB", "Ziraat Bankası"],
+        correct: 0
+      },
+      {
+        question: "Vade farksız 6 taksit hangi kartlarda yapılabilir?",
+        options: ["World ve Albaraka kartlarda", "Tüm kartlarda", "Sadece kredi kartlarında"],
+        correct: 0
+      },
+      {
+        question: "İptal işlemi ne zaman yapılabilir?",
+        options: ["Z raporu alınmadan önce", "Her zaman", "Sadece ertesi gün"],
+        correct: 0
+      },
+      {
+        question: "POS iade limiti aşıldığında ne yapılmalıdır?",
+        options: ["Merkez Muhasebe'ye mail atılmalı", "Mağaza artırabilir", "İade yapılmamalı"],
+        correct: 0
+      },
+      {
+        question: "Chippin ile ödeme alırken hangi seçenek kullanılır?",
+        options: ["Mobile Pay", "Kredi Kartı", "Nakit"],
+        correct: 0
+      },
+      {
+        question: "Yemek kartları günlük kontrolünde ne karşılaştırılmalıdır?",
+        options: ["Sistem tutarları ile portal tutarları", "Sadece nakit tutarlar", "Personel sayısı"],
+        correct: 0
+      },
+      {
+        question: "Nakit yatırma sırasında hangi fiş tipi seçilmemelidir?",
+        options: ["Tahsil", "Tediye", "Muhtelif"],
+        correct: 0
+      },
+      {
+        question: "Google Sheets'te dolar kuru için hangi formül kullanılır?",
+        options: ['=GOOGLEFINANCE("CURRENCY:USDTRY")', "=DOLLAR()", "=KURS()"],
+        correct: 0
+      }
+    ];
+
+    let currentAnswers = new Array(examQuestions.length).fill(null);
+    let examPassed = localStorage.getItem('examPassed') === 'true';
 
     // Initialize page
     document.addEventListener('DOMContentLoaded', () => {
@@ -1428,10 +1646,160 @@
       }, 100);
     }
 
-    // Close modal when clicking outside
+    // Exam functions
+    function showExamModal() {
+      const modal = document.getElementById('examModal');
+      currentAnswers = new Array(examQuestions.length).fill(null);
+      renderExam();
+      modal.classList.add('active');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeExamModal() {
+      const modal = document.getElementById('examModal');
+      modal.classList.remove('active');
+    }
+
+    function renderExam() {
+      const container = document.getElementById('questionsContainer');
+      const progressIndicator = document.getElementById('progressIndicator');
+
+      // Render progress dots
+      progressIndicator.innerHTML = examQuestions.map((_, i) =>
+        `<div class="progress-dot ${currentAnswers[i] !== null ? 'answered' : ''}">${i + 1}</div>`
+      ).join('');
+
+      // Render questions
+      container.innerHTML = examQuestions.map((q, i) => `
+        <div class="question-card ${currentAnswers[i] !== null ? 'answered' : ''}" id="question-${i}">
+          <h4 class="font-bold text-slate-800 mb-3 text-sm lg:text-base">
+            <span class="text-blue-600">${i + 1}.</span> ${q.question}
+          </h4>
+          <div class="space-y-2">
+            ${q.options.map((option, optionIndex) => `
+              <button
+                class="option-btn ${currentAnswers[i] === optionIndex ? 'selected' : ''}"
+                onclick="selectAnswer(${i}, ${optionIndex})"
+              >
+                ${String.fromCharCode(65 + optionIndex)}) ${option}
+              </button>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      updateSubmitButton();
+    }
+
+    function selectAnswer(questionIndex, optionIndex) {
+      currentAnswers[questionIndex] = optionIndex;
+      renderExam();
+    }
+
+    function updateSubmitButton() {
+      const submitBtn = document.getElementById('submitExamBtn');
+      const allAnswered = currentAnswers.every(a => a !== null);
+      submitBtn.disabled = !allAnswered;
+    }
+
+    function submitExam() {
+      let correctCount = 0;
+      examQuestions.forEach((q, i) => {
+        if (currentAnswers[i] === q.correct) {
+          correctCount++;
+        }
+      });
+
+      const passed = correctCount >= 8;
+      showExamResult(correctCount, passed);
+
+      if (passed) {
+        localStorage.setItem('examPassed', 'true');
+        examPassed = true;
+      }
+    }
+
+    function showExamResult(score, passed) {
+      closeExamModal();
+
+      const modal = document.getElementById('examResultModal');
+      const icon = document.getElementById('resultIcon');
+      const title = document.getElementById('resultTitle');
+      const message = document.getElementById('resultMessage');
+      const scoreDiv = document.getElementById('resultScore');
+      const actions = document.getElementById('resultActions');
+
+      if (passed) {
+        icon.className = 'w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg';
+        icon.innerHTML = '<i data-lucide="trophy" class="w-12 h-12 text-white"></i>';
+        title.textContent = 'Tebrikler! Sınavı Geçtiniz! 🎉';
+        title.className = 'text-2xl font-bold mb-2 text-green-700';
+        message.textContent = 'Başarılı bir şekilde eğitimi tamamladınız. Şimdi sertifikanızı alabilirsiniz.';
+        scoreDiv.textContent = `${score}/10`;
+        scoreDiv.className = 'text-4xl font-bold mb-6 text-green-600';
+        actions.innerHTML = `
+          <button
+            onclick="closeExamResultModal()"
+            class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Kapat
+          </button>
+          <button
+            onclick="closeExamResultModal(); showNameModal();"
+            class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+          >
+            Sertifikayı Al
+          </button>
+        `;
+      } else {
+        icon.className = 'w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg';
+        icon.innerHTML = '<i data-lucide="x-circle" class="w-12 h-12 text-white"></i>';
+        title.textContent = 'Sınav Başarısız';
+        title.className = 'text-2xl font-bold mb-2 text-red-700';
+        message.textContent = 'Başarılı olmak için en az 8 doğru cevap gerekiyor. Lütfen tekrar deneyin.';
+        scoreDiv.textContent = `${score}/10`;
+        scoreDiv.className = 'text-4xl font-bold mb-6 text-red-600';
+        actions.innerHTML = `
+          <button
+            onclick="closeExamResultModal()"
+            class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors"
+          >
+            Kapat
+          </button>
+          <button
+            onclick="closeExamResultModal(); showExamModal();"
+            class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+          >
+            Tekrar Dene
+          </button>
+        `;
+      }
+
+      modal.classList.add('active');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeExamResultModal() {
+      const modal = document.getElementById('examResultModal');
+      modal.classList.remove('active');
+    }
+
+    // Close modals when clicking outside
     document.getElementById('nameModal').addEventListener('click', function(e) {
       if (e.target === this) {
         closeNameModal();
+      }
+    });
+
+    document.getElementById('examModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeExamModal();
+      }
+    });
+
+    document.getElementById('examResultModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeExamResultModal();
       }
     });
   </script>
