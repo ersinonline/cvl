@@ -541,33 +541,46 @@
                   </p>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:gap-4">
-                  <div class="bg-white p-3 rounded-lg lg:rounded-xl border border-slate-200">
-                    <strong class="block mb-2 text-orange-600 text-sm lg:text-base">Setcard</strong>
-                    <ol class="list-decimal list-inside text-[10px] lg:text-xs space-y-1">
-                      <li>Kasada Setcard Seç</li>
-                      <li>Müşteri Bilgileri Gir</li>
-                      <li>SMS/Uygulama Onayı Al</li>
-                    </ol>
-                  </div>
-                  <div class="bg-white p-3 rounded-lg lg:rounded-xl border border-slate-200">
-                    <strong class="block mb-2 text-red-600 text-sm lg:text-base">Edenred</strong>
-                    <ol class="list-decimal list-inside text-[10px] lg:text-xs space-y-1">
-                      <li>Kasada Edenred Seç</li>
-                      <li>Satış Oluştur</li>
-                      <li>SMS Doğrulama Yap</li>
-                    </ol>
-                  </div>
-                </div>
-
-                <button onclick="completeModule(8)" class="complete-btn w-full bg-teal-600 hover:bg-teal-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20 text-sm lg:text-base">
-                  <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
-                  Modülü Tamamla
-                </button>
+            <!-- Diğer Yöntemler Grid -->
+            <div class="grid md:grid-cols-3 gap-4">
+              <!-- iWallet -->
+              <div class="bg-white p-3 rounded-xl border border-slate-200 text-sm">
+                <strong class="block mb-2 text-indigo-600">iWallet</strong>
+                <p class="text-xs text-slate-500 mb-2">İpucu: Kart No yerine 7 haneli QR kod kullanın.</p>
+                <ol class="list-decimal list-inside text-xs space-y-1">
+                  <li>Kasada iWallet Seç</li>
+                  <li>Satışı Başlat</li>
+                  <li>Kart/QR Doğrulama</li>
+                </ol>
+              </div>
+               <!-- Setcard -->
+               <div class="bg-white p-3 rounded-xl border border-slate-200 text-sm">
+                <strong class="block mb-2 text-orange-600">Setcard</strong>
+                <ol class="list-decimal list-inside text-xs space-y-1">
+                  <li>Kasada Setcard Seç</li>
+                  <li>Müşteri Bilgileri</li>
+                  <li>SMS/Uygulama Onayı</li>
+                </ol>
+              </div>
+               <!-- Edenred -->
+               <div class="bg-white p-3 rounded-xl border border-slate-200 text-sm">
+                <strong class="block mb-2 text-red-600">Edenred</strong>
+                <ol class="list-decimal list-inside text-xs space-y-1">
+                  <li>Kasada Edenred Seç</li>
+                  <li>Satış Oluştur</li>
+                  <li>SMS Doğrulama</li>
+                </ol>
               </div>
             </div>
+
+            <button onclick="completeModule(4)" class="w-full bg-amber-500 hover:bg-amber-600 text-white py-3 rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20">
+              <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+              Modülü Tamamla
+            </button>
           </div>
         </div>
+      </div>
+    </div>
         <!-- MODÜL 9: MUHASEBE VE MASRAF -->
         <div class="training-category group opacity-60" data-module="9">
           <div class="bg-white rounded-xl lg:rounded-2xl shadow-md border border-slate-200 hover:shadow-lg transition-all overflow-hidden">
