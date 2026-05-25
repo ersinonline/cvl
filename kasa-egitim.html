@@ -473,6 +473,8 @@
               <div class="progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
           </div>
+
+          <div id="trainingSmartPanel" class="mt-4 sm:mt-6"></div>
         </div>
       </div>
 
@@ -1351,6 +1353,7 @@
 
   <script src="app.js"></script>
   <script>
+    const totalModules = 11;
     let completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]');
 
     // Exam questions
@@ -1456,9 +1459,15 @@
     document.addEventListener('DOMContentLoaded', () => {
       updateProgress();
       unlockCompletedModules();
+      renderTrainingSmartPanel();
     });
 
     function toggleModule(moduleNum) {
+      if (moduleNum > 1 && !completedModules.includes(moduleNum) && !completedModules.includes(moduleNum - 1)) {
+        showSuccessNotification(`Önce ${moduleNum - 1}. modülü tamamlayın.`, 2500);
+        return;
+      }
+
       const content = document.getElementById(`content-${moduleNum}`);
       const icon = document.getElementById(`icon-${moduleNum}`);
 
@@ -1481,6 +1490,8 @@
       } else {
         content.classList.add('active');
         icon.style.transform = 'rotate(180deg)';
+        localStorage.setItem('civilLastTrainingModule', String(moduleNum));
+        renderTrainingSmartPanel();
         // Scroll to module smoothly
         setTimeout(() => {
           content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1494,6 +1505,7 @@
       if (!completedModules.includes(moduleNum)) {
         completedModules.push(moduleNum);
         localStorage.setItem('completedModules', JSON.stringify(completedModules));
+        localStorage.setItem('civilLastTrainingModule', String(Math.min(moduleNum + 1, totalModules)));
 
         const module = document.querySelector(`[data-module="${moduleNum}"]`);
         const button = module.querySelector('.complete-btn');
@@ -1523,9 +1535,10 @@
         }
 
         updateProgress();
+        renderTrainingSmartPanel();
 
         // Check if all modules completed
-        if (completedModules.length === 11) {
+        if (completedModules.length === totalModules) {
           setTimeout(() => {
             document.getElementById('completionCertificate').classList.remove('hidden');
             document.getElementById('completionCertificate').scrollIntoView({ behavior: 'smooth' });
@@ -1590,12 +1603,12 @@
             button.disabled = true;
           }
         }
-        if (moduleNum < 11) {
+        if (moduleNum < totalModules) {
           unlockModule(moduleNum + 1);
         }
       });
 
-      if (completedModules.length === 11) {
+      if (completedModules.length === totalModules) {
         document.getElementById('completionCertificate').classList.remove('hidden');
       }
 
@@ -1604,7 +1617,7 @@
 
     function updateProgress() {
       const completed = completedModules.length;
-      const total = 11;
+      const total = totalModules;
       const percentage = (completed / total) * 100;
 
       const progressFill = document.getElementById('progressFill');
@@ -1626,7 +1639,67 @@
         progressFill.style.background = 'linear-gradient(90deg, #3b82f6, #2563eb)';
       } else if (percentage >= 50) {
         progressFill.style.background = 'linear-gradient(90deg, #8b5cf6, #7c3aed)';
+      } else {
+        progressFill.style.background = 'linear-gradient(90deg, #ffffff 0%, rgba(255,255,255,0.8) 100%)';
       }
+    }
+
+    function renderTrainingSmartPanel() {
+      const panel = document.getElementById('trainingSmartPanel');
+      if (!panel) {
+        return;
+      }
+
+      const lastModule = parseInt(localStorage.getItem('civilLastTrainingModule') || '1', 10);
+      const safeModule = Math.min(Math.max(lastModule, 1), totalModules);
+      const completed = completedModules.length;
+      const nextModule = completed >= totalModules ? totalModules : safeModule;
+      const isFinished = completed >= totalModules;
+
+      panel.innerHTML = `
+        <div class="bg-white/10 backdrop-blur-sm border border-white/15 rounded-2xl p-4">
+          <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+            <div>
+              <p class="text-xs uppercase tracking-[0.24em] text-white/70 font-semibold mb-2">Akıllı Eğitim Takibi</p>
+              <h3 class="text-base lg:text-lg font-bold text-white">
+                ${isFinished ? 'Tüm modüller tamamlandı.' : `${nextModule}. modülden devam edebilirsiniz.`}
+              </h3>
+              <p class="text-sm text-white/80 mt-1">
+                ${isFinished ? 'Şimdi sınava girip sertifikanızı alabilirsiniz.' : `${completed}/${totalModules} modül tamamlandı. İlerlemeniz bu cihazda kaydediliyor.`}
+              </p>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              ${
+                isFinished
+                  ? '<button onclick="showExamModal()" class="px-4 py-2.5 rounded-xl bg-white text-civil-red font-semibold hover:bg-red-50 transition-colors">Sınava Başla</button>'
+                  : `<button onclick="focusModule(${nextModule})" class="px-4 py-2.5 rounded-xl bg-white text-civil-red font-semibold hover:bg-red-50 transition-colors">Modüle Git</button>`
+              }
+              <button onclick="resetTrainingProgress()" class="px-4 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-semibold hover:bg-white/15 transition-colors">
+                İlerlemeni Sıfırla
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function focusModule(moduleNum) {
+      toggleModule(moduleNum);
+      const module = document.querySelector(`[data-module="${moduleNum}"]`);
+      if (module) {
+        module.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function resetTrainingProgress() {
+      const confirmed = window.confirm('Eğitim ilerlemeniz, sınav sonucu ve sertifika adı sıfırlanacak. Devam etmek istiyor musunuz?');
+      if (!confirmed) {
+        return;
+      }
+
+      const keysToClear = ['completedModules', 'examPassed', 'examAttemptCount', 'certificateName', 'civilLastTrainingModule'];
+      keysToClear.forEach((key) => localStorage.removeItem(key));
+      window.location.reload();
     }
 
     // Certificate functions

@@ -1,0 +1,16 @@
+{
+  "appId": "tr.com.civil.kasaasistani",
+  "appName": "Civil Kasa Asistani",
+  "webDir": ".",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1200,
+      "backgroundColor": "#dd3612",
+      "showSpinner": false
+    }
+  }
+}

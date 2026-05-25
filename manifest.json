@@ -1,11 +1,30 @@
 {
-  "name": "Kasa Asistanım",
-  "short_name": "Kasa Asistanım",
-  "start_url": "./index.html",
+  "name": "Civil Kasa Asistanı",
+  "short_name": "Civil Kasa",
+  "description": "Civil kasacılar için eğitim, işlem rehberi, sınav ve sertifika uygulaması.",
+  "start_url": "./dashboard.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#dd3612",
   "orientation": "portrait",
+  "categories": ["business", "education", "productivity"],
+  "shortcuts": [
+    {
+      "name": "Kasa Eğitimi",
+      "short_name": "Eğitim",
+      "url": "./kasa-egitim.html"
+    },
+    {
+      "name": "POS İşlemleri",
+      "short_name": "POS",
+      "url": "./pos-islemleri.html"
+    },
+    {
+      "name": "Kasa Raporları",
+      "short_name": "Rapor",
+      "url": "./raporlar.html"
+    }
+  ],
   "icons": [
     {
       "src": "https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png",

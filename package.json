@@ -1,0 +1,20 @@
+{
+  "name": "civil-kasa-asistani",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Civil kasacılar için eğitim ve operasyon destek uygulaması",
+  "scripts": {
+    "serve": "node server.js",
+    "cap:add:android": "npx cap add android",
+    "cap:add:ios": "npx cap add ios",
+    "cap:sync": "npx cap sync",
+    "cap:open:android": "npx cap open android",
+    "cap:open:ios": "npx cap open ios"
+  },
+  "devDependencies": {
+    "@capacitor/android": "^7.2.0",
+    "@capacitor/cli": "^7.2.0",
+    "@capacitor/core": "^7.2.0",
+    "@capacitor/ios": "^7.2.0"
+  }
+}
