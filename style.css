@@ -3,6 +3,22 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
+body.native-ios-app {
+    --native-safe-top: env(safe-area-inset-top, 0px);
+    --native-safe-bottom: env(safe-area-inset-bottom, 0px);
+    padding-top: var(--native-safe-top);
+    box-sizing: border-box;
+}
+
+body.native-ios-app #sidebar {
+    padding-top: var(--native-safe-top);
+}
+
+body.native-ios-app #floatingChatButton,
+body.native-ios-app .floating-install-button {
+    bottom: calc(16px + var(--native-safe-bottom));
+}
+
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;

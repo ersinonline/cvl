@@ -149,6 +149,10 @@ function isNativeCapacitorApp() {
   return window.location.protocol === "capacitor:" || document.URL.startsWith("capacitor://");
 }
 
+function isNativeIOSApp() {
+  return isNativeCapacitorApp() && /iphone|ipad|ipod/i.test(navigator.userAgent || "");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   try {
     const currentPage = (location.pathname.split("/").pop() || "").toLowerCase();
@@ -157,6 +161,10 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
   } catch (_) {}
+
+  if (isNativeIOSApp()) {
+    document.body.classList.add("native-ios-app");
+  }
 
   ensureGlobalShell();
   loadSharedFragments();
