@@ -25,6 +25,10 @@ Kurulum adimlari:
 4. `npm run cap:sync`
 5. `npm run cap:open:android` veya `npm run cap:open:ios`
 
+Android build notu:
+- Android debug/release build icin makinede Java 11 veya uzeri JDK kurulu olmalidir.
+- Bu ortamda yalnizca Java 8 bulundugu icin Android `assembleDebug` dogrulamasi JDK nedeniyle durmustur.
+
 Magaza uygunlugu icin not:
 - Acilis ekraninda uygulamanin amacini net anlatan bir onboarding ekleyin.
 - Uygulamaya ozel bir fayda daha ekleyin:

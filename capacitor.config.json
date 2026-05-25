@@ -1,7 +1,7 @@
 {
   "appId": "tr.com.civil.kasaasistani",
   "appName": "Civil Kasa Asistani",
-  "webDir": ".",
+  "webDir": "web",
   "bundledWebRuntime": false,
   "server": {
     "androidScheme": "https"

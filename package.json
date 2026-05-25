@@ -5,9 +5,10 @@
   "description": "Civil kasacılar için eğitim ve operasyon destek uygulaması",
   "scripts": {
     "serve": "node server.js",
+    "prepare:web": "mkdir -p web && rsync -a --delete --exclude web --exclude ios --exclude android --exclude node_modules --exclude .git --exclude package-lock.json --exclude package.json --exclude capacitor.config.json ./ web/ && cp dashboard.html web/index.html",
     "cap:add:android": "npx cap add android",
     "cap:add:ios": "npx cap add ios",
-    "cap:sync": "npx cap sync",
+    "cap:sync": "npm run prepare:web && npx cap sync",
     "cap:open:android": "npx cap open android",
     "cap:open:ios": "npx cap open ios"
   },

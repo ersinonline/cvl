@@ -145,10 +145,14 @@ const STORAGE_KEYS = {
 let deferredInstallPrompt = null;
 let lastConnectivityState = navigator.onLine;
 
+function isNativeCapacitorApp() {
+  return window.location.protocol === "capacitor:" || document.URL.startsWith("capacitor://");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   try {
     const currentPage = (location.pathname.split("/").pop() || "").toLowerCase();
-    if (currentPage === "" || currentPage === "index.html") {
+    if (!isNativeCapacitorApp() && (currentPage === "" || currentPage === "index.html")) {
       window.location.href = "dashboard.html";
       return;
     }
