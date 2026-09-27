@@ -85,9 +85,29 @@
     </a>
   </nav>
 
-  <div class="sidebar-footer p-4 border-t">
-    <div class="text-xs text-center text-slate-400">v2.6 • Mall of Istanbul Ekibi</div>
-    <div class="text-[11px] text-center mt-1">
+  <div class="sidebar-footer p-3 border-t space-y-2">
+    <button
+      id="sidebarInstallButton"
+      type="button"
+      onclick="triggerInstallPrompt()"
+      class="sidebar-install-btn hidden w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors"
+      aria-label="Uygulamayı yükle"
+    >
+      <i data-lucide="download" class="w-5 h-5"></i>
+      <span>Uygulamayı Yükle</span>
+    </button>
+    <button
+      type="button"
+      onclick="openChat()"
+      class="sidebar-assistant-btn w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold transition-colors"
+    >
+      <span class="assistant-orb" aria-hidden="true">
+        <i data-lucide="sparkles" class="w-4 h-4"></i>
+      </span>
+      <span>Akıllı Asistan</span>
+    </button>
+    <div class="text-xs text-center text-slate-400 pt-1">v2.6 • Mall of Istanbul Ekibi</div>
+    <div class="text-[11px] text-center">
       <a href="https://teknotech.info" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-civil-red transition">by Teknotech</a>
     </div>
   </div>

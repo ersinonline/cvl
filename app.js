@@ -157,7 +157,7 @@ const STORAGE_KEYS = {
 };
 
 const THEME_ORDER = ["system", "light", "dark"];
-const RECENT_LIMIT = 5;
+const RECENT_LIMIT = 3;
 const PAGE_ICON_MAP = {
   dashboard: "layout-grid",
   raporlar: "bar-chart-2",
@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initTheme();
   ensureSkipLink();
+  polishFloatingAssistantButton();
   ensureGlobalShell();
   loadSharedFragments();
   initializePageState();
@@ -215,6 +216,17 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   }
 });
+
+function polishFloatingAssistantButton() {
+  const btn = document.getElementById("floatingChatButton");
+  if (!btn) {
+    return;
+  }
+  btn.classList.add("relative");
+  btn.setAttribute("aria-label", "Akıllı asistanı aç");
+  btn.title = "Akıllı Asistan";
+  btn.innerHTML = '<i data-lucide="sparkles" class="w-6 h-6"></i>';
+}
 
 function ensureGlobalShell() {
   ensureChatWidget();
@@ -412,21 +424,18 @@ function ensureCommandPalette() {
             </button>
           </div>
           <div id="commandPaletteHint" class="command-palette-hint">
-            En hızlı kullanım: "iade", "z raporu", "chippin", "nakit yatırma", "sertifika"
+            <div class="command-suggest-row" id="commandSuggestChips">
+              <button type="button" class="filter-chip" data-suggest="iade">iade</button>
+              <button type="button" class="filter-chip" data-suggest="taksit">taksit</button>
+              <button type="button" class="filter-chip" data-suggest="chippin">chippin</button>
+              <button type="button" class="filter-chip" data-suggest="nakit">nakit</button>
+              <button type="button" class="filter-chip" data-suggest="rapor">rapor</button>
+            </div>
           </div>
           <div id="commandPaletteResults" class="command-palette-results"></div>
         </div>
       </div>
       <div id="appStatusToast" class="app-status-toast hidden"></div>
-      <button
-        id="floatingInstallButton"
-        type="button"
-        onclick="triggerInstallPrompt()"
-        class="floating-install-button hidden"
-      >
-        <i data-lucide="download" class="w-4 h-4"></i>
-        Uygulamayı Yükle
-      </button>
     `
   );
 
@@ -447,7 +456,22 @@ function ensureCommandPalette() {
     });
   }
 
+  document.querySelectorAll("#commandSuggestChips [data-suggest]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const value = chip.getAttribute("data-suggest") || "";
+      if (input) {
+        input.value = value;
+        input.focus();
+      }
+      renderCommandPaletteResults(value);
+      document.querySelectorAll("#commandSuggestChips .filter-chip").forEach((el) => {
+        el.classList.toggle("is-active", el === chip);
+      });
+    });
+  });
+
   renderCommandPaletteResults("");
+  updateInstallUI();
 
   if (window.lucide) {
     lucide.createIcons();
@@ -459,6 +483,7 @@ function refreshSidebarState() {
   decorateSidebarFavorites();
   renderSidebarFavorites();
   renderSidebarRecent();
+  updateInstallUI();
 
   if (window.lucide) {
     lucide.createIcons();
@@ -641,20 +666,39 @@ function enhanceContentPages() {
 
   const filterTargets = section.querySelectorAll(".step-container, .guide-card, .search-item");
   if (filterTargets.length >= 2) {
+    const chipLabels = buildPageFilterChips(section);
     const toolbar = document.createElement("div");
-    toolbar.className = "page-toolbar";
+    toolbar.className = "page-toolbar search-panel";
     toolbar.innerHTML = `
-      <div class="page-filter-wrap">
-        <i data-lucide="filter"></i>
-        <input
-          id="pageFilterInput"
-          type="search"
-          class="page-filter-input"
-          placeholder="Bu sayfada ara (adım, kural, banka...)"
-          autocomplete="off"
-        >
+      <div class="search-panel-head">
+        <div class="page-filter-wrap">
+          <i data-lucide="search" class="page-filter-icon"></i>
+          <input
+            id="pageFilterInput"
+            type="search"
+            class="page-filter-input"
+            placeholder="Bu sayfada ara — adım, kural, banka..."
+            autocomplete="off"
+            aria-label="Sayfa içi arama"
+          >
+          <button type="button" id="pageFilterClear" class="page-filter-clear hidden" aria-label="Aramayı temizle">
+            <i data-lucide="x" class="w-4 h-4"></i>
+          </button>
+        </div>
+        <span id="pageFilterMeta" class="page-filter-meta">
+          <i data-lucide="list-filter" class="w-3.5 h-3.5"></i>
+          ${filterTargets.length} madde
+        </span>
       </div>
-      <span id="pageFilterMeta" class="page-filter-meta">${filterTargets.length} madde</span>
+      <div class="filter-chip-row" id="pageFilterChips">
+        <button type="button" class="filter-chip is-active" data-filter="">Tümü</button>
+        ${chipLabels
+          .map(
+            (label) =>
+              `<button type="button" class="filter-chip" data-filter="${escapeHtmlAttr(label)}">${escapeHtml(label)}</button>`
+          )
+          .join("")}
+      </div>
     `;
 
     const empty = document.createElement("div");
@@ -664,6 +708,7 @@ function enhanceContentPages() {
       <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-3 text-slate-400"></i>
       <p class="font-semibold mb-1">Sonuç bulunamadı</p>
       <p class="text-sm">Farklı bir anahtar kelime deneyin veya filtreyi temizleyin.</p>
+      <button type="button" class="smart-action-secondary mt-4" id="pageFilterEmptyReset">Filtreyi temizle</button>
     `;
 
     const insertBefore = section.querySelector(".grid, .space-y-6, .search-container, .card-grid") || section.firstElementChild?.nextElementSibling;
@@ -675,8 +720,57 @@ function enhanceContentPages() {
     section.appendChild(empty);
 
     const input = toolbar.querySelector("#pageFilterInput");
+    const clearBtn = toolbar.querySelector("#pageFilterClear");
+
     if (input) {
-      input.addEventListener("input", (event) => filterCurrentPage(event.target.value));
+      input.addEventListener("input", (event) => {
+        const value = event.target.value;
+        if (clearBtn) {
+          clearBtn.classList.toggle("hidden", !value.trim());
+        }
+        syncFilterChipActive(value);
+        filterCurrentPage(value);
+      });
+    }
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => {
+        if (input) {
+          input.value = "";
+          input.focus();
+        }
+        clearBtn.classList.add("hidden");
+        syncFilterChipActive("");
+        filterCurrentPage("");
+      });
+    }
+
+    toolbar.querySelectorAll("#pageFilterChips .filter-chip").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const value = chip.getAttribute("data-filter") || "";
+        if (input) {
+          input.value = value;
+          if (clearBtn) {
+            clearBtn.classList.toggle("hidden", !value);
+          }
+        }
+        syncFilterChipActive(value);
+        filterCurrentPage(value);
+      });
+    });
+
+    const emptyReset = empty.querySelector("#pageFilterEmptyReset");
+    if (emptyReset) {
+      emptyReset.addEventListener("click", () => {
+        if (input) {
+          input.value = "";
+        }
+        if (clearBtn) {
+          clearBtn.classList.add("hidden");
+        }
+        syncFilterChipActive("");
+        filterCurrentPage("");
+      });
     }
   }
 
@@ -685,6 +779,53 @@ function enhanceContentPages() {
   if (window.lucide) {
     lucide.createIcons();
   }
+}
+
+function buildPageFilterChips(section) {
+  const titles = Array.from(section.querySelectorAll(".step-title"))
+    .map((el) => (el.textContent || "").trim())
+    .filter(Boolean);
+
+  const chips = [];
+  const seen = new Set();
+
+  titles.forEach((title) => {
+    const short = title.length > 28 ? title.slice(0, 26).trim() + "…" : title;
+    const key = short.toLowerCase();
+    if (!seen.has(key)) {
+      seen.add(key);
+      chips.push(short.replace(/…$/, "") === short ? short : title.slice(0, 22).trim());
+    }
+  });
+
+  // Kısa etiket tercih et; en fazla 5 chip
+  return chips
+    .map((label) => (label.length > 22 ? label.slice(0, 20).trim() + "…" : label))
+    .slice(0, 5);
+}
+
+function syncFilterChipActive(query) {
+  const normalized = (query || "").trim().toLowerCase();
+  document.querySelectorAll("#pageFilterChips .filter-chip").forEach((chip) => {
+    const value = (chip.getAttribute("data-filter") || "").trim().toLowerCase();
+    const isAll = value === "";
+    chip.classList.toggle(
+      "is-active",
+      isAll ? !normalized : normalized === value || (!!normalized && value.includes(normalized))
+    );
+  });
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function escapeHtmlAttr(value) {
+  return escapeHtml(value).replace(/'/g, "&#39;");
 }
 
 function filterCurrentPage(query) {
@@ -707,7 +848,12 @@ function filterCurrentPage(query) {
 
   const meta = document.getElementById("pageFilterMeta");
   if (meta) {
-    meta.textContent = normalized ? `${visible} / ${items.length} madde` : `${items.length} madde`;
+    meta.innerHTML = normalized
+      ? `<i data-lucide="list-filter" class="w-3.5 h-3.5"></i> ${visible} / ${items.length}`
+      : `<i data-lucide="list-filter" class="w-3.5 h-3.5"></i> ${items.length} madde`;
+    if (window.lucide) {
+      lucide.createIcons();
+    }
   }
 
   const empty = document.getElementById("pageFilterEmpty");
@@ -791,6 +937,18 @@ function bindChatForm() {
       }
     });
   }
+
+  document.querySelectorAll("#chatSuggestChips [data-chat-suggest]").forEach((chip) => {
+    chip.addEventListener("click", () => {
+      const value = chip.getAttribute("data-chat-suggest") || "";
+      if (input) {
+        input.value = value;
+      }
+      if (form) {
+        form.dispatchEvent(new Event("submit", { cancelable: true }));
+      }
+    });
+  });
 }
 
 function highlightCurrentRoute() {
@@ -1054,9 +1212,7 @@ function renderDashboardEnhancements() {
             <div class="smart-card-kicker">Son Bakılanlar</div>
             <h3 class="smart-card-title">Geçmiş</h3>
           </div>
-          <button type="button" onclick="triggerInstallPrompt()" class="text-sm font-semibold text-civil-red hover:underline ${deferredInstallPrompt ? "" : "opacity-50"}">
-            Uygulamayı Yükle
-          </button>
+          <span class="text-xs font-semibold text-slate-400">Son 3</span>
         </div>
         <div class="flex flex-wrap gap-2">
           ${
@@ -1095,37 +1251,48 @@ function getCompletedModules() {
 function setupInstallPrompt() {
   window.addEventListener("beforeinstallprompt", (event) => {
     event.preventDefault();
+    if (isNativeCapacitorApp()) {
+      deferredInstallPrompt = null;
+      updateInstallUI();
+      return;
+    }
     deferredInstallPrompt = event;
     updateInstallUI();
-    renderDashboardEnhancements();
   });
 
   window.addEventListener("appinstalled", () => {
     deferredInstallPrompt = null;
     showToast("Uygulama cihaza eklendi.");
     updateInstallUI();
-    renderDashboardEnhancements();
   });
 }
 
 function updateInstallUI() {
+  const sidebarButton = document.getElementById("sidebarInstallButton");
   const headerButton = document.getElementById("installAppButton");
   const floatingButton = document.getElementById("floatingInstallButton");
-  const method = deferredInstallPrompt ? "remove" : "add";
+  const canShow = !!deferredInstallPrompt && !isNativeCapacitorApp();
 
-  if (headerButton) {
-    headerButton.classList[method]("hidden");
-    headerButton.classList.add("flex");
+  if (sidebarButton) {
+    sidebarButton.classList.toggle("hidden", !canShow);
+    if (canShow && window.lucide) {
+      lucide.createIcons();
+    }
   }
 
+  // Agresif / sticky install UI kapalı
+  if (headerButton) {
+    headerButton.classList.add("hidden");
+    headerButton.classList.remove("flex");
+  }
   if (floatingButton) {
-    floatingButton.classList[method]("hidden");
+    floatingButton.classList.add("hidden");
   }
 }
 
 async function triggerInstallPrompt() {
   if (!deferredInstallPrompt) {
-    showToast("Bu cihazda mağaza veya tarayıcı kurulum penceresi şu anda hazır değil.");
+    updateInstallUI();
     return;
   }
 
