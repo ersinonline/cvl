@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="theme-system">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="robots" content="noindex, nofollow">
+    <meta name="theme-color" content="#dd3612">
     <title>Civil Kasa Asistanı</title>
     <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
     <link rel="manifest" href="manifest.json">
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("civilTheme") || "system";
+          document.documentElement.classList.add("theme-" + t);
+          var dark = t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark-active", dark);
+        } catch (e) {}
+      })();
+    </script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,7 +28,8 @@
     <button 
         onclick="openChat()" 
         id="floatingChatButton"
-        class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
+        class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center"
+        aria-label="Asistanı aç">
         <i data-lucide="bot" class="w-6 h-6"></i>
     </button>
 

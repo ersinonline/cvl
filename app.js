@@ -15,7 +15,7 @@ try {
             red: "#dd3612",
             dark: "#c22f0f",
             light: "#fff1f0",
-            bg: "#f8fafc",
+            bg: "#f4f6f9",
           },
         },
         fontFamily: { sans: ["Inter", "sans-serif"] },
@@ -29,6 +29,18 @@ try {
     window.tailwind = { config: cfg };
   }
 } catch (_) {}
+
+/* Tema: flash önleme — mümkün olduğunca erken uygula */
+(function applyThemeBoot() {
+  try {
+    const stored = localStorage.getItem("civilTheme") || "system";
+    const root = document.documentElement;
+    root.classList.remove("theme-light", "theme-dark", "theme-system");
+    root.classList.add("theme-" + stored);
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    root.classList.toggle("dark-active", stored === "dark" || (stored === "system" && prefersDark));
+  } catch (_) {}
+})();
 
 const SECTION_META = [
   {
@@ -140,10 +152,32 @@ const STORAGE_KEYS = {
   lastPage: "civilLastPage",
   lastTrainingModule: "civilLastTrainingModule",
   completedModules: "completedModules",
+  theme: "civilTheme",
+  recentPages: "civilRecentPages",
+};
+
+const THEME_ORDER = ["system", "light", "dark"];
+const RECENT_LIMIT = 5;
+const PAGE_ICON_MAP = {
+  dashboard: "layout-grid",
+  raporlar: "bar-chart-2",
+  "pos-islemleri": "credit-card",
+  "ozel-odemeler": "gift",
+  "nakit-yatirma": "wallet-2",
+  "kasa-duzeltme": "alert-triangle",
+  "masraf-duzeltme": "coins",
+  "fatura-portal": "file-text",
+  taksitler: "percent",
+  sablon: "file-spreadsheet",
+  "havale-eft": "refresh-ccw",
+  chippin: "star",
+  "gorus-oneri": "message-square",
+  "kasa-egitim": "graduation-cap",
 };
 
 let deferredInstallPrompt = null;
 let lastConnectivityState = navigator.onLine;
+let commandPaletteActiveIndex = -1;
 
 function isNativeCapacitorApp() {
   return window.location.protocol === "capacitor:" || document.URL.startsWith("capacitor://");
@@ -166,9 +200,12 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("native-ios-app");
   }
 
+  initTheme();
+  ensureSkipLink();
   ensureGlobalShell();
   loadSharedFragments();
   initializePageState();
+  enhanceContentPages();
   bindGlobalEvents();
   registerServiceWorker();
   setupInstallPrompt();
@@ -183,6 +220,18 @@ function ensureGlobalShell() {
   ensureChatWidget();
   ensureImageModal();
   ensureCommandPalette();
+  ensureShortcutsPanel();
+}
+
+function ensureSkipLink() {
+  if (document.querySelector(".skip-link")) {
+    return;
+  }
+  const link = document.createElement("a");
+  link.href = "#contentArea";
+  link.className = "skip-link";
+  link.textContent = "İçeriğe atla";
+  document.body.prepend(link);
 }
 
 function loadSharedFragments() {
@@ -212,6 +261,7 @@ function loadSharedFragments() {
 function initializePageState() {
   highlightCurrentRoute();
   rememberCurrentPage();
+  pushRecentPage();
   renderDashboardEnhancements();
 
   const hash = window.location.hash.replace("#", "");
@@ -244,14 +294,58 @@ function bindGlobalEvents() {
       return;
     }
 
+    const isSlash =
+      event.key === "/" &&
+      !event.ctrlKey &&
+      !event.metaKey &&
+      !event.altKey &&
+      !isTypingInField(event.target);
+    if (isSlash) {
+      event.preventDefault();
+      openCommandPalette();
+      return;
+    }
+
+    const isHelp =
+      (event.key === "?" || (event.shiftKey && event.key === "/")) &&
+      !isTypingInField(event.target);
+    if (isHelp) {
+      event.preventDefault();
+      toggleShortcutsHelp(true);
+      return;
+    }
+
     if (event.key === "Escape") {
       closeCommandPalette();
+      closeShortcutsHelp();
       closeModal();
+      return;
+    }
+
+    const paletteOpen = !document.getElementById("commandPalette")?.classList.contains("hidden");
+    if (paletteOpen && (event.key === "ArrowDown" || event.key === "ArrowUp" || event.key === "Enter")) {
+      handleCommandPaletteKeys(event);
     }
   });
 
   window.addEventListener("online", () => updateConnectivityState(false));
   window.addEventListener("offline", () => updateConnectivityState(false));
+
+  try {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+      if (getThemePreference() === "system") {
+        applyTheme("system");
+      }
+    });
+  } catch (_) {}
+}
+
+function isTypingInField(target) {
+  if (!target) {
+    return false;
+  }
+  const tag = (target.tagName || "").toLowerCase();
+  return tag === "input" || tag === "textarea" || target.isContentEditable;
 }
 
 function ensureChatWidget() {
@@ -364,6 +458,7 @@ function refreshSidebarState() {
   highlightCurrentRoute();
   decorateSidebarFavorites();
   renderSidebarFavorites();
+  renderSidebarRecent();
 
   if (window.lucide) {
     lucide.createIcons();
@@ -372,9 +467,309 @@ function refreshSidebarState() {
 
 function refreshHeaderState() {
   updateInstallUI();
+  syncThemeToggleButtons();
+  updateConnectivityPill();
 
   if (window.lucide) {
     lucide.createIcons();
+  }
+}
+
+/* ——— Tema ——— */
+function getThemePreference() {
+  try {
+    const value = localStorage.getItem(STORAGE_KEYS.theme) || "system";
+    return THEME_ORDER.includes(value) ? value : "system";
+  } catch (_) {
+    return "system";
+  }
+}
+
+function initTheme() {
+  applyTheme(getThemePreference());
+}
+
+function applyTheme(theme) {
+  const next = THEME_ORDER.includes(theme) ? theme : "system";
+  const root = document.documentElement;
+  root.classList.remove("theme-light", "theme-dark", "theme-system");
+  root.classList.add("theme-" + next);
+
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const isDark = next === "dark" || (next === "system" && prefersDark);
+  root.classList.toggle("dark-active", isDark);
+
+  try {
+    localStorage.setItem(STORAGE_KEYS.theme, next);
+  } catch (_) {}
+
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) {
+    metaTheme.setAttribute("content", isDark ? "#0b1220" : "#dd3612");
+  }
+
+  syncThemeToggleButtons();
+}
+
+function cycleTheme() {
+  const current = getThemePreference();
+  const index = THEME_ORDER.indexOf(current);
+  const next = THEME_ORDER[(index + 1) % THEME_ORDER.length];
+  applyTheme(next);
+  const labels = { system: "Sistem teması", light: "Açık tema", dark: "Koyu tema" };
+  showToast(labels[next] + " uygulandı.", "success", 1600);
+}
+
+function syncThemeToggleButtons() {
+  const theme = getThemePreference();
+  const icon = theme === "dark" ? "sun" : theme === "light" ? "moon" : "monitor";
+  const label =
+    theme === "dark"
+      ? "Tema: koyu (tıkla: sistem)"
+      : theme === "light"
+        ? "Tema: açık (tıkla: koyu)"
+        : "Tema: sistem (tıkla: açık)";
+
+  document.querySelectorAll(".theme-toggle-btn").forEach((btn) => {
+    btn.dataset.theme = theme;
+    btn.title = label;
+    btn.setAttribute("aria-label", label);
+    btn.innerHTML = `<i data-lucide="${icon}" class="w-5 h-5"></i>`;
+  });
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+/* ——— Son bakılanlar ——— */
+function getRecentPages() {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEYS.recentPages) || "[]");
+    return Array.isArray(raw) ? raw : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function setRecentPages(ids) {
+  localStorage.setItem(STORAGE_KEYS.recentPages, JSON.stringify(ids.slice(0, RECENT_LIMIT)));
+}
+
+function pushRecentPage() {
+  const meta = getCurrentSectionMeta();
+  if (!meta || meta.id === "dashboard") {
+    return;
+  }
+
+  const next = [meta.id, ...getRecentPages().filter((id) => id !== meta.id)].slice(0, RECENT_LIMIT);
+  setRecentPages(next);
+}
+
+function renderSidebarRecent() {
+  const wrapper = document.getElementById("sidebarRecentSection");
+  const list = document.getElementById("sidebarRecentList");
+  if (!wrapper || !list) {
+    return;
+  }
+
+  const recent = getRecentPages()
+    .map((id) => SECTION_META.find((item) => item.id === id))
+    .filter(Boolean);
+
+  if (!recent.length) {
+    wrapper.classList.add("hidden");
+    list.innerHTML = "";
+    return;
+  }
+
+  wrapper.classList.remove("hidden");
+  list.innerHTML = recent
+    .map(
+      (item) => `
+        <a href="${item.url}" class="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-slate-600 hover:bg-civil-light hover:text-civil-red transition-colors">
+          <i data-lucide="history" class="w-4 h-4 text-slate-400"></i>
+          <span class="truncate">${item.title}</span>
+        </a>
+      `
+    )
+    .join("");
+}
+
+/* ——— Sayfa araç çubuğu / filtre ——— */
+function enhanceContentPages() {
+  const section = document.querySelector(".content-section:not(#dashboard)");
+  if (!section || section.dataset.enhanced === "1") {
+    return;
+  }
+
+  const meta = getCurrentSectionMeta();
+  const heading = section.querySelector(":scope > h2");
+  if (heading && meta) {
+    const iconName = PAGE_ICON_MAP[meta.id] || "book-open";
+    const hero = document.createElement("div");
+    hero.className = "page-hero";
+    hero.innerHTML = `
+      <div>
+        <h2 class="page-hero-title">
+          <span class="page-hero-icon"><i data-lucide="${iconName}" class="w-5 h-5"></i></span>
+          ${meta.title}
+        </h2>
+        <p class="page-hero-sub">${meta.description}</p>
+      </div>
+      <button type="button" class="smart-action-secondary favorite-page-btn" data-section="${meta.id}">
+        <i data-lucide="star" class="w-4 h-4 ${isFavorite(meta.id) ? "fill-current text-amber-500" : ""}"></i>
+        ${isFavorite(meta.id) ? "Favoride" : "Favorile"}
+      </button>
+    `;
+    heading.replaceWith(hero);
+
+    const favBtn = hero.querySelector(".favorite-page-btn");
+    if (favBtn) {
+      favBtn.addEventListener("click", () => {
+        toggleFavorite(meta.id);
+        favBtn.innerHTML = `
+          <i data-lucide="star" class="w-4 h-4 ${isFavorite(meta.id) ? "fill-current text-amber-500" : ""}"></i>
+          ${isFavorite(meta.id) ? "Favoride" : "Favorile"}
+        `;
+        if (window.lucide) {
+          lucide.createIcons();
+        }
+      });
+    }
+  }
+
+  const filterTargets = section.querySelectorAll(".step-container, .guide-card, .search-item");
+  if (filterTargets.length >= 2) {
+    const toolbar = document.createElement("div");
+    toolbar.className = "page-toolbar";
+    toolbar.innerHTML = `
+      <div class="page-filter-wrap">
+        <i data-lucide="filter"></i>
+        <input
+          id="pageFilterInput"
+          type="search"
+          class="page-filter-input"
+          placeholder="Bu sayfada ara (adım, kural, banka...)"
+          autocomplete="off"
+        >
+      </div>
+      <span id="pageFilterMeta" class="page-filter-meta">${filterTargets.length} madde</span>
+    `;
+
+    const empty = document.createElement("div");
+    empty.id = "pageFilterEmpty";
+    empty.className = "page-empty-state";
+    empty.innerHTML = `
+      <i data-lucide="search-x" class="w-8 h-8 mx-auto mb-3 text-slate-400"></i>
+      <p class="font-semibold mb-1">Sonuç bulunamadı</p>
+      <p class="text-sm">Farklı bir anahtar kelime deneyin veya filtreyi temizleyin.</p>
+    `;
+
+    const insertBefore = section.querySelector(".grid, .space-y-6, .search-container, .card-grid") || section.firstElementChild?.nextElementSibling;
+    if (insertBefore) {
+      section.insertBefore(toolbar, insertBefore);
+    } else {
+      section.appendChild(toolbar);
+    }
+    section.appendChild(empty);
+
+    const input = toolbar.querySelector("#pageFilterInput");
+    if (input) {
+      input.addEventListener("input", (event) => filterCurrentPage(event.target.value));
+    }
+  }
+
+  section.dataset.enhanced = "1";
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+function filterCurrentPage(query) {
+  const section = document.querySelector(".content-section:not(#dashboard)");
+  if (!section) {
+    return;
+  }
+
+  const normalized = query.trim().toLowerCase();
+  const items = section.querySelectorAll(".step-container, .guide-card.search-item, .search-item");
+  let visible = 0;
+
+  items.forEach((item) => {
+    const match = !normalized || item.innerText.toLowerCase().includes(normalized);
+    item.classList.toggle("hidden", !match);
+    if (match) {
+      visible += 1;
+    }
+  });
+
+  const meta = document.getElementById("pageFilterMeta");
+  if (meta) {
+    meta.textContent = normalized ? `${visible} / ${items.length} madde` : `${items.length} madde`;
+  }
+
+  const empty = document.getElementById("pageFilterEmpty");
+  if (empty) {
+    empty.classList.toggle("visible", visible === 0);
+  }
+}
+
+/* ——— Kısayol paneli ——— */
+function ensureShortcutsPanel() {
+  if (document.getElementById("shortcutsPanel")) {
+    return;
+  }
+
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `
+      <div id="shortcutsPanel" class="shortcuts-panel hidden" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle">
+        <div class="shortcuts-card">
+          <div class="flex items-center justify-between mb-2">
+            <h3 id="shortcutsTitle">Klavye Kısayolları</h3>
+            <button type="button" class="header-icon-btn" onclick="closeShortcutsHelp()" aria-label="Kapat">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+          <div class="shortcut-row"><span>Hızlı arama</span><span class="kbd-chip">Ctrl K</span></div>
+          <div class="shortcut-row"><span>Hızlı arama (alternatif)</span><span class="kbd-chip">/</span></div>
+          <div class="shortcut-row"><span>Bu paneli aç</span><span class="kbd-chip">?</span></div>
+          <div class="shortcut-row"><span>Kapat</span><span class="kbd-chip">Esc</span></div>
+          <div class="shortcut-row"><span>Tema değiştir</span><span class="text-sm">Header’daki güneş/ay</span></div>
+          <p class="text-xs text-slate-500 mt-4">Favoriler sol menüdeki yıldız ile eklenir; son bakılanlar otomatik kaydedilir.</p>
+        </div>
+      </div>
+    `
+  );
+
+  const panel = document.getElementById("shortcutsPanel");
+  if (panel) {
+    panel.addEventListener("click", (event) => {
+      if (event.target === panel) {
+        closeShortcutsHelp();
+      }
+    });
+  }
+}
+
+function toggleShortcutsHelp(forceOpen) {
+  const panel = document.getElementById("shortcutsPanel");
+  if (!panel) {
+    return;
+  }
+  const shouldOpen = forceOpen === true || panel.classList.contains("hidden");
+  panel.classList.toggle("hidden", !shouldOpen);
+  if (shouldOpen && window.lucide) {
+    lucide.createIcons();
+  }
+}
+
+function closeShortcutsHelp() {
+  const panel = document.getElementById("shortcutsPanel");
+  if (panel) {
+    panel.classList.add("hidden");
   }
 }
 
@@ -403,10 +798,10 @@ function highlightCurrentRoute() {
   document.querySelectorAll("#sidebar .nav-item").forEach((link) => {
     const href = (link.getAttribute("href") || "").toLowerCase();
     if (href && current && href.endsWith(current)) {
-      link.classList.add("bg-civil-light", "text-civil-red");
+      link.classList.add("bg-civil-light", "text-civil-red", "is-active");
       link.classList.remove("text-slate-600");
     } else {
-      link.classList.remove("bg-civil-light", "text-civil-red");
+      link.classList.remove("bg-civil-light", "text-civil-red", "is-active");
       link.classList.add("text-slate-600");
     }
   });
@@ -447,7 +842,8 @@ function isFavorite(sectionId) {
 
 function toggleFavorite(sectionId) {
   const favorites = getFavorites();
-  const nextFavorites = favorites.includes(sectionId)
+  const wasFavorite = favorites.includes(sectionId);
+  const nextFavorites = wasFavorite
     ? favorites.filter((item) => item !== sectionId)
     : [...favorites, sectionId];
 
@@ -455,6 +851,7 @@ function toggleFavorite(sectionId) {
   decorateSidebarFavorites();
   renderSidebarFavorites();
   renderDashboardEnhancements();
+  showToast(wasFavorite ? "Favorilerden çıkarıldı." : "Favorilere eklendi.", "success", 1400);
 }
 
 function decorateSidebarFavorites() {
@@ -548,6 +945,9 @@ function renderDashboardEnhancements() {
   const favorites = getFavorites()
     .map((id) => SECTION_META.find((item) => item.id === id))
     .filter(Boolean);
+  const recent = getRecentPages()
+    .map((id) => SECTION_META.find((item) => item.id === id))
+    .filter(Boolean);
 
   const continueLabel =
     lastTrainingModule > 0 && completedModules.length < 11
@@ -563,6 +963,13 @@ function renderDashboardEnhancements() {
         ? lastPage.url
         : "kasa-egitim.html";
 
+  const quickActions = [
+    { title: "POS İade", url: "pos-islemleri.html", icon: "undo-2" },
+    { title: "Taksitler", url: "taksitler.html", icon: "percent" },
+    { title: "Havale/EFT", url: "havale-eft.html", icon: "refresh-ccw" },
+    { title: "Raporlar", url: "raporlar.html", icon: "bar-chart-2" },
+  ];
+
   smartZone.innerHTML = `
     <div class="grid lg:grid-cols-3 gap-4">
       <div class="smart-card lg:col-span-2">
@@ -571,10 +978,10 @@ function renderDashboardEnhancements() {
             <div class="smart-card-kicker">Akıllı Başlangıç</div>
             <h3 class="smart-card-title">Kaldığın yerden devam et</h3>
             <p class="smart-card-text">
-              ${continueLabel}. Eğitim ilerlemen ve favori sayfaların bu cihazda saklanır.
+              ${continueLabel}. Eğitim ilerlemen, favoriler ve son bakılanlar bu cihazda saklanır.
             </p>
           </div>
-          <div class="smart-card-icon bg-civil-light text-civil-red">
+          <div class="smart-card-icon">
             <i data-lucide="rocket" class="w-5 h-5"></i>
           </div>
         </div>
@@ -583,54 +990,90 @@ function renderDashboardEnhancements() {
           <button type="button" onclick="openCommandPalette()" class="smart-action-secondary">
             Hızlı Arama Aç
           </button>
+          <button type="button" onclick="cycleTheme()" class="smart-action-secondary">
+            Tema Değiştir
+          </button>
         </div>
       </div>
       <div class="smart-card">
         <div class="flex items-start justify-between gap-4">
           <div>
-            <div class="smart-card-kicker">Mobil Hazırlık</div>
-            <h3 class="smart-card-title">Uygulama gibi kullan</h3>
-            <p class="smart-card-text">
-              Çevrimdışı destek, ana ekrana ekleme ve hızlı erişim hazır.
-            </p>
+            <div class="smart-card-kicker">Hızlı Aksiyonlar</div>
+            <h3 class="smart-card-title">Sık ihtiyaç duyulanlar</h3>
+            <p class="smart-card-text">Mağazada en çok açılan işlemlere tek dokunuş.</p>
           </div>
-          <div class="smart-card-icon bg-blue-50 text-blue-600">
-            <i data-lucide="smartphone" class="w-5 h-5"></i>
+          <div class="smart-card-icon">
+            <i data-lucide="zap" class="w-5 h-5"></i>
           </div>
         </div>
-        <div class="mt-4 flex flex-wrap gap-3">
-          <button type="button" onclick="triggerInstallPrompt()" class="smart-action-primary ${deferredInstallPrompt ? "" : "smart-action-disabled"}">
-            Yükle
-          </button>
-          <a href="kasa-egitim.html" class="smart-action-secondary">Eğitimi Aç</a>
+        <div class="mt-4 flex flex-wrap gap-2">
+          ${quickActions
+            .map(
+              (item) => `
+                <a href="${item.url}" class="favorite-pill">
+                  <i data-lucide="${item.icon}" class="w-4 h-4 text-civil-red"></i>
+                  ${item.title}
+                </a>
+              `
+            )
+            .join("")}
         </div>
       </div>
     </div>
-    <div class="smart-card">
-      <div class="flex items-center justify-between gap-3 mb-4">
-        <div>
-          <div class="smart-card-kicker">Favori Kısayollar</div>
-          <h3 class="smart-card-title">En sık kullanılan sayfalar</h3>
+    <div class="grid lg:grid-cols-2 gap-4">
+      <div class="smart-card">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <div class="smart-card-kicker">Favoriler</div>
+            <h3 class="smart-card-title">Kısayolların</h3>
+          </div>
+          <button type="button" onclick="openCommandPalette()" class="text-sm font-semibold text-civil-red hover:underline">
+            Favori ekle
+          </button>
         </div>
-        <button type="button" onclick="openCommandPalette()" class="text-sm font-semibold text-civil-red hover:underline">
-          Favori ekle
-        </button>
+        <div class="flex flex-wrap gap-3">
+          ${
+            favorites.length
+              ? favorites
+                  .map(
+                    (item) => `
+                      <a href="${item.url}" class="favorite-pill">
+                        <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-current"></i>
+                        ${item.title}
+                      </a>
+                    `
+                  )
+                  .join("")
+              : '<div class="text-sm text-slate-500">Henüz favori yok. Sol menüde yıldız ikonuna veya sayfa başındaki Favorile butonuna dokunun.</div>'
+          }
+        </div>
       </div>
-      <div class="flex flex-wrap gap-3">
-        ${
-          favorites.length
-            ? favorites
-                .map(
-                  (item) => `
-                    <a href="${item.url}" class="favorite-pill">
-                      <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-current"></i>
-                      ${item.title}
-                    </a>
-                  `
-                )
-                .join("")
-            : '<div class="text-sm text-slate-500">Henüz favori seçilmedi. Sol menüde yıldız ikonuna dokunarak hızlı kısayol oluşturabilirsiniz.</div>'
-        }
+      <div class="smart-card">
+        <div class="flex items-center justify-between gap-3 mb-4">
+          <div>
+            <div class="smart-card-kicker">Son Bakılanlar</div>
+            <h3 class="smart-card-title">Geçmiş</h3>
+          </div>
+          <button type="button" onclick="triggerInstallPrompt()" class="text-sm font-semibold text-civil-red hover:underline ${deferredInstallPrompt ? "" : "opacity-50"}">
+            Uygulamayı Yükle
+          </button>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          ${
+            recent.length
+              ? recent
+                  .map(
+                    (item) => `
+                      <a href="${item.url}" class="recent-chip">
+                        <i data-lucide="history" class="w-3.5 h-3.5 text-slate-400"></i>
+                        ${item.title}
+                      </a>
+                    `
+                  )
+                  .join("")
+              : '<div class="text-sm text-slate-500">Henüz geçmiş yok. Birkaç sayfa gezdikçe burada görünecek.</div>'
+          }
+        </div>
       </div>
     </div>
   `;
@@ -696,16 +1139,38 @@ function updateConnectivityState(isInitial = false) {
   if (navigator.onLine) {
     if (isInitial) {
       lastConnectivityState = true;
+      updateConnectivityPill();
       return;
     }
     if (lastConnectivityState === true) {
+      updateConnectivityPill();
       return;
     }
     lastConnectivityState = true;
+    updateConnectivityPill();
     showToast("Çevrimiçi moddasın. Son içerikler hazır.", "success", 1800);
   } else {
     lastConnectivityState = false;
+    updateConnectivityPill();
     showToast("Bağlantı kesildi. Önbelleğe alınan eğitim içerikleri kullanılacak.", "warning", 3200);
+  }
+}
+
+function updateConnectivityPill() {
+  const pill = document.getElementById("connectivityPill");
+  if (!pill) {
+    return;
+  }
+
+  const online = navigator.onLine;
+  pill.classList.toggle("is-online", online);
+  pill.classList.toggle("is-offline", !online);
+  pill.innerHTML = online
+    ? `<i data-lucide="wifi" class="w-3.5 h-3.5"></i> Çevrimiçi`
+    : `<i data-lucide="wifi-off" class="w-3.5 h-3.5"></i> Çevrimdışı`;
+
+  if (window.lucide) {
+    lucide.createIcons();
   }
 }
 
@@ -732,8 +1197,10 @@ function openCommandPalette(initialValue = "") {
     return;
   }
 
+  closeShortcutsHelp();
   overlay.classList.remove("hidden");
   input.value = initialValue;
+  commandPaletteActiveIndex = 0;
   renderCommandPaletteResults(initialValue);
   setTimeout(() => input.focus(), 30);
 }
@@ -742,6 +1209,50 @@ function closeCommandPalette() {
   const overlay = document.getElementById("commandPalette");
   if (overlay) {
     overlay.classList.add("hidden");
+  }
+  commandPaletteActiveIndex = -1;
+}
+
+function getCommandResultItems() {
+  return Array.from(document.querySelectorAll("#commandPaletteResults .command-result-item"));
+}
+
+function syncCommandPaletteActive() {
+  const items = getCommandResultItems();
+  items.forEach((item, index) => {
+    item.classList.toggle("is-active", index === commandPaletteActiveIndex);
+  });
+}
+
+function handleCommandPaletteKeys(event) {
+  const items = getCommandResultItems();
+  if (!items.length) {
+    return;
+  }
+
+  if (event.key === "ArrowDown") {
+    event.preventDefault();
+    commandPaletteActiveIndex = (commandPaletteActiveIndex + 1) % items.length;
+    syncCommandPaletteActive();
+    items[commandPaletteActiveIndex].scrollIntoView({ block: "nearest" });
+    return;
+  }
+
+  if (event.key === "ArrowUp") {
+    event.preventDefault();
+    commandPaletteActiveIndex = (commandPaletteActiveIndex - 1 + items.length) % items.length;
+    syncCommandPaletteActive();
+    items[commandPaletteActiveIndex].scrollIntoView({ block: "nearest" });
+    return;
+  }
+
+  if (event.key === "Enter") {
+    event.preventDefault();
+    const active = items[Math.max(0, commandPaletteActiveIndex)] || items[0];
+    const sectionId = active?.dataset?.sectionId;
+    if (sectionId) {
+      navigateToRoute(sectionId);
+    }
   }
 }
 
@@ -752,11 +1263,14 @@ function renderCommandPaletteResults(query) {
   }
 
   const normalized = query.trim().toLowerCase();
+  const favorites = getFavorites();
+  const recent = getRecentPages();
+
   const ranked = SECTION_META.map((item) => {
     const haystack = [item.title, item.description, ...(item.keywords || [])]
       .join(" ")
       .toLowerCase();
-    const matchScore =
+    let matchScore =
       !normalized
         ? 1
         : haystack.includes(normalized)
@@ -764,6 +1278,15 @@ function renderCommandPaletteResults(query) {
           : item.keywords.some((keyword) => normalized.includes(keyword) || keyword.includes(normalized))
             ? 2
             : 0;
+
+    if (matchScore > 0) {
+      if (favorites.includes(item.id)) {
+        matchScore += 0.4;
+      }
+      if (recent.includes(item.id)) {
+        matchScore += 0.2;
+      }
+    }
 
     return { item, matchScore };
   })
@@ -774,11 +1297,12 @@ function renderCommandPaletteResults(query) {
     ? ranked
         .slice(0, 8)
         .map(
-          ({ item }) => `
+          ({ item }, index) => `
             <div
-              class="command-result-item"
+              class="command-result-item ${index === 0 ? "is-active" : ""}"
               role="button"
               tabindex="0"
+              data-section-id="${item.id}"
               onclick="navigateToRoute('${item.id}')"
               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();navigateToRoute('${item.id}');}"
             >
@@ -790,6 +1314,7 @@ function renderCommandPaletteResults(query) {
                 <button
                   type="button"
                   class="command-favorite-btn"
+                  aria-label="Favori"
                   onclick="event.stopPropagation(); toggleFavorite('${item.id}'); renderCommandPaletteResults(document.getElementById('commandPaletteInput').value);"
                 >
                   <i data-lucide="star" class="w-4 h-4 ${isFavorite(item.id) ? "fill-current text-amber-500" : "text-slate-300"}"></i>
@@ -801,6 +1326,8 @@ function renderCommandPaletteResults(query) {
         )
         .join("")
     : `<div class="command-empty-state">Bu arama için bir sonuç bulunamadı. "iade", "taksit", "portal" gibi daha kısa bir ifade deneyin.</div>`;
+
+  commandPaletteActiveIndex = ranked.length ? 0 : -1;
 
   if (window.lucide) {
     lucide.createIcons();
