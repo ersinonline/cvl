@@ -1556,6 +1556,211 @@ html.theme-system.dark-active .training-promo p {
   }
 }
 
+/* Teknokapsül anlık reklam — kapatılabilir, içeriği kilitlemez */
+.teknokapsul-promo {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.teknokapsul-promo.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.teknokapsul-promo-card {
+  position: relative;
+  width: min(420px, 100%);
+  background: var(--civil-surface);
+  color: var(--civil-text);
+  border: 1px solid var(--civil-border);
+  border-radius: var(--civil-radius-lg);
+  box-shadow: var(--civil-shadow-lg);
+  padding: 22px 22px 18px;
+  transform: translateY(10px) scale(0.98);
+  transition: transform 0.22s ease;
+}
+
+.teknokapsul-promo.is-open .teknokapsul-promo-card {
+  transform: translateY(0) scale(1);
+}
+
+.teknokapsul-promo-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid var(--civil-border);
+  background: var(--civil-surface-2);
+  color: var(--civil-text-muted);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.teknokapsul-promo-close:hover {
+  color: var(--civil-text);
+  border-color: var(--civil-border-strong);
+}
+
+.teknokapsul-promo-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-right: 36px;
+}
+
+.teknokapsul-promo-mark {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: linear-gradient(145deg, #0f766e 0%, #115e59 55%, #134e4a 100%);
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.28);
+  flex-shrink: 0;
+}
+
+.teknokapsul-promo-kicker {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--civil-text-soft);
+  margin: 0 0 2px;
+}
+
+.teknokapsul-promo-title {
+  margin: 0;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--civil-text);
+}
+
+.teknokapsul-promo-lead {
+  margin: 0 0 14px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--civil-text-muted);
+}
+
+.teknokapsul-promo-lead strong {
+  color: var(--civil-text);
+  font-weight: 750;
+}
+
+.teknokapsul-promo-coupon {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  border: 1px dashed rgba(15, 118, 110, 0.45);
+  background: rgba(15, 118, 110, 0.08);
+}
+
+html.theme-dark .teknokapsul-promo-coupon,
+html.theme-system.dark-active .teknokapsul-promo-coupon {
+  background: rgba(45, 212, 191, 0.1);
+  border-color: rgba(45, 212, 191, 0.35);
+}
+
+.teknokapsul-promo-coupon-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0f766e;
+}
+
+html.theme-dark .teknokapsul-promo-coupon-label,
+html.theme-system.dark-active .teknokapsul-promo-coupon-label {
+  color: #5eead4;
+}
+
+.teknokapsul-promo-coupon-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--civil-text);
+}
+
+.teknokapsul-promo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.teknokapsul-promo-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 12px;
+  background: #0f766e;
+  color: #fff !important;
+  font-weight: 700;
+  font-size: 0.92rem;
+  border: none;
+  box-shadow: 0 8px 18px rgba(15, 118, 110, 0.25);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.teknokapsul-promo-cta:hover {
+  background: #0d9488;
+  transform: translateY(-1px);
+}
+
+.teknokapsul-promo-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid var(--civil-border);
+  background: var(--civil-surface-2);
+  color: var(--civil-text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.teknokapsul-promo-dismiss:hover {
+  color: var(--civil-text);
+  border-color: var(--civil-border-strong);
+}
+
+.teknokapsul-promo-note {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--civil-text-soft);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

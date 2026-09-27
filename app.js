@@ -168,7 +168,12 @@ const STORAGE_KEYS = {
   completedModules: "completedModules",
   theme: "civilTheme",
   recentPages: "civilRecentPages",
+  teknokapsulDismissedAt: "civilTeknokapsulDismissedAt",
+  teknokapsulSessionShown: "civilTeknokapsulSessionShown",
 };
+
+const TEKNOKAPSUL_STORE_URL = "https://www.hepsiburada.com/magaza/teknokapsul";
+const TEKNOKAPSUL_COOLDOWN_MS = 24 * 60 * 60 * 1000;
 
 const THEME_ORDER = ["system", "light", "dark"];
 const RECENT_LIMIT = 3;
@@ -228,11 +233,156 @@ document.addEventListener("DOMContentLoaded", () => {
   registerServiceWorker();
   setupInstallPrompt();
   updateConnectivityState(true);
+  scheduleTeknokapsulPromo();
 
   if (window.lucide) {
     lucide.createIcons();
   }
 });
+
+function isDashboardPage() {
+  try {
+    const page = (location.pathname.split("/").pop() || "").toLowerCase();
+    return page === "dashboard.html" || page === "" || !!document.getElementById("dashboard");
+  } catch (_) {
+    return !!document.getElementById("dashboard");
+  }
+}
+
+function shouldShowTeknokapsulPromo() {
+  if (!isDashboardPage()) {
+    return false;
+  }
+  try {
+    if (sessionStorage.getItem(STORAGE.teknokapsulSessionShown) === "1") {
+      return false;
+    }
+    const dismissedAt = parseInt(localStorage.getItem(STORAGE.teknokapsulDismissedAt) || "0", 10);
+    if (dismissedAt && Date.now() - dismissedAt < TEKNOKAPSUL_COOLDOWN_MS) {
+      return false;
+    }
+  } catch (_) {
+    // storage kapalıysa yine de bir kez göster
+  }
+  return true;
+}
+
+function markTeknokapsulPromoSeen() {
+  try {
+    sessionStorage.setItem(STORAGE.teknokapsulSessionShown, "1");
+    localStorage.setItem(STORAGE.teknokapsulDismissedAt, String(Date.now()));
+  } catch (_) {}
+}
+
+function closeTeknokapsulPromo() {
+  const overlay = document.getElementById("teknokapsulPromo");
+  if (!overlay) {
+    return;
+  }
+  overlay.classList.remove("is-open");
+  markTeknokapsulPromoSeen();
+  window.setTimeout(() => overlay.remove(), 220);
+}
+
+function ensureTeknokapsulPromo() {
+  let overlay = document.getElementById("teknokapsulPromo");
+  if (overlay) {
+    return overlay;
+  }
+
+  overlay = document.createElement("div");
+  overlay.id = "teknokapsulPromo";
+  overlay.className = "teknokapsul-promo";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-labelledby", "teknokapsulPromoTitle");
+  overlay.innerHTML = `
+    <div class="teknokapsul-promo-card" role="document">
+      <button type="button" class="teknokapsul-promo-close" aria-label="Reklamı kapat" data-teknokapsul-close>
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div class="teknokapsul-promo-brand">
+        <span class="teknokapsul-promo-mark" aria-hidden="true">TK</span>
+        <div>
+          <p class="teknokapsul-promo-kicker">Sponsor · Teknokapsül</p>
+          <h2 id="teknokapsulPromoTitle" class="teknokapsul-promo-title">Teknokapsül</h2>
+        </div>
+      </div>
+      <p class="teknokapsul-promo-lead">
+        Takip edenlere özel: <strong>1000 TL</strong> alışverişe <strong>125 TL indirim kuponu</strong>.
+      </p>
+      <div class="teknokapsul-promo-coupon" aria-hidden="true">
+        <span class="teknokapsul-promo-coupon-label">Kupon</span>
+        <span class="teknokapsul-promo-coupon-value">1000 TL → 125 TL indirim</span>
+      </div>
+      <div class="teknokapsul-promo-actions">
+        <a
+          class="teknokapsul-promo-cta"
+          href="${TEKNOKAPSUL_STORE_URL}"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-teknokapsul-cta
+        >
+          Mağazaya git
+        </a>
+        <button type="button" class="teknokapsul-promo-dismiss" data-teknokapsul-close>Şimdi değil</button>
+      </div>
+      <p class="teknokapsul-promo-note">Hepsiburada mağaza sayfası yeni sekmede açılır. Bu duyuru oturumda bir kez gösterilir.</p>
+    </div>
+  `;
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      closeTeknokapsulPromo();
+    }
+  });
+
+  overlay.querySelectorAll("[data-teknokapsul-close]").forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+      closeTeknokapsulPromo();
+    });
+  });
+
+  const cta = overlay.querySelector("[data-teknokapsul-cta]");
+  if (cta) {
+    cta.addEventListener("click", () => {
+      markTeknokapsulPromoSeen();
+      window.setTimeout(() => {
+        const el = document.getElementById("teknokapsulPromo");
+        if (el) {
+          el.classList.remove("is-open");
+          el.remove();
+        }
+      }, 120);
+    });
+  }
+
+  document.body.appendChild(overlay);
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+  return overlay;
+}
+
+function scheduleTeknokapsulPromo() {
+  if (!shouldShowTeknokapsulPromo()) {
+    return;
+  }
+
+  window.setTimeout(() => {
+    if (!shouldShowTeknokapsulPromo()) {
+      return;
+    }
+    const overlay = ensureTeknokapsulPromo();
+    requestAnimationFrame(() => overlay.classList.add("is-open"));
+    try {
+      sessionStorage.setItem(STORAGE.teknokapsulSessionShown, "1");
+    } catch (_) {}
+  }, 700);
+}
+
+window.closeTeknokapsulPromo = closeTeknokapsulPromo;
 
 function ensureGlobalShell() {
   ensureChatWidget();
