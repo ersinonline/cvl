@@ -1,13 +1,11 @@
-<div id="chatWidget" class="chat-widget-shell fixed bottom-4 right-4 w-[22rem] max-w-[92vw] transform translate-y-[120%] transition-transform z-40 flex flex-col">
+<div id="chatWidget" class="chat-widget-shell fixed bottom-4 right-4 w-80 max-w-[92vw] transform translate-y-[120%] transition-transform z-40 flex flex-col">
   <div class="chat-widget-panel">
     <div class="chat-widget-head" onclick="closeChat()">
-      <div class="flex items-center gap-3 min-w-0">
-        <span class="assistant-orb assistant-orb-lg" aria-hidden="true">
-          <i data-lucide="sparkles" class="w-4 h-4"></i>
-        </span>
+      <div class="flex items-center gap-2 min-w-0">
+        <i data-lucide="bot" class="w-4 h-4 flex-shrink-0"></i>
         <div class="min-w-0">
-          <div class="font-bold text-sm tracking-tight">Akıllı Asistan</div>
-          <div class="text-[11px] text-white/80 truncate">Anahtar kelimeyle sayfa bul — örn. iade, taksit</div>
+          <div class="font-semibold text-sm">Asistan</div>
+          <div class="text-[11px] text-white/80 truncate">Anahtar kelime ile sayfa bul</div>
         </div>
       </div>
       <button type="button" class="chat-widget-close" aria-label="Asistanı kapat" onclick="event.stopPropagation(); closeChat()">
@@ -16,19 +14,13 @@
     </div>
     <div class="chat-widget-body">
       <div id="chatMessages" class="chat-messages hidden"></div>
-      <div class="chat-suggest-row" id="chatSuggestChips">
-        <button type="button" class="filter-chip" data-chat-suggest="iade">iade</button>
-        <button type="button" class="filter-chip" data-chat-suggest="taksit">taksit</button>
-        <button type="button" class="filter-chip" data-chat-suggest="pos">pos</button>
-        <button type="button" class="filter-chip" data-chat-suggest="eğitim">eğitim</button>
-      </div>
       <form id="chatForm" class="chat-form">
         <div class="chat-input-row">
           <i data-lucide="search" class="chat-input-icon"></i>
           <input
             id="llmInput"
             type="text"
-            placeholder="Ne arıyorsun? (iade, z raporu...)"
+            placeholder="örn. iade, taksit, rapor..."
             class="chat-input"
             autocomplete="off"
             aria-label="Asistan araması"

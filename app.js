@@ -202,7 +202,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initTheme();
   ensureSkipLink();
-  polishFloatingAssistantButton();
   ensureGlobalShell();
   loadSharedFragments();
   initializePageState();
@@ -216,17 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
     lucide.createIcons();
   }
 });
-
-function polishFloatingAssistantButton() {
-  const btn = document.getElementById("floatingChatButton");
-  if (!btn) {
-    return;
-  }
-  btn.classList.add("relative");
-  btn.setAttribute("aria-label", "Akıllı asistanı aç");
-  btn.title = "Akıllı Asistan";
-  btn.innerHTML = '<i data-lucide="sparkles" class="w-6 h-6"></i>';
-}
 
 function ensureGlobalShell() {
   ensureChatWidget();
@@ -938,17 +926,6 @@ function bindChatForm() {
     });
   }
 
-  document.querySelectorAll("#chatSuggestChips [data-chat-suggest]").forEach((chip) => {
-    chip.addEventListener("click", () => {
-      const value = chip.getAttribute("data-chat-suggest") || "";
-      if (input) {
-        input.value = value;
-      }
-      if (form) {
-        form.dispatchEvent(new Event("submit", { cancelable: true }));
-      }
-    });
-  });
 }
 
 function highlightCurrentRoute() {
