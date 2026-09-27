@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="theme-system">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#dd3612">
   <title>Kasa Eğitimi • Civil Kasa Asistanı</title>
   <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
   <link rel="manifest" href="manifest.json">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("civilTheme") || "system";
+        document.documentElement.classList.add("theme-" + t);
+        var dark = t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark-active", dark);
+      } catch (e) {}
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
   <style>
@@ -389,6 +400,120 @@
       color: white;
     }
 
+    .training-filtered-out { display: none !important; }
+    .training-tools-grid {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 1024px) {
+      .training-tools-grid { grid-template-columns: 1.1fr 1fr 0.9fr; }
+    }
+    .training-tool-card {
+      background: var(--civil-surface, #fff);
+      border: 1px solid var(--civil-border, #e2e8f0);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--civil-shadow-sm, 0 1px 2px rgba(15,23,42,.04));
+      color: var(--civil-text, #0f172a);
+    }
+    .training-tool-kicker {
+      font-size: 0.7rem;
+      font-weight: 750;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--civil-red, #dd3612);
+      margin-bottom: 6px;
+    }
+    .training-tool-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--civil-text, #0f172a);
+    }
+    .training-tool-text {
+      font-size: .9rem;
+      color: var(--civil-text-muted, #64748b);
+      line-height: 1.5;
+    }
+    .training-practice-steps {
+      margin: 10px 0 0;
+      padding-left: 1.1rem;
+      color: var(--civil-text-muted, #64748b);
+      font-size: .88rem;
+      line-height: 1.55;
+    }
+    .training-practice-steps li + li { margin-top: 4px; }
+    .training-scenario-grid {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    .training-scenario-card {
+      text-align: left;
+      border: 1px solid var(--civil-border, #e2e8f0);
+      background: var(--civil-surface, #fff);
+      border-radius: 14px;
+      padding: 14px;
+      cursor: pointer;
+      transition: border-color .2s ease, transform .2s ease;
+      color: var(--civil-text, #0f172a);
+    }
+    .training-scenario-card:hover {
+      border-color: rgba(221,54,18,.35);
+      transform: translateY(-1px);
+    }
+    .training-scenario-card h4 { font-weight: 750; margin: 0 0 6px; }
+    .training-scenario-card p {
+      font-size: .85rem;
+      color: var(--civil-text-muted, #64748b);
+      margin: 0 0 10px;
+      line-height: 1.45;
+    }
+    .training-scenario-cta {
+      font-size: .78rem;
+      font-weight: 700;
+      color: var(--civil-red, #dd3612);
+    }
+    .training-badge-strip { display: flex; flex-wrap: wrap; gap: 8px; }
+    .training-module-badge {
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--civil-border, #e2e8f0);
+      background: var(--civil-surface-2, #f8fafc);
+      color: var(--civil-text-muted, #64748b);
+    }
+    .training-module-badge.is-done {
+      color: #059669;
+      border-color: rgba(16,185,129,.35);
+      background: rgba(16,185,129,.12);
+    }
+    .exam-feedback {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: .85rem;
+      line-height: 1.45;
+      display: none;
+    }
+    .exam-feedback.visible { display: block; }
+    .exam-feedback.is-correct {
+      background: rgba(16,185,129,.12);
+      border: 1px solid rgba(16,185,129,.3);
+      color: #047857;
+    }
+    .exam-feedback.is-wrong {
+      background: rgba(239,68,68,.1);
+      border: 1px solid rgba(239,68,68,.28);
+      color: #b91c1c;
+    }
+    html.theme-dark .exam-feedback.is-correct,
+    html.theme-system.dark-active .exam-feedback.is-correct { color: #6ee7b7; }
+    html.theme-dark .exam-feedback.is-wrong,
+    html.theme-system.dark-active .exam-feedback.is-wrong { color: #fca5a5; }
+
     .progress-indicator {
       display: flex;
       gap: 6px;
@@ -525,6 +650,9 @@
           </div>
         </div>
       </div>
+
+      <!-- Öğrenme araçları: ara, bugünün pratiği, senaryolar -->
+      <div id="trainingLearningTools" class="mb-6 lg:mb-8"></div>
 
       <!-- Training Modules -->
       <div class="space-y-4 lg:space-y-6">
@@ -704,6 +832,11 @@
                   <p class="text-xs lg:text-sm text-slate-600 ml-7 lg:ml-8">Slip çıkmazsa POS menüsünden ek nüsha alınmalıdır. Bu müşteri için zorunludur.</p>
                 </div>
 
+                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
+                  <h4 class="font-bold text-slate-800 mb-2 text-sm lg:text-base">QR destekli bankalar (eğitim özeti)</h4>
+                  <div id="trainingQrSaleMount"></div>
+                </div>
+
                 <button onclick="completeModule(3)" class="complete-btn w-full bg-purple-600 hover:bg-purple-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20 text-sm lg:text-base">
                   <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
                   Modülü Tamamla
@@ -814,13 +947,8 @@
 
                 <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
                   <h4 class="font-bold text-slate-800 mb-2 lg:mb-3 text-sm lg:text-base">QR (Karekod) İptal — Banka Menüleri</h4>
-                  <p class="text-xs lg:text-sm text-slate-600 mb-3">Detaylı adımlar için <a href="pos-islemleri.html#qrBankProceduresMount" class="text-civil-red font-semibold underline">POS İşlemleri › QR İptal/İade</a> sayfasına bakın.</p>
-                  <ul class="text-xs lg:text-sm text-slate-600 space-y-2">
-                    <li><strong>Akbank:</strong> Kart İşlemleri › Karekod İptal › slipteki sıra no › müşteri Axess ile QR okutur.</li>
-                    <li><strong>QNB Finansbank:</strong> Ana menü › İptal › işyeri şifresi › işlem sıra no › karekod için <strong>0</strong> (satış da karekod olmalı).</li>
-                    <li><strong>Garanti BBVA:</strong> F › Özel İşlemler › QR Kod ile Ödeme › QR Kod ile İptal › şifre › işlem/sıra no › BonusFlaş onayı.</li>
-                    <li><strong>İş Bankası:</strong> Ayrı “iptal” satırı yok; QR Ödeme İşlemleri altında peşin/taksitli iade kullanılır.</li>
-                  </ul>
+                  <p class="text-xs lg:text-sm text-slate-600 mb-3">Canlı prosedür verisi (`qr-bank-procedures`). Tam adımlar: <a href="pos-islemleri.html#qrBankProceduresMount" class="text-civil-red font-semibold underline">POS İşlemleri › QR İptal/İade</a>.</p>
+                  <div id="trainingQrCancelMount"></div>
                 </div>
 
                 <button onclick="completeModule(5)" class="complete-btn w-full bg-orange-600 hover:bg-orange-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 text-sm lg:text-base">
@@ -886,14 +1014,8 @@
 
                 <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
                   <h4 class="font-bold text-slate-800 mb-2 lg:mb-3 text-sm lg:text-base">QR (Karekod) İade — Banka Özeti</h4>
-                  <p class="text-xs lg:text-sm text-slate-600 mb-3">İşyeri şifreleri mağaza yöneticisinde tanımlıdır. Tam menü yolları: <a href="pos-islemleri.html#qrBankProceduresMount" class="text-civil-red font-semibold underline">POS İşlemleri</a>.</p>
-                  <ul class="text-xs lg:text-sm text-slate-600 space-y-2">
-                    <li><strong>Akbank FAST referanslı:</strong> Kart İşlemleri › Karekod FAST Referanslı İade › şifre › tutar › slipteki <strong>16 haneli işlem kodu</strong>. Destek: 444 28 28.</li>
-                    <li><strong>Akbank klasik:</strong> Kart İşlemleri › Karekod İade › şifre › işlem kodu › tutar › Axess ile QR onay.</li>
-                    <li><strong>QNB Finansbank:</strong> İade İşlemleri › tutar › karekod için <strong>0</strong> › satış tutarı + tarih (GGAAYYYY). Satış da karekod olmalı.</li>
-                    <li><strong>Garanti BBVA:</strong> Özel İşlemler › QR Kod ile İade › şifre › slipteki <strong>Ref. No</strong> › BonusFlaş onayı.</li>
-                    <li><strong>İş Bankası:</strong> Menü › QR Ödeme İşlemleri › Peşin/Taksitli İade › işyeri şifresi › tutar › referans no › müşteri QR onayı.</li>
-                  </ul>
+                  <p class="text-xs lg:text-sm text-slate-600 mb-3">İşyeri şifreleri mağaza yöneticisinde tanımlıdır. Kaynak: <a href="pos-islemleri.html#qrBankProceduresMount" class="text-civil-red font-semibold underline">POS İşlemleri QR prosedürleri</a>.</p>
+                  <div id="trainingQrRefundMount"></div>
                 </div>
 
                 <button onclick="completeModule(6)" class="complete-btn w-full bg-civil-red hover:bg-red-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 text-sm lg:text-base">
@@ -1373,7 +1495,9 @@
     </div>
   </div>
 
+  <script src="qr-bank-procedures.js"></script>
   <script src="app.js"></script>
+  <script src="kasa-egitim-enhance.js"></script>
   <script>
     const totalModules = 11;
     let completedModules = JSON.parse(localStorage.getItem('completedModules') || '[]');
@@ -1383,67 +1507,92 @@
       {
         question: "Hareket özeti alırken hangi rapor seçilmelidir?",
         options: ["Kasa-Kasiyer Raporu 2 Yeni", "Günlük Satış Raporu", "Stok Raporu"],
-        correct: 0
+        correct: 0,
+        explanation: "Mağaza hareket özetinde 'Kasa-Kasiyer Raporu 2 Yeni' seçilir; ardından kasiyer bazında listeleme açılır."
       },
       {
         question: "Z raporu ne için kullanılır?",
         options: ["Gün sonu kapatışı", "Stok sayımı", "Personel devam kontrol"],
-        correct: 0
+        correct: 0,
+        explanation: "Z raporu gün sonu kapatışı içindir; iptal işlemleri genelde Z alınmadan önce yapılır."
       },
       {
         question: "QR ödeme alınırken anlaşmamız olmayan banka için hangi banka seçilmeli?",
         options: ["Yapı Kredi", "QNB", "Ziraat Bankası"],
-        correct: 0
+        correct: 0,
+        explanation: "Anlaşma yoksa öncelikli bankamız Yapı Kredi seçilerek QR devam ettirilir."
       },
       {
         question: "Vade farksız 6 taksit hangi kartlarda yapılabilir?",
         options: ["World ve Albaraka kartlarda", "Tüm kartlarda", "Sadece kredi kartlarında"],
-        correct: 0
+        correct: 0,
+        explanation: "Yapı Kredi / Vakıfbank / Albaraka World kartlarında vade farksız 6 taksit uygulanır; Business/Eko gibi istisnalar vardır."
       },
       {
         question: "İptal işlemi ne zaman yapılabilir?",
         options: ["Z raporu alınmadan önce", "Her zaman", "Sadece ertesi gün"],
-        correct: 0
+        correct: 0,
+        explanation: "Aynı gün ve gün sonu (Z) öncesi işlemler iptal; sonrası iade olarak ilerler."
       },
       {
         question: "POS iade limiti aşıldığında ne yapılmalıdır?",
         options: ["Merkez Muhasebe'ye mail atılmalı", "Mağaza artırabilir", "İade yapılmamalı"],
-        correct: 0
+        correct: 0,
+        explanation: "Limit mağaza tarafından artırılamaz; fatura/slip/barkod ile Merkez Muhasebe'ye mail atılır."
       },
       {
         question: "Akbank QR FAST referanslı iadede slipte hangi bilgi girilir?",
         options: ["16 haneli işlem kodu", "CVV kodu", "IBAN numarası"],
-        correct: 0
+        correct: 0,
+        explanation: "FAST referanslı iadede müşteri QR okutmaz; slipteki 16 haneli işlem kodu kullanılır."
       },
       {
         question: "QNB Finansbank'ta karekod iptal/iade için satışın nasıl yapılmış olması gerekir?",
         options: ["Karekod ile yapılmış olmalı", "Sadece temassız olmalı", "Sadece taksitli olmalı"],
-        correct: 0
+        correct: 0,
+        explanation: "Finansbank karekod iptal/iadesinde orijinal satışın da karekod olması gerekir; menüde 0 ile karekod seçilir."
       },
       {
         question: "Garanti BBVA QR iadede menü yolu nasıldır?",
         options: ["F > Özel İşlemler > QR Kod ile Ödeme > QR Kod ile İade", "Sadece 0 tuşu", "Yalnızca gün sonu menüsü"],
-        correct: 0
+        correct: 0,
+        explanation: "Garanti'de F › Özel İşlemler › QR Kod ile Ödeme › QR Kod ile İade; slipteki Ref. No girilir."
+      },
+      {
+        question: "İş Bankası QR işlemlerinde ayrı 'iptal' satırı yoksa ne yapılır?",
+        options: ["QR Ödeme İşlemleri altında peşin/taksitli iade kullanılır", "Sadece nakit iade yapılır", "İşlem yapılamaz"],
+        correct: 0,
+        explanation: "İş Bankası'nda QR iptal ayrı menüde değildir; peşin veya taksitli iade akışı kullanılır."
       },
       {
         question: "Chippin ile ödeme alırken hangi seçenek kullanılır?",
         options: ["Mobile Pay", "Kredi Kartı", "Nakit"],
-        correct: 0
+        correct: 0,
+        explanation: "Chippin ödemelerinde Mobile Pay seçeneği kullanılır."
       },
       {
         question: "Yemek kartları günlük kontrolünde ne karşılaştırılmalıdır?",
         options: ["Sistem tutarları ile portal tutarları", "Sadece nakit tutarlar", "Personel sayısı"],
-        correct: 0
+        correct: 0,
+        explanation: "Günlük kontrolde sistem ile portal tutarları eşleştirilir."
       },
       {
         question: "Nakit yatırma sırasında hangi fiş tipi seçilmemelidir?",
         options: ["Tahsil", "Tediye", "Muhtelif"],
-        correct: 0
+        correct: 0,
+        explanation: "Nakit yatırmada tediye fişi kullanılır; tahsil seçilmez."
       },
       {
         question: "Google Sheets'te dolar kuru için hangi formül kullanılır?",
         options: ['=GOOGLEFINANCE("CURRENCY:USDTRY")', "=DOLLAR()", "=KURS()"],
-        correct: 0
+        correct: 0,
+        explanation: "GOOGLEFINANCE formülü Google Sheets'te canlı kur çeker."
+      },
+      {
+        question: "YKB Business kartında vade farksız 6 taksit uygulanır mı?",
+        options: ["Hayır, taksit yapılmayanlar arasındadır", "Evet, tüm World kartlarda vardır", "Sadece 4 taksit vardır"],
+        correct: 0,
+        explanation: "YKB Business ve World Eko vade farksız 6 taksit listesinde değildir."
       }
     ];
 
@@ -1463,31 +1612,37 @@
     }
 
     function prepareExam() {
-      // Sınava giriş sayısını kontrol et
-      const attemptCount = parseInt(localStorage.getItem(examAttemptKey) || '0');
+      const drillMode = !!window.__trainingDrillMode;
+      const drillQuestions = window.__trainingDrillQuestions;
 
-      if (attemptCount > 0 && !examPassed) {
-        alert('Sınavı tekrar girebilmek için eğitim modüllerini yeniden tamamlamanız gerekmektedir.');
-        return false;
+      if (!drillMode) {
+        const attemptCount = parseInt(localStorage.getItem(examAttemptKey) || '0');
+        if (attemptCount > 0 && !examPassed) {
+          alert('Sınavı tekrar girebilmek için eğitim modüllerini yeniden tamamlamanız gerekmektedir.');
+          return false;
+        }
+        localStorage.setItem(examAttemptKey, (attemptCount + 1).toString());
       }
 
-      // Soruları karıştır
-      const shuffledQuestions = shuffleArray(examQuestionsBase).map(q => {
+      const source = drillMode && Array.isArray(drillQuestions) && drillQuestions.length
+        ? drillQuestions
+        : shuffleArray(examQuestionsBase).slice(0, 10);
+
+      examQuestions = shuffleArray(source).map((q) => {
         const shuffledOptions = shuffleArray(q.options);
         const newCorrectIndex = shuffledOptions.indexOf(q.options[q.correct]);
-
         return {
           question: q.question,
           options: shuffledOptions,
-          correct: newCorrectIndex
+          correct: newCorrectIndex,
+          explanation: q.explanation || ""
         };
       });
 
-      examQuestions = shuffledQuestions;
       currentAnswers = new Array(examQuestions.length).fill(null);
-
-      // Sınav girişi sayısını artır
-      localStorage.setItem(examAttemptKey, (attemptCount + 1).toString());
+      window.__trainingDrillMode = false;
+      window.__trainingDrillQuestions = null;
+      window.__examReviewMode = false;
 
       return true;
     }
@@ -1734,7 +1889,16 @@
         return;
       }
 
-      const keysToClear = ['completedModules', 'examPassed', 'examAttemptCount', 'certificateName', 'civilLastTrainingModule'];
+      const keysToClear = [
+        'completedModules',
+        'examPassed',
+        'examAttemptCount',
+        'certificateName',
+        'civilLastTrainingModule',
+        'civilTrainingWrongAnswers',
+        'civilTrainingPracticeDate',
+        'civilTrainingPracticeId'
+      ];
       keysToClear.forEach((key) => localStorage.removeItem(key));
       window.location.reload();
     }
@@ -1836,24 +2000,40 @@
         `<div class="progress-dot ${currentAnswers[i] !== null ? 'answered' : ''}">${i + 1}</div>`
       ).join('');
 
-      // Render questions
-      container.innerHTML = examQuestions.map((q, i) => `
-        <div class="question-card ${currentAnswers[i] !== null ? 'answered' : ''}" id="question-${i}">
+      const review = !!window.__examReviewMode;
+
+      container.innerHTML = examQuestions.map((q, i) => {
+        const selected = currentAnswers[i];
+        const showFeedback = review && selected !== null;
+        const isCorrect = selected === q.correct;
+        return `
+        <div class="question-card ${selected !== null ? 'answered' : ''}" id="question-${i}">
           <h4 class="font-bold text-slate-800 mb-3 text-sm lg:text-base">
             <span class="text-blue-600">${i + 1}.</span> ${q.question}
           </h4>
           <div class="space-y-2">
             ${q.options.map((option, optionIndex) => `
               <button
-                class="option-btn ${currentAnswers[i] === optionIndex ? 'selected' : ''}"
-                onclick="selectAnswer(${i}, ${optionIndex})"
+                class="option-btn ${selected === optionIndex ? 'selected' : ''} ${review && optionIndex === q.correct ? 'ring-2 ring-green-500' : ''}"
+                onclick="${review ? '' : `selectAnswer(${i}, ${optionIndex})`}"
+                ${review ? 'disabled' : ''}
               >
                 ${String.fromCharCode(65 + optionIndex)}) ${option}
               </button>
             `).join('')}
           </div>
+          <div class="exam-feedback ${showFeedback ? 'visible' : ''} ${isCorrect ? 'is-correct' : 'is-wrong'}">
+            ${
+              showFeedback
+                ? (isCorrect
+                    ? `Doğru. ${q.explanation || ''}`
+                    : `Yanlış. Doğru cevap: <b>${q.options[q.correct]}</b>. ${q.explanation || ''}`)
+                : ''
+            }
+          </div>
         </div>
-      `).join('');
+      `;
+      }).join('');
 
       updateSubmitButton();
     }
@@ -1870,26 +2050,40 @@
     }
 
     function submitExam() {
-      let correctCount = 0;
-      examQuestions.forEach((q, i) => {
-        if (currentAnswers[i] === q.correct) {
-          correctCount++;
+      if (window.__examReviewMode) {
+        const total = examQuestions.length;
+        let correctCount = 0;
+        examQuestions.forEach((q, i) => {
+          if (currentAnswers[i] === q.correct) correctCount++;
+        });
+        const passMark = Math.max(8, Math.ceil(total * 0.8));
+        const passed = correctCount >= passMark;
+        if (passed) {
+          localStorage.setItem('examPassed', 'true');
+          examPassed = true;
+          localStorage.setItem(examAttemptKey, '0');
         }
-      });
+        showExamResult(correctCount, passed, total, passMark);
+        return;
+      }
 
-      const passed = correctCount >= 8;
-      showExamResult(correctCount, passed);
+      if (typeof recordWrongExamAnswers === 'function') {
+        recordWrongExamAnswers(examQuestions, currentAnswers);
+      }
 
-      if (passed) {
-        localStorage.setItem('examPassed', 'true');
-        examPassed = true;
-        // Başarılı olunca deneme sayacını sıfırla
-        localStorage.setItem(examAttemptKey, '0');
+      window.__examReviewMode = true;
+      renderExam();
+
+      const submitBtn = document.getElementById('submitExamBtn');
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Sonuçları Gör';
       }
     }
 
-    function showExamResult(score, passed) {
+    function showExamResult(score, passed, total = 10, passMark = 8) {
       closeExamModal();
+      window.__examReviewMode = false;
 
       const modal = document.getElementById('examResultModal');
       const icon = document.getElementById('resultIcon');
@@ -1901,46 +2095,26 @@
       if (passed) {
         icon.className = 'w-20 h-20 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg';
         icon.innerHTML = '<i data-lucide="trophy" class="w-12 h-12 text-white"></i>';
-        title.textContent = 'Tebrikler! Sınavı Geçtiniz! 🎉';
+        title.textContent = 'Tebrikler! Sınavı Geçtiniz!';
         title.className = 'text-2xl font-bold mb-2 text-green-700';
-        message.textContent = 'Başarılı bir şekilde eğitimi tamamladınız. Şimdi sertifikanızı alabilirsiniz.';
-        scoreDiv.textContent = `${score}/10`;
+        message.textContent = 'Eğitimi başarıyla tamamladınız. Sertifikanızı alabilir, yanlış sorularınızı da pratikten tekrarlayabilirsiniz.';
+        scoreDiv.textContent = `${score}/${total}`;
         scoreDiv.className = 'text-4xl font-bold mb-6 text-green-600';
         actions.innerHTML = `
-          <button
-            onclick="closeExamResultModal()"
-            class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors"
-          >
-            Kapat
-          </button>
-          <button
-            onclick="closeExamResultModal(); showNameModal();"
-            class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
-          >
-            Sertifikayı Al
-          </button>
+          <button onclick="closeExamResultModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors">Kapat</button>
+          <button onclick="closeExamResultModal(); showNameModal();" class="flex-1 bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">Sertifikayı Al</button>
         `;
       } else {
         icon.className = 'w-20 h-20 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg';
         icon.innerHTML = '<i data-lucide="x-circle" class="w-12 h-12 text-white"></i>';
         title.textContent = 'Sınav Başarısız';
         title.className = 'text-2xl font-bold mb-2 text-red-700';
-        message.textContent = 'Başarılı olmak için en az 8 doğru cevap gerekiyor. Lütfen tekrar deneyin.';
-        scoreDiv.textContent = `${score}/10`;
+        message.textContent = `Geçmek için en az ${passMark}/${total} doğru gerekir. Yanlışlar “Yanlışları tekrar et” listesine eklendi.`;
+        scoreDiv.textContent = `${score}/${total}`;
         scoreDiv.className = 'text-4xl font-bold mb-6 text-red-600';
         actions.innerHTML = `
-          <button
-            onclick="closeExamResultModal()"
-            class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors"
-          >
-            Kapat
-          </button>
-          <button
-            onclick="closeExamResultModal(); showExamModal();"
-            class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
-          >
-            Tekrar Dene
-          </button>
+          <button onclick="closeExamResultModal()" class="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 py-3 rounded-lg font-semibold transition-colors">Kapat</button>
+          <button onclick="closeExamResultModal(); startWrongAnswerDrill();" class="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all">Yanlışları Tekrarla</button>
         `;
       }
 

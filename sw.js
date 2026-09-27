@@ -1,4 +1,4 @@
-const CACHE_NAME = "civil-kasa-asistani-v6";
+const CACHE_NAME = "civil-kasa-asistani-v7";
 const OFFLINE_URLS = [
   "./",
   "./index.html",
@@ -22,6 +22,7 @@ const OFFLINE_URLS = [
   "./style.css",
   "./app.js",
   "./qr-bank-procedures.js",
+  "./kasa-egitim-enhance.js",
   "./manifest.json",
   "./assets/qr-procedures/akbank-menu.jpg",
   "./assets/qr-procedures/akbank-kart-islemleri.jpg",
