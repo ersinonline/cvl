@@ -1,17 +1,35 @@
-<div id="chatWidget" class="fixed bottom-4 right-4 w-80 max-w-[90vw] bg-white rounded-2xl shadow-2xl border border-slate-200 transform translate-y-[120%] transition-transform z-40 flex flex-col">
-  <div class="bg-civil-red text-white p-3 rounded-t-2xl flex justify-between items-center cursor-pointer" onclick="closeChat()">
-    <div class="flex items-center gap-2">
-      <i data-lucide="bot" class="w-5 h-5"></i>
-      <span class="font-bold">Akıllı Asistan ✨</span>
-    </div>
-    <button><i data-lucide="chevron-down" class="w-5 h-5"></i></button>
-  </div>
-  <div class="p-3 border-t border-slate-100 bg-white rounded-b-2xl">
-    <form id="chatForm">
-      <div class="flex items-center gap-2">
-        <input id="llmInput" type="text" placeholder="Anahtar kelime yazın..." class="flex-1 bg-slate-100 border border-slate-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-civil-red/20" />
-        <button type="submit" class="bg-civil-red text-white px-3 py-2 rounded-lg text-sm">Git</button>
+<div id="chatWidget" class="chat-widget-shell fixed bottom-4 right-4 w-80 max-w-[92vw] transform translate-y-[120%] transition-transform z-40 flex flex-col">
+  <div class="chat-widget-panel">
+    <div class="chat-widget-head" onclick="closeChat()">
+      <div class="flex items-center gap-2 min-w-0">
+        <i data-lucide="bot" class="w-4 h-4 flex-shrink-0"></i>
+        <div class="min-w-0">
+          <div class="font-semibold text-sm">Asistan</div>
+          <div class="text-[11px] text-white/80 truncate">Anahtar kelime ile sayfa bul</div>
+        </div>
       </div>
-    </form>
+      <button type="button" class="chat-widget-close" aria-label="Asistanı kapat" onclick="event.stopPropagation(); closeChat()">
+        <i data-lucide="chevron-down" class="w-5 h-5"></i>
+      </button>
+    </div>
+    <div class="chat-widget-body">
+      <div id="chatMessages" class="chat-messages hidden"></div>
+      <form id="chatForm" class="chat-form">
+        <div class="chat-input-row">
+          <i data-lucide="search" class="chat-input-icon"></i>
+          <input
+            id="llmInput"
+            type="text"
+            placeholder="örn. iade, taksit, rapor..."
+            class="chat-input"
+            autocomplete="off"
+            aria-label="Asistan araması"
+          />
+          <button type="submit" class="chat-submit" aria-label="Ara">
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

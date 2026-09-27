@@ -1,197 +1,224 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="theme-system">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#dd3612">
   <title>Ana Sayfa • Civil Kasa Asistanı</title>
   <link rel="icon" href="https://images.seeklogo.com/logo-png/32/2/civil-logo-png_seeklogo-326678.png" type="image/png">
   <link rel="manifest" href="manifest.json">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("civilTheme") || "system";
+        document.documentElement.classList.remove("theme-light", "theme-dark", "theme-system");
+        document.documentElement.classList.add("theme-" + t);
+        var dark = t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        document.documentElement.classList.toggle("dark-active", dark);
+      } catch (e) {}
+    })();
+  </script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="text-slate-800 h-screen flex overflow-hidden">
-  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-4 rounded-full shadow-xl z-50 flex items-center justify-center">
-    <i data-lucide="bot" class="w-6 h-6"></i>
+  <a href="#contentArea" class="skip-link">İçeriğe atla</a>
+  <button onclick="openChat()" id="floatingChatButton" class="fixed bottom-4 right-4 bg-civil-red text-white p-3.5 rounded-full shadow-lg z-50 flex items-center justify-center" aria-label="Asistanı aç">
+    <i data-lucide="bot" class="w-5 h-5"></i>
   </button>
   <div id="mobileOverlay" class="fixed inset-0 bg-black/50 z-20 hidden lg:hidden backdrop-blur-sm transition-opacity" onclick="toggleSidebar()"></div>
   <div id="sidebarMount"></div>
   <main class="flex-1 flex flex-col h-screen overflow-hidden bg-civil-bg relative">
     <div id="headerMount"></div>
-    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth">
+    <div id="contentArea" class="flex-1 overflow-y-auto p-4 lg:p-8 scroll-smooth" tabindex="-1">
       <section id="dashboard" class="content-section fade-in block">
-        <!-- Welcome Banner -->
-        <div class="mb-8 bg-gradient-to-r from-civil-red to-civil-dark rounded-2xl p-6 lg:p-8 text-white shadow-xl relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
-          <div class="absolute -right-10 -top-10 w-40 h-40 bg-white/5 rounded-full"></div>
-          <div class="absolute -left-10 -bottom-10 w-32 h-32 bg-white/5 rounded-full"></div>
-          <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-3">
-              <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <i data-lucide="sparkles" class="w-7 h-7"></i>
-              </div>
-              <div>
-                <h1 class="text-2xl lg:text-3xl font-bold">Hoş Geldiniz!</h1>
-                <p class="text-white/90 text-sm lg:text-base">Civil Kasa Yönetim Sistemi</p>
-              </div>
+        <div class="welcome-banner">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+              <i data-lucide="sparkles" class="w-7 h-7"></i>
             </div>
-            <p class="text-white/80 text-sm lg:text-base mt-4 max-w-2xl">
-              Kasa işlemlerinizi kolayca öğrenin ve yönetin. Aşağıdaki menüden öğrenmek istediğiniz konuyu seçin veya yeni eğitim modülümüze göz atın.
-            </p>
+            <div>
+              <h1 class="text-2xl lg:text-3xl font-bold tracking-tight">Civil Kasa Asistanı</h1>
+              <p class="text-white/90 text-sm lg:text-base">Mağaza kasa işlemleri için hızlı rehber</p>
+            </div>
+          </div>
+          <p class="text-white/85 text-sm lg:text-base mt-3 max-w-2xl leading-relaxed">
+            POS, taksit, iade ve eğitim içeriklerine tek yerden ulaşın. Favorileriniz ve son bakılan sayfalar bu cihazda saklanır.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <button type="button" onclick="openCommandPalette()" class="smart-action-primary">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              Hızlı Ara
+            </button>
+            <a href="kasa-egitim.html" class="smart-action-secondary !bg-white/15 !text-white !border-white/25 hover:!bg-white/25">
+              Eğitime Başla
+            </a>
           </div>
         </div>
 
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-8">
+          <div class="stat-card">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                <i data-lucide="book-open" class="w-5 h-5 text-blue-600"></i>
+              <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="text-xs text-slate-500">Toplam Konu</p>
-                <p class="text-xl font-bold text-slate-800">12</p>
+                <p class="text-xs">Toplam Konu</p>
+                <p class="text-xl font-bold stat-value">12</p>
               </div>
             </div>
           </div>
-          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+          <div class="stat-card">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
-                <i data-lucide="check-circle" class="w-5 h-5 text-green-600"></i>
+              <div class="w-10 h-10 bg-green-100 text-green-600 rounded-lg flex items-center justify-center">
+                <i data-lucide="check-circle" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="text-xs text-slate-500">Aktif Modül</p>
-                <p class="text-xl font-bold text-slate-800">8</p>
+                <p class="text-xs">Aktif Modül</p>
+                <p class="text-xl font-bold stat-value">8</p>
               </div>
             </div>
           </div>
-          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+          <div class="stat-card">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
-                <i data-lucide="users" class="w-5 h-5 text-purple-600"></i>
+              <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center">
+                <i data-lucide="zap" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="text-xs text-slate-500">Kullanıcı</p>
-                <p class="text-xl font-bold text-slate-800">150+</p>
+                <p class="text-xs">Hızlı Erişim</p>
+                <p class="text-xl font-bold stat-value">Ctrl K</p>
               </div>
             </div>
           </div>
-          <div class="bg-white rounded-xl p-4 shadow-md border border-slate-100 hover:shadow-lg transition-all">
+          <div class="stat-card">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-amber-100 rounded-lg flex items-center justify-center">
-                <i data-lucide="star" class="w-5 h-5 text-amber-600"></i>
+              <div class="w-10 h-10 bg-rose-100 text-civil-red rounded-lg flex items-center justify-center">
+                <i data-lucide="star" class="w-5 h-5"></i>
               </div>
               <div>
-                <p class="text-xs text-slate-500">Güncel</p>
-                <p class="text-xl font-bold text-slate-800">v2.5</p>
+                <p class="text-xs">Sürüm</p>
+                <p class="text-xl font-bold stat-value">v2.6</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Training Highlight -->
-        <a href="kasa-egitim.html" class="block mb-8 group">
-          <div class="bg-amber-50 rounded-2xl p-4 lg:p-6 border-2 border-amber-200 hover:border-civil-red transition-all duration-300 shadow-md hover:shadow-xl">
-            <div class="flex items-center justify-between">
-              <div class="flex items-center gap-3 lg:gap-4 flex-1">
-                <div class="w-16 h-16 sm:w-20 sm:h-20 lg:w-14 lg:h-14 bg-amber-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform flex-shrink-0">
-                  <i data-lucide="graduation-cap" class="w-9 h-9 sm:w-11 sm:h-11 lg:w-8 lg:h-8 text-white"></i>
-                </div>
-                <div class="flex-1 min-w-0">
-                  <div class="flex flex-wrap items-center gap-2 mb-1">
-                    <h3 class="text-base sm:text-lg lg:text-xl font-bold text-slate-800">Kasa Eğitim Modülü</h3>
-                    <span class="bg-civil-red text-white text-[10px] sm:text-xs px-2 py-1 rounded-full font-semibold whitespace-nowrap">YENİ</span>
-                  </div>
-                  <p class="text-slate-600 text-xs sm:text-sm">İnteraktif ve kolay öğrenilebilir kasa eğitimi - Adım adım rehberle öğrenin!</p>
-                </div>
+        <a href="kasa-egitim.html" class="training-promo group">
+          <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 lg:gap-4 flex-1 min-w-0">
+              <div class="w-14 h-14 bg-amber-500 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform flex-shrink-0">
+                <i data-lucide="graduation-cap" class="w-7 h-7 text-white"></i>
               </div>
-              <i data-lucide="arrow-right" class="w-6 h-6 text-civil-red group-hover:translate-x-2 transition-transform hidden lg:block flex-shrink-0"></i>
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap items-center gap-2 mb-1">
+                  <h3 class="text-base sm:text-lg font-bold section-heading">Kasa Eğitim Modülü</h3>
+                  <span class="bg-civil-red text-white text-[10px] sm:text-xs px-2 py-1 rounded-md font-semibold">YENİ</span>
+                </div>
+                <p class="section-sub text-xs sm:text-sm">Adım adım rehber, sınav ve sertifika ile öğrenin.</p>
+              </div>
             </div>
+            <i data-lucide="arrow-right" class="w-6 h-6 text-civil-red group-hover:translate-x-1 transition-transform hidden lg:block flex-shrink-0"></i>
           </div>
         </a>
 
-        <div class="mb-6">
-          <h2 class="text-xl font-bold text-slate-800 mb-2 flex items-center gap-2">
+        <!-- Akıllı bölge app.js tarafından doldurulur -->
+        <div id="dashboardSmartZone" class="space-y-6 mb-8"></div>
+
+        <div class="mb-5">
+          <h2 class="text-xl section-heading mb-1 flex items-center gap-2">
             <i data-lucide="grid-3x3" class="w-5 h-5 text-civil-red"></i>
             Hızlı Erişim Menüsü
           </h2>
-          <p class="text-slate-500 text-sm">İşlem kategorilerinden birine dokunarak başlayın</p>
+          <p class="section-sub">İşlem kategorilerinden birine dokunarak başlayın</p>
         </div>
 
         <div class="grid quick-access-grid gap-4 mb-8">
-          <a href="raporlar.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3 group-hover:bg-indigo-200 transition-colors">
+          <a href="raporlar.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-indigo-100 text-indigo-600">
               <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Kasa Raporları</h3>
+            <h3>Kasa Raporları</h3>
+            <p class="text-xs text-slate-500 mt-1">Hareket özeti ve kasiyer raporları</p>
           </a>
-          <a href="pos-islemleri.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center mb-3 group-hover:bg-blue-200 transition-colors">
+          <a href="pos-islemleri.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-blue-100 text-blue-600">
               <i data-lucide="credit-card" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">POS İşlemleri</h3>
+            <h3>POS İşlemleri</h3>
+            <p class="text-xs text-slate-500 mt-1">İptal, iade, QR ve gün sonu</p>
           </a>
-          <a href="taksitler.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-pink-100 text-pink-600 flex items-center justify-center mb-3 group-hover:bg-pink-200 transition-colors">
+          <a href="taksitler.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-pink-100 text-pink-600">
               <i data-lucide="percent" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Taksitler</h3>
+            <h3>Taksitler</h3>
+            <p class="text-xs text-slate-500 mt-1">Kart bazlı taksit kuralları</p>
           </a>
-          <a href="chippin.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3 group-hover:bg-indigo-200 transition-colors">
+          <a href="chippin.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-indigo-100 text-indigo-600">
               <i data-lucide="star" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Chippin</h3>
+            <h3>Chippin</h3>
+            <p class="text-xs text-slate-500 mt-1">Mobil ödeme alma</p>
           </a>
-          <a href="ozel-odemeler.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center mb-3 group-hover:bg-green-200 transition-colors">
+          <a href="ozel-odemeler.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-green-100 text-green-600">
               <i data-lucide="gift" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Hediye Kartları</h3>
+            <h3>Hediye Kartları</h3>
+            <p class="text-xs text-slate-500 mt-1">Özel ödeme adımları</p>
           </a>
-          <a href="havale-eft.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-cyan-100 text-cyan-600 flex items-center justify-center mb-3 group-hover:bg-cyan-200 transition-colors">
+          <a href="havale-eft.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-cyan-100 text-cyan-600">
               <i data-lucide="refresh-ccw" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Havale / EFT</h3>
+            <h3>Havale / EFT</h3>
+            <p class="text-xs text-slate-500 mt-1">Transfer işlem akışı</p>
           </a>
-          <a href="fatura-portal.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center mb-3 group-hover:bg-purple-200 transition-colors">
+          <a href="fatura-portal.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-purple-100 text-purple-600">
               <i data-lucide="file-text" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">eTicaret</h3>
+            <h3>eTicaret</h3>
+            <p class="text-xs text-slate-500 mt-1">Portal ve online alışveriş</p>
           </a>
-          <a href="nakit-yatirma.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center mb-3 group-hover:bg-yellow-200 transition-colors">
+          <a href="nakit-yatirma.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-yellow-100 text-yellow-600">
               <i data-lucide="wallet-2" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Nakit Yatırma</h3>
+            <h3>Nakit Yatırma</h3>
+            <p class="text-xs text-slate-500 mt-1">Banka yatırma kuralları</p>
           </a>
-          <a href="kasa-duzeltme.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-red-100 text-civil-red flex items-center justify-center mb-3 group-hover:bg-red-200 transition-colors">
+          <a href="kasa-duzeltme.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-red-100 text-civil-red">
               <i data-lucide="trending-down" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Hatalı İşlemler</h3>
+            <h3>Hatalı İşlemler</h3>
+            <p class="text-xs text-slate-500 mt-1">Düzeltme akışları</p>
           </a>
-          <a href="masraf-duzeltme.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center mb-3 group-hover:bg-orange-200 transition-colors">
+          <a href="masraf-duzeltme.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-orange-100 text-orange-600">
               <i data-lucide="coins" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Masraf Girişi</h3>
+            <h3>Masraf Girişi</h3>
+            <p class="text-xs text-slate-500 mt-1">Gider ve fiyat farkı</p>
           </a>
-          <a href="sablon.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-teal-100 text-teal-600 flex items-center justify-center mb-3 group-hover:bg-teal-200 transition-colors">
+          <a href="sablon.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-teal-100 text-teal-600">
               <i data-lucide="file-spreadsheet" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Şablon</h3>
+            <h3>Şablon</h3>
+            <p class="text-xs text-slate-500 mt-1">Hazır metin örnekleri</p>
           </a>
-          <a href="gorus-oneri.html" class="block cursor-pointer bg-white p-5 rounded-xl shadow-md border border-slate-100 hover:border-civil-red/50 hover:shadow-lg transition-all group hover:scale-[1.02]">
-            <div class="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center mb-3 group-hover:bg-indigo-200 transition-colors">
+          <a href="gorus-oneri.html" class="quick-access-card group">
+            <div class="quick-access-icon bg-indigo-100 text-indigo-600">
               <i data-lucide="message-square" class="w-5 h-5"></i>
             </div>
-            <h3 class="font-semibold text-slate-800">Görüş & Öneri</h3>
+            <h3>Görüş & Öneri</h3>
+            <p class="text-xs text-slate-500 mt-1">Geri bildirim gönder</p>
           </a>
         </div>
       </section>
