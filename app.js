@@ -61,8 +61,22 @@ const SECTION_META = [
     id: "pos-islemleri",
     title: "POS İşlemleri",
     url: "pos-islemleri.html",
-    description: "POS iptal, iade, gün sonu ve slip işlemleri.",
-    keywords: ["pos", "iade", "iptal", "gün sonu", "slip", "qr"],
+    description: "POS iptal, iade, gün sonu, QR ve slip işlemleri.",
+    keywords: [
+      "pos",
+      "iade",
+      "iptal",
+      "gün sonu",
+      "slip",
+      "qr",
+      "karekod",
+      "akbank",
+      "finansbank",
+      "qnb",
+      "garanti",
+      "iş bankası",
+      "fast",
+    ],
   },
   {
     id: "ozel-odemeler",
@@ -205,6 +219,10 @@ document.addEventListener("DOMContentLoaded", () => {
   ensureGlobalShell();
   loadSharedFragments();
   initializePageState();
+  // QR kartları önce mount edilsin; sayfa filtresi onları da görsün
+  if (document.getElementById("qrBankProceduresMount")) {
+    renderQrBankProcedures();
+  }
   enhanceContentPages();
   bindGlobalEvents();
   registerServiceWorker();
@@ -274,14 +292,21 @@ function initializePageState() {
     }
   }
 
+  const isContentSection = targetEl && targetEl.classList.contains("content-section");
   const defaultSection =
-    (targetEl && targetEl.id) ||
+    (isContentSection && targetEl.id) ||
     (document.getElementById("dashboard")
       ? "dashboard"
       : document.querySelector(".content-section")?.id || null);
 
   if (defaultSection) {
     showSection(defaultSection);
+  }
+
+  if (targetEl && !isContentSection) {
+    setTimeout(() => {
+      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
   }
 }
 
@@ -414,6 +439,7 @@ function ensureCommandPalette() {
           <div id="commandPaletteHint" class="command-palette-hint">
             <div class="command-suggest-row" id="commandSuggestChips">
               <button type="button" class="filter-chip" data-suggest="iade">iade</button>
+              <button type="button" class="filter-chip" data-suggest="qr">qr</button>
               <button type="button" class="filter-chip" data-suggest="taksit">taksit</button>
               <button type="button" class="filter-chip" data-suggest="chippin">chippin</button>
               <button type="button" class="filter-chip" data-suggest="nakit">nakit</button>
@@ -805,7 +831,7 @@ function syncFilterChipActive(query) {
 }
 
 function escapeHtml(value) {
-  return String(value)
+  return String(value ?? "")
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
@@ -1689,6 +1715,131 @@ function togglePassword(inputId) {
   }
 
   input.type = input.type === "password" ? "text" : "password";
+}
+
+function getQrBankProcedures() {
+  return window.QR_BANK_PROCEDURES || [];
+}
+
+function renderQrBankProcedures(mountId = "qrBankProceduresMount") {
+  const mount = document.getElementById(mountId);
+  const procedures = getQrBankProcedures();
+  if (!mount || !procedures.length) {
+    return;
+  }
+
+  const cards = procedures
+    .map((bank) => {
+      const ops = (bank.operations || [])
+        .map((op) => {
+          const typeBadge =
+            op.type === "iptal"
+              ? '<span class="qr-badge qr-badge-iptal">İptal</span>'
+              : '<span class="qr-badge qr-badge-iade">İade</span>';
+
+          const menu = (op.menuPath || [])
+            .map((part) => `<code class="qr-code-chip">${escapeHtml(part)}</code>`)
+            .join(' <span class="qr-menu-sep">›</span> ');
+
+          const fields = (op.requiredFields || [])
+            .map((field) => {
+              let extra = "";
+              if (
+                field.key === "merchantPassword" &&
+                op.merchantPasswordGuideDefault
+              ) {
+                extra = ` — banka kılavuzu örneği: <code class="qr-code-chip qr-code-chip-warn">${escapeHtml(op.merchantPasswordGuideDefault)}</code> <span class="qr-muted">(değişmiş olabilir; mağazadan doğrulayın)</span>`;
+              } else if (field.key === "merchantPassword") {
+                extra = ` <span class="qr-muted">(mağaza yöneticisinden alın)</span>`;
+              }
+              return `<li><b class="font-semibold">${escapeHtml(field.label)}</b>: ${escapeHtml(field.source)}${extra}</li>`;
+            })
+            .join("");
+
+          const steps = (op.steps || [])
+            .map((step) => `<li>${escapeHtml(step)}</li>`)
+            .join("");
+
+          return `
+            <div class="qr-op-card space-y-2">
+              <div class="flex flex-wrap items-center gap-2">
+                ${typeBadge}
+                <h5 class="qr-op-title">${escapeHtml(op.title)}</h5>
+              </div>
+              <p class="qr-body"><span class="font-semibold">Menü:</span> ${menu}</p>
+              <div>
+                <p class="qr-label">Gerekli alanlar</p>
+                <ul class="list-disc ml-5 qr-body space-y-0.5">${fields}</ul>
+              </div>
+              <div>
+                <p class="qr-label">Adımlar</p>
+                <ol class="list-decimal ml-5 qr-body space-y-0.5">${steps}</ol>
+              </div>
+            </div>
+          `;
+        })
+        .join("");
+
+      const notes = (bank.notes || [])
+        .map((note) => `<li>${escapeHtml(note)}</li>`)
+        .join("");
+
+      const supportBits = [];
+      if (bank.supportPhone) {
+        supportBits.push(`Destek: <b class="font-semibold">${escapeHtml(bank.supportPhone)}</b>`);
+      }
+      if (bank.supportEmail) {
+        supportBits.push(`E-posta: <b class="font-semibold">${escapeHtml(bank.supportEmail)}</b>`);
+      }
+
+      const images = (bank.images || [])
+        .map(
+          (img) => `
+            <img
+              src="${escapeHtml(img.src)}"
+              alt="${escapeHtml(img.alt || bank.bank)}"
+              class="step-image"
+              onclick="openModal(this.src)"
+            >
+          `
+        )
+        .join("");
+
+      return `
+        <div class="step-container search-item" data-bank="${escapeHtml(bank.id)}">
+          <div class="step-header">
+            <div class="step-number"><i data-lucide="qr-code" class="w-4 h-4"></i></div>
+            <h3 class="step-title">${escapeHtml(bank.bank)} — QR İptal / İade</h3>
+          </div>
+          <div class="step-content space-y-4">
+            ${supportBits.length ? `<p class="qr-body">${supportBits.join(" · ")}</p>` : ""}
+            ${notes ? `<ul class="list-disc ml-5 qr-body space-y-1">${notes}</ul>` : ""}
+            <div class="space-y-3">${ops}</div>
+            ${images ? `<div class="grid sm:grid-cols-2 gap-3 pt-1">${images}</div>` : ""}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  mount.innerHTML = `
+    <div class="guide-card search-item qr-intro-card mb-4">
+      <h3 class="qr-intro-title flex items-center gap-2">
+        <i data-lucide="scan-line" class="w-5 h-5 text-civil-red"></i>
+        Banka Bazlı QR (Karekod) İptal / İade
+      </h3>
+      <p class="qr-body leading-relaxed">
+        Aynı gün ve gün sonu öncesi işlemler genelde <b class="font-semibold">iptal</b>, gün sonu sonrası
+        <b class="font-semibold">iade</b> olarak ilerler. Aşağıdaki adımlar ilgili bankanın POS menüsüne göredir.
+        İşyeri şifreleri mağaza yöneticisinde tanımlıdır; banka kılavuzundaki örnek değerler değişmiş olabilir.
+      </p>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">${cards}</div>
+  `;
+
+  if (window.lucide) {
+    lucide.createIcons();
+  }
 }
 
 function openModal(src) {

@@ -1247,43 +1247,272 @@ html.theme-system.dark-active .training-promo {
   background: rgba(180, 83, 9, 0.1);
 }
 
-/* Dark mode Tailwind utility overrides for shared shell */
+/* QR prosedür kartları */
+.qr-intro-card {
+  padding: 20px;
+}
+
+.qr-intro-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--civil-text);
+  margin-bottom: 8px;
+}
+
+.qr-body {
+  font-size: 0.9rem;
+  color: var(--civil-text-muted);
+  line-height: 1.55;
+}
+
+.qr-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--civil-text);
+  margin-bottom: 4px;
+}
+
+.qr-muted {
+  color: var(--civil-text-soft);
+}
+
+.qr-op-card {
+  border: 1px solid var(--civil-border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  background: var(--civil-surface-2);
+}
+
+.qr-op-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--civil-text);
+}
+
+.qr-code-chip {
+  display: inline-block;
+  background: var(--civil-surface);
+  border: 1px solid var(--civil-border);
+  color: var(--civil-text);
+  padding: 2px 7px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+}
+
+.qr-code-chip-warn {
+  background: rgba(245, 158, 11, 0.14);
+  border-color: rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+html:not(.theme-dark):not(.dark-active) .qr-code-chip-warn {
+  color: #92400e;
+}
+
+.qr-menu-sep {
+  color: var(--civil-text-soft);
+}
+
+.qr-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+}
+
+.qr-badge-iptal {
+  color: #c2410c;
+  background: rgba(249, 115, 22, 0.12);
+  border-color: rgba(249, 115, 22, 0.28);
+}
+
+.qr-badge-iade {
+  color: #1d4ed8;
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.28);
+}
+
+html.theme-dark .qr-badge-iptal,
+html.theme-system.dark-active .qr-badge-iptal {
+  color: #fdba74;
+}
+
+html.theme-dark .qr-badge-iade,
+html.theme-system.dark-active .qr-badge-iade {
+  color: #93c5fd;
+}
+
+/* Dark mode — kontrast / okunabilirlik */
+html.theme-dark,
+html.theme-system.dark-active {
+  color-scheme: dark;
+}
+
+html.theme-dark body,
+html.theme-system.dark-active body {
+  color: var(--civil-text);
+  background-color: var(--civil-bg);
+}
+
 html.theme-dark .bg-white,
-html.theme-system.dark-active .bg-white {
+html.theme-dark .bg-slate-50,
+html.theme-dark .bg-slate-100,
+html.theme-dark .bg-gray-50,
+html.theme-dark .bg-gray-100,
+html.theme-system.dark-active .bg-white,
+html.theme-system.dark-active .bg-slate-50,
+html.theme-system.dark-active .bg-slate-100,
+html.theme-system.dark-active .bg-gray-50,
+html.theme-system.dark-active .bg-gray-100 {
   background-color: var(--civil-surface) !important;
 }
 
-html.theme-dark .bg-slate-50,
-html.theme-system.dark-active .bg-slate-50 {
+html.theme-dark .bg-slate-50\/60,
+html.theme-system.dark-active .bg-slate-50\/60 {
   background-color: var(--civil-surface-2) !important;
 }
 
+html.theme-dark .text-slate-900,
 html.theme-dark .text-slate-800,
 html.theme-dark .text-slate-700,
+html.theme-dark .text-gray-900,
+html.theme-dark .text-gray-800,
+html.theme-dark .text-gray-700,
+html.theme-system.dark-active .text-slate-900,
 html.theme-system.dark-active .text-slate-800,
-html.theme-system.dark-active .text-slate-700 {
+html.theme-system.dark-active .text-slate-700,
+html.theme-system.dark-active .text-gray-900,
+html.theme-system.dark-active .text-gray-800,
+html.theme-system.dark-active .text-gray-700 {
   color: var(--civil-text) !important;
 }
 
 html.theme-dark .text-slate-600,
 html.theme-dark .text-slate-500,
-html.theme-dark .text-slate-400,
+html.theme-dark .text-gray-600,
+html.theme-dark .text-gray-500,
 html.theme-system.dark-active .text-slate-600,
 html.theme-system.dark-active .text-slate-500,
-html.theme-system.dark-active .text-slate-400 {
-  color: var(--civil-text-muted) !important;
+html.theme-system.dark-active .text-gray-600,
+html.theme-system.dark-active .text-gray-500 {
+  color: #cbd5e1 !important;
+}
+
+html.theme-dark .text-slate-400,
+html.theme-dark .text-gray-400,
+html.theme-system.dark-active .text-slate-400,
+html.theme-system.dark-active .text-gray-400 {
+  color: #94a3b8 !important;
 }
 
 html.theme-dark .border-slate-100,
 html.theme-dark .border-slate-200,
+html.theme-dark .border-gray-100,
+html.theme-dark .border-gray-200,
 html.theme-system.dark-active .border-slate-100,
-html.theme-system.dark-active .border-slate-200 {
+html.theme-system.dark-active .border-slate-200,
+html.theme-system.dark-active .border-gray-100,
+html.theme-system.dark-active .border-gray-200 {
   border-color: var(--civil-border) !important;
 }
 
 html.theme-dark .bg-civil-bg,
 html.theme-system.dark-active .bg-civil-bg {
   background-color: var(--civil-bg) !important;
+}
+
+html.theme-dark .bg-civil-light,
+html.theme-system.dark-active .bg-civil-light {
+  background-color: var(--civil-light) !important;
+}
+
+html.theme-dark .bg-blue-50,
+html.theme-dark .bg-blue-100,
+html.theme-dark .bg-green-50,
+html.theme-dark .bg-green-100,
+html.theme-dark .bg-amber-50,
+html.theme-dark .bg-amber-100,
+html.theme-dark .bg-yellow-50,
+html.theme-dark .bg-yellow-100,
+html.theme-dark .bg-orange-50,
+html.theme-dark .bg-orange-100,
+html.theme-dark .bg-red-50,
+html.theme-dark .bg-red-100,
+html.theme-dark .bg-indigo-50,
+html.theme-dark .bg-indigo-100,
+html.theme-dark .bg-purple-50,
+html.theme-dark .bg-purple-100,
+html.theme-dark .bg-pink-50,
+html.theme-dark .bg-pink-100,
+html.theme-dark .bg-cyan-50,
+html.theme-dark .bg-cyan-100,
+html.theme-dark .bg-teal-50,
+html.theme-dark .bg-teal-100,
+html.theme-dark .bg-rose-100,
+html.theme-system.dark-active .bg-blue-50,
+html.theme-system.dark-active .bg-blue-100,
+html.theme-system.dark-active .bg-green-50,
+html.theme-system.dark-active .bg-green-100,
+html.theme-system.dark-active .bg-amber-50,
+html.theme-system.dark-active .bg-amber-100,
+html.theme-system.dark-active .bg-yellow-50,
+html.theme-system.dark-active .bg-yellow-100,
+html.theme-system.dark-active .bg-orange-50,
+html.theme-system.dark-active .bg-orange-100,
+html.theme-system.dark-active .bg-red-50,
+html.theme-system.dark-active .bg-red-100,
+html.theme-system.dark-active .bg-indigo-50,
+html.theme-system.dark-active .bg-indigo-100,
+html.theme-system.dark-active .bg-purple-50,
+html.theme-system.dark-active .bg-purple-100,
+html.theme-system.dark-active .bg-pink-50,
+html.theme-system.dark-active .bg-pink-100,
+html.theme-system.dark-active .bg-cyan-50,
+html.theme-system.dark-active .bg-cyan-100,
+html.theme-system.dark-active .bg-teal-50,
+html.theme-system.dark-active .bg-teal-100,
+html.theme-system.dark-active .bg-rose-100 {
+  background-color: var(--civil-surface-2) !important;
+}
+
+html.theme-dark input,
+html.theme-dark textarea,
+html.theme-dark select,
+html.theme-system.dark-active input,
+html.theme-system.dark-active textarea,
+html.theme-system.dark-active select {
+  color: var(--civil-text);
+  background-color: var(--civil-surface);
+  border-color: var(--civil-border);
+}
+
+html.theme-dark .card-item,
+html.theme-system.dark-active .card-item {
+  background-color: var(--civil-surface-2);
+  color: var(--civil-text);
+}
+
+html.theme-dark .card-item span,
+html.theme-system.dark-active .card-item span {
+  color: var(--civil-text);
+}
+
+html.theme-dark code,
+html.theme-system.dark-active code {
+  color: var(--civil-text);
+}
+
+html.theme-dark .training-promo h3,
+html.theme-system.dark-active .training-promo h3 {
+  color: var(--civil-text) !important;
+}
+
+html.theme-dark .training-promo p,
+html.theme-system.dark-active .training-promo p {
+  color: #cbd5e1 !important;
 }
 
 @media (max-width: 640px) {

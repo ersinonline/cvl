@@ -812,6 +812,17 @@
                   </ul>
                 </div>
 
+                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
+                  <h4 class="font-bold text-slate-800 mb-2 lg:mb-3 text-sm lg:text-base">QR (Karekod) İptal — Banka Menüleri</h4>
+                  <p class="text-xs lg:text-sm text-slate-600 mb-3">Detaylı adımlar için <a href="pos-islemleri.html#qrBankProceduresMount" class="text-civil-red font-semibold underline">POS İşlemleri › QR İptal/İade</a> sayfasına bakın.</p>
+                  <ul class="text-xs lg:text-sm text-slate-600 space-y-2">
+                    <li><strong>Akbank:</strong> Kart İşlemleri › Karekod İptal › slipteki sıra no › müşteri Axess ile QR okutur.</li>
+                    <li><strong>QNB Finansbank:</strong> Ana menü › İptal › işyeri şifresi › işlem sıra no › karekod için <strong>0</strong> (satış da karekod olmalı).</li>
+                    <li><strong>Garanti BBVA:</strong> F › Özel İşlemler › QR Kod ile Ödeme › QR Kod ile İptal › şifre › işlem/sıra no › BonusFlaş onayı.</li>
+                    <li><strong>İş Bankası:</strong> Ayrı “iptal” satırı yok; QR Ödeme İşlemleri altında peşin/taksitli iade kullanılır.</li>
+                  </ul>
+                </div>
+
                 <button onclick="completeModule(5)" class="complete-btn w-full bg-orange-600 hover:bg-orange-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-orange-600/20 text-sm lg:text-base">
                   <i data-lucide="check-circle-2" class="w-4 h-4 lg:w-5 lg:h-5"></i>
                   Modülü Tamamla
@@ -871,6 +882,18 @@
                     <li>Fatura referans numarasını girin</li>
                     <li>Fatura numarası ile iade işlemini tamamlayın</li>
                   </ol>
+                </div>
+
+                <div class="bg-white p-3 lg:p-4 rounded-lg lg:rounded-xl border border-slate-200 shadow-sm">
+                  <h4 class="font-bold text-slate-800 mb-2 lg:mb-3 text-sm lg:text-base">QR (Karekod) İade — Banka Özeti</h4>
+                  <p class="text-xs lg:text-sm text-slate-600 mb-3">İşyeri şifreleri mağaza yöneticisinde tanımlıdır. Tam menü yolları: <a href="pos-islemleri.html#qrBankProceduresMount" class="text-civil-red font-semibold underline">POS İşlemleri</a>.</p>
+                  <ul class="text-xs lg:text-sm text-slate-600 space-y-2">
+                    <li><strong>Akbank FAST referanslı:</strong> Kart İşlemleri › Karekod FAST Referanslı İade › şifre › tutar › slipteki <strong>16 haneli işlem kodu</strong>. Destek: 444 28 28.</li>
+                    <li><strong>Akbank klasik:</strong> Kart İşlemleri › Karekod İade › şifre › işlem kodu › tutar › Axess ile QR onay.</li>
+                    <li><strong>QNB Finansbank:</strong> İade İşlemleri › tutar › karekod için <strong>0</strong> › satış tutarı + tarih (GGAAYYYY). Satış da karekod olmalı.</li>
+                    <li><strong>Garanti BBVA:</strong> Özel İşlemler › QR Kod ile İade › şifre › slipteki <strong>Ref. No</strong> › BonusFlaş onayı.</li>
+                    <li><strong>İş Bankası:</strong> Menü › QR Ödeme İşlemleri › Peşin/Taksitli İade › işyeri şifresi › tutar › referans no › müşteri QR onayı.</li>
+                  </ul>
                 </div>
 
                 <button onclick="completeModule(6)" class="complete-btn w-full bg-civil-red hover:bg-red-700 text-white py-2.5 lg:py-3 rounded-lg lg:rounded-xl font-semibold transition-colors flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 text-sm lg:text-base">
@@ -1385,6 +1408,21 @@
       {
         question: "POS iade limiti aşıldığında ne yapılmalıdır?",
         options: ["Merkez Muhasebe'ye mail atılmalı", "Mağaza artırabilir", "İade yapılmamalı"],
+        correct: 0
+      },
+      {
+        question: "Akbank QR FAST referanslı iadede slipte hangi bilgi girilir?",
+        options: ["16 haneli işlem kodu", "CVV kodu", "IBAN numarası"],
+        correct: 0
+      },
+      {
+        question: "QNB Finansbank'ta karekod iptal/iade için satışın nasıl yapılmış olması gerekir?",
+        options: ["Karekod ile yapılmış olmalı", "Sadece temassız olmalı", "Sadece taksitli olmalı"],
+        correct: 0
+      },
+      {
+        question: "Garanti BBVA QR iadede menü yolu nasıldır?",
+        options: ["F > Özel İşlemler > QR Kod ile Ödeme > QR Kod ile İade", "Sadece 0 tuşu", "Yalnızca gün sonu menüsü"],
         correct: 0
       },
       {

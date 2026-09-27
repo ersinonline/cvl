@@ -1,4 +1,4 @@
-const CACHE_NAME = "civil-kasa-asistani-v5";
+const CACHE_NAME = "civil-kasa-asistani-v6";
 const OFFLINE_URLS = [
   "./",
   "./index.html",
@@ -21,7 +21,10 @@ const OFFLINE_URLS = [
   "./chat.html",
   "./style.css",
   "./app.js",
+  "./qr-bank-procedures.js",
   "./manifest.json",
+  "./assets/qr-procedures/akbank-menu.jpg",
+  "./assets/qr-procedures/akbank-kart-islemleri.jpg",
 ];
 
 self.addEventListener("install", (event) => {
